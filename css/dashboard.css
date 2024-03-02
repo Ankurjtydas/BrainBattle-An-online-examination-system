@@ -1,0 +1,160 @@
+.classroom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70vw;
+    height: 40vh;
+    background-color: blue;
+    margin: 0 auto;
+    border-radius: 30px;
+}
+
+.classroom-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90%;
+    width: 30%;
+    margin: 1rem;
+}
+
+.faculty-image {
+    height: 90px;
+    width: 90px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.classroom-title {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.classroom-desc {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.classroom-code {
+    display: flex;
+    align-items: flex-end;
+    height: 90%;
+    margin: 2rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.classroom-code span {
+    color: white;
+    padding: 3px 2px;
+}
+
+.classroom-code #code {
+    background-color: rgb(236, 236, 236);
+    margin-left: 0.4rem;
+    margin-right: 8px;
+    border-radius: 5px;
+    padding: 3px 5px;
+    border: 1px solid black;
+}
+
+.classroom-code i {
+    color: white;
+    padding: 4px 0;
+    cursor: pointer;
+}
+
+.classroom-code i:hover {
+    color: rgb(218, 217, 217);
+}
+
+.dashboard-container {
+    width: 70vw;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border: 2px solid red;
+    margin: 0 auto;
+    margin-top: 1rem;
+    gap: 20px;
+}
+
+.dashboard-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.item-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    height: 8rem;
+    border: 5px double rgb(201, 47, 47);
+    border-radius: 15px;
+}
+
+.item-image:hover {
+    height: 8.05rem;
+    background-color: rgb(236, 236, 236);
+}
+
+.item-image img {
+    width: 50%;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+.dashboard-item span {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.test-container {
+    width: 70vw;
+    border:2px solid blue;
+    margin: 1rem auto;
+    padding: 0 1rem;
+}
+
+.test {
+    display: flex;
+    width: 100%;
+    padding: 5px 0.8rem;
+    margin: 5px 0;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: rgb(243, 243, 243);
+}
+
+.test:hover {
+    background-color: rgb(206, 206, 206);
+    
+}
+
+.test-detail {
+    width: 80%;
+    text-decoration: none;
+    color: black;
+}
+
+.test-title {
+    font-weight: bold;
+}
+
+.test-control > i {
+    margin: 0 4px;
+    cursor: pointer;
+}
+
+.update:hover {
+    color: blue;
+}
+
+.trash:hover {
+    color: red;
+}
