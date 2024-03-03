@@ -14,6 +14,7 @@
             for($i=0; $i<6; $i++){
                 $randomCode .= $characters[rand(0, strlen($characters)-1)];
             }
+            
             // check if the code is unique or not
             $sql = "select * from classrooms where classroom_code='$randomCode'";
             $result = mysqli_query($conn, $sql);

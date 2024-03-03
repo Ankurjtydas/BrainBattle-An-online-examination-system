@@ -1,7 +1,12 @@
 <?php
 session_status() == PHP_SESSION_ACTIVE ?: session_start();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null || $_SESSION["role"] != "faculty") {
+    header("Location: index.php");
+    exit;
+}
 require "partials/_dbconnect.php";
 $noOfQuestions = 0;
+$examId;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $examTitle = $_POST["examTitle"];
     $examDescription = $_POST["examDescription"];
@@ -13,6 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // add exam details to database
     $sql = "INSERT INTO `exams` (`exam_title`, `exam_description`, `no_of_questions`, `exam_date`, `exam_time`, `time_per_question`, `of_classroom`, `create_at`) VALUES ('$examTitle', '$examDescription', '$noOfQuestions', '$examDate', '$examTime', '$timePerQuestion', '$_SESSION[in_classroom]', current_timestamp())";
     $result = mysqli_query($conn, $sql);
+
+    // get id of created exam
+    $sql = "select * from exams where exam_id = (select max(exam_id) from exams)";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $examId = $row["exam_id"];
 }
 ?>
 <!DOCTYPE html>
@@ -23,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require "partials/_bootstrap_css.php"; ?>
     <link rel="stylesheet" href="css/test_create.css">
-    <title>Document</title>
+    <title>Set questions</title>
 </head>
 
 <body>
@@ -38,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="detail-item">
                             <label for="examTitle" class="form-label">Exam title</label>
                             <input type="text" class="form-control" id="examTitle" name="examTitle"
-                                placeholder="e.g. Mathematics Class-test 1">
+                                placeholder="e.g. Mathematics Class-test 1" required>
                         </div>
                         <div class="detail-item">
                             <label for="examDescription" class="form-label">Description description</label>
@@ -54,11 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="body">
                         <div class="detail-item">
                             <label for="examDate" class="form-label">Set Exam Date</label>
-                            <input type="date" class="form-control" id="examDate" name="examDate">
+                            <input type="date" class="form-control" id="examDate" name="examDate" required>
                         </div>
                         <div class="detail-item">
                             <label for="examTime" class="form-label">Set Exam Time</label>
-                            <input type="time" class="form-control" id="examTime" name="examTime">
+                            <input type="time" class="form-control" id="examTime" name="examTime" required>
                         </div>
                         <div class="detail-item">
                             <label for="timePerQuestion" class="form-label">Time per question</label>
@@ -69,39 +80,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
             </div>
+        </form>
+        <form action="partials/_handleSetQuestion.php" method="post">
             <?php
             if ($noOfQuestions != 0) {
                 echo '
                     <div class="test-questions">
-                        <hr>
-                        <h4 class="text-center mt-1">Set Questions</h4>';
+                    <hr>
+                    <h4 class="text-center mt-1">Set Questions</h4>';
                 for ($i = 1; $i <= $noOfQuestions; $i++) {
                     echo '
                             <div class="test-item">
                                 <div class="question">
                                     <span>Question no. '.$i.' : </span>
-                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText" id="questionText"></textarea>
+                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText'.$i.'" id="questionText'.$i.'"></textarea>
                                 </div>
                                 <div class="options">
                                     <div class="option-item">
                                         <span>Option A : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                                        name="option1" id="option1"></textarea>
+                                        name="optionA'.$i.'" id="optionA'.$i.'"></textarea>
                                     </div>
                                     <div class="option-item">
                                         <span>Option B : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                                        name="option2" id="option2"></textarea>
+                                        name="optionB'.$i.'" id="optionB'.$i.'"></textarea>
                                     </div>
                                     <div class="option-item">
                                         <span>Option C : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                                        name="option3" id="option3"></textarea>
+                                        name="optionC'.$i.'" id="optionC'.$i.'"></textarea>
                                     </div>
                                     <div class="option-item">
                                         <span>Option D : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                                        name="option4" id="option4"></textarea>
+                                        name="optionD'.$i.'" id="optionD'.$i.'"></textarea>
                                     </div>
                                     <div class="option-item">
-                                        <label for="answer">Correct answer :</label>
-                                        <select id="answer">
+                                        <label for="answer'.$i.'">Correct answer :</label>
+                                        <select id="answer'.$i.'" name="answer'.$i.'" class="answer">
                                             <option value="A">Option A</option>
                                             <hr>
                                             <option value="B">Option B</option>
@@ -114,8 +127,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>';
                 }
-                echo '
-                    <button type="submit" class="btn btn-primary">Finish</button>
+                    echo '
+                            <input type="hidden" value="'.$noOfQuestions.'" name="noOfQns">
+                            <input type="hidden" value="'.$examId.'" name="examId">
+                            <button type="submit" class="btn btn-primary">Finish</button>
                     </div>';
             }
             ?>
