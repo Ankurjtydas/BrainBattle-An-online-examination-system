@@ -18,19 +18,7 @@
             $_SESSION["last_name"] = $row["last_name"];
             $_SESSION["email"] = $row["email"];
             $_SESSION["in_classroom"] = $row["in_classroom"];
-            if($_SESSION["in_classroom"] != null){
-
-                // check if the user is faculty or student
-                $sql = "select * from classrooms where classroom_id=$_SESSION[in_classroom]";
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                if($_SESSION["user_id"] == $row["classroom_faculty"]){
-                  $_SESSION["role"] = "faculty";
-                }else{
-                    $_SESSION["role"] = "student";
-                }
-            }
-            echo var_dump($_SESSION);
+            $_SESSION["role"] = $row["role"];
             header("Location: ../index.php");
         }else{
             $alert = "Invalid email and password.";

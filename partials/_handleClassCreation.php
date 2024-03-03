@@ -23,7 +23,7 @@
             }
         }
         
-        // update classroom in database
+        // add classroom in database
         $sql = "INSERT INTO `classrooms` (`classroom_name`, `classroom_description`, `classroom_faculty`, `classroom_code`, `create_at`) VALUES ('$classroomTitle', '$classroomDescription', '$_SESSION[user_id]', '$randomCode', current_timestamp())";
         $result = mysqli_query($conn, $sql);
         if($result == 1){
@@ -42,7 +42,7 @@
             mysqli_query($conn, $sql);
 
             // update users table
-            $sql = "UPDATE `users` SET `in_classroom` = '$_SESSION[in_classroom]' WHERE `user_id` = $_SESSION[user_id]";
+            $sql = "UPDATE `users` SET `in_classroom` = '$_SESSION[in_classroom]', `role` = 'faculty' WHERE `user_id` = $_SESSION[user_id]";
             mysqli_query($conn, $sql);
             exit;
         }

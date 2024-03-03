@@ -3,6 +3,11 @@
     height: 100vh;
 }
 
+.head {
+    background-color: lightblue;
+    border-radius: 20px;
+}
+
 .test-details {
     display: flex;
     flex-direction: row;
@@ -11,8 +16,6 @@
     min-height: 300px;
     height: fit-content;
     gap: 0 2rem;
-    background-color: lightblue;
-    border-radius: 20px;
 }
 
 .body {
@@ -50,11 +53,16 @@
     padding: 0.5rem;
     border: 1px solid black;
     border-radius: 10px;
+    margin: 10px 0;
 }
 
 .question {
     display: flex;
     align-items: baseline;
+}
+
+.question>span {
+    font-weight: bold;
 }
 
 .question-field {
