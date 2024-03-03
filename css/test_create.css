@@ -1,0 +1,125 @@
+.container {
+    width: 70vw;
+    height: 100vh;
+}
+
+.test-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    min-height: 300px;
+    height: fit-content;
+    gap: 0 2rem;
+    background-color: lightblue;
+    border-radius: 20px;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-start; */
+    align-items: center;
+    width: 38%;
+}
+
+.body button {
+    align-self: flex-end;
+    margin: 10px 0;
+    border-radius: 20px;
+}
+
+.detail-item {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.desc {
+    max-height: 80px;
+}
+
+.test-questions {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.test-item {
+    background-color: rgb(228, 228, 228);
+    padding: 0.5rem;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.question {
+    display: flex;
+    align-items: baseline;
+}
+
+.question-field {
+    border: none;
+    background: none;
+    border-bottom: 1px solid black;
+    resize: none;
+    overflow: hidden;
+    height: 30px;
+    width: 60%;
+    outline: none;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.option-item {
+    display: flex;
+    align-items: baseline;
+    margin-top: 20px;
+}
+
+.option-field {
+    border: none;
+    background: none;
+    border-bottom: 1px solid black;
+    resize: none;
+    overflow: hidden;
+    height: 30px;
+    width: 55%;
+    outline: none;
+}
+
+#answer {
+    background: none;
+    padding: 3px 8px;
+    margin:  0 4px;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#answer:hover {
+    background-color: rgb(214, 214, 214);
+    padding: 3px 9px;
+}
+
+#answer option {
+    background-color: rgb(238, 238, 238);
+}
+
+.test-questions button {
+    align-self: flex-end;
+    margin: 10px 0;
+    padding: 7px 20px;
+    border-radius: 20px;
+}
+
+hr {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 1rem;
+}
