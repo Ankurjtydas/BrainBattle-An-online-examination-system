@@ -92,29 +92,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '
                             <div class="test-item">
                                 <div class="question">
-                                    <span>Question no. '.$i.' : </span>
-                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText'.$i.'" id="questionText'.$i.'"></textarea>
+                                    <span>Question no. ' . $i . ' : </span>
+                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText' . $i . '" id="questionText' . $i . '"></textarea>
                                 </div>
                                 <div class="options">
                                     <div class="option-item">
-                                        <span>Option A : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                                        name="optionA'.$i.'" id="optionA'.$i.'"></textarea>
+                                        <span>Option A : </span><textarea oninput="auto_grow(this)" class="option-field" type="text" name="optionA' . $i . '" id="optionA' . $i . '"></textarea>
                                     </div>
                                     <div class="option-item">
-                                        <span>Option B : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                                        name="optionB'.$i.'" id="optionB'.$i.'"></textarea>
+                                        <span>Option B : </span><textarea oninput="auto_grow(this)" class="option-field" type="text" name="optionB' . $i . '" id="optionB' . $i . '"></textarea>
                                     </div>
                                     <div class="option-item">
-                                        <span>Option C : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                                        name="optionC'.$i.'" id="optionC'.$i.'"></textarea>
+                                        <span>Option C : </span><textarea oninput="auto_grow(this)" class="option-field" type="text" name="optionC' . $i . '" id="optionC' . $i . '"></textarea>
                                     </div>
                                     <div class="option-item">
-                                        <span>Option D : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                                        name="optionD'.$i.'" id="optionD'.$i.'"></textarea>
+                                        <span>Option D : </span><textarea oninput="auto_grow(this)" class="option-field" type="text" name="optionD' . $i . '" id="optionD' . $i . '"></textarea>
                                     </div>
                                     <div class="option-item">
-                                        <label for="answer'.$i.'">Correct answer :</label>
-                                        <select id="answer'.$i.'" name="answer'.$i.'" class="answer">
+                                        <label for="answer' . $i . '">Correct answer :</label>
+                                        <select id="answer' . $i . '" name="answer' . $i . '" class="answer">
                                             <option value="A">Option A</option>
                                             <hr>
                                             <option value="B">Option B</option>
@@ -127,9 +123,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>';
                 }
-                    echo '
-                            <input type="hidden" value="'.$noOfQuestions.'" name="noOfQns">
-                            <input type="hidden" value="'.$examId.'" name="examId">
+                echo '
+                            <input type="hidden" value="' . $noOfQuestions . '" name="noOfQns">
+                            <input type="hidden" value="' . $examId . '" name="examId">
                             <button type="submit" class="btn btn-primary">Finish</button>
                     </div>';
             }
