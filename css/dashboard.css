@@ -14,7 +14,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 90%;
-    width: 30%;
+    /* width: 50%; */
     margin: 1rem;
 }
 
@@ -40,12 +40,14 @@
     display: flex;
     align-items: flex-end;
     height: 90%;
+    min-height: fit-content;
     margin: 2rem;
     font-size: 1.2rem;
     font-weight: 500;
 }
 
 .classroom-code span {
+    text-wrap: nowrap;
     color: white;
     padding: 3px 2px;
 }

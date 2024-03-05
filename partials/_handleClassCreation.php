@@ -4,8 +4,9 @@
 
     header("Location: ../faculty_dashboard.php");
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $classroomTitle = $_POST["classroomTitle"];
-        $classroomDescription = $_POST["classroomDescription"];
+        $classroomTitle = htmlspecialchars($_POST["classroomTitle"]);
+        echo $classroomTitle;
+        $classroomDescription = htmlspecialchars($_POST["classroomDescription"]);
         
         $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $randomCode = "";
@@ -48,6 +49,5 @@
             exit;
         }
     }
-    header("Location: ../index.php");
 
 ?>

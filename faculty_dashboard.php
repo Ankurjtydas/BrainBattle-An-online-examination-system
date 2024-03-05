@@ -1,24 +1,24 @@
 <?php
-    session_status() == PHP_SESSION_ACTIVE?: session_start();
-    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null || $_SESSION["role"] != "faculty"){
+session_status() == PHP_SESSION_ACTIVE ?: session_start();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null || $_SESSION["role"] != "faculty") {
+    header("Location: index.php");
+    exit;
+} else {
+    require "partials/_dbconnect.php";
+    $sql = "select * from classrooms where classroom_faculty=$_SESSION[user_id]";
+    $result = mysqli_query($conn, $sql);
+    $numRows = mysqli_num_rows($result);
+    if ($numRows == 1) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION["classroom_id"] = $row["classroom_id"];
+        $_SESSION["classroom_name"] = $row["classroom_name"];
+        $_SESSION["classroom_description"] = $row["classroom_description"];
+        $_SESSION["classroom_code"] = $row["classroom_code"];
+    } else {
         header("Location: index.php");
         exit;
-    }else{
-        require "partials/_dbconnect.php";
-        $sql = "select * from classrooms where classroom_faculty=$_SESSION[user_id]";
-        $result = mysqli_query($conn, $sql);
-        $numRows = mysqli_num_rows($result);
-        if($numRows == 1){
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION["classroom_id"] = $row["classroom_id"];
-            $_SESSION["classroom_name"] = $row["classroom_name"];
-            $_SESSION["classroom_description"] = $row["classroom_description"];
-            $_SESSION["classroom_code"] = $row["classroom_code"];
-        }else{
-            header("Location: index.php");
-            exit;
-        }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +26,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $_SESSION["classroom_name"] ?></title>
+    <title>
+        <?php echo $_SESSION["classroom_name"] ?>
+    </title>
     <?php require "partials/_bootstrap_css.php"; ?>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
@@ -42,14 +44,22 @@
                 <img src="" alt="Faculty Profile Image">
             </div>
             <div class="classroom-text">
-                <span class="classroom-title"><?php echo $_SESSION["classroom_name"] ?></span><br>
-                <span class="classroom-desc"><?php echo $_SESSION["classroom_description"] ?></span>
+                <span class="classroom-title">
+                    <?php echo $_SESSION["classroom_name"] ?>
+                </span><br>
+                <span class="classroom-desc">
+                    <?php echo nl2br($_SESSION["classroom_description"]); ?>
+                </span>
             </div>
         </div>
         <div class="classroom-code">
             <span>Code : </span>
-            <div id="code"><?php echo $_SESSION["classroom_code"] ?></div>
-            <i id="icon" class="bi bi-clipboard2"></i>
+            <div style="display:flex;">
+                <div id="code">
+                    <?php echo $_SESSION["classroom_code"] ?>
+                </div>
+                <i id="icon" class="bi bi-clipboard2"></i>
+            </div>
         </div>
     </div>
 
@@ -123,7 +133,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Are you sure to delete the classroom. <span class="text-danger">Once you delete it cannot be undone.</span></h6>
+                    <h6>Are you sure to delete the classroom. <span class="text-danger">Once you delete it cannot be
+                            undone.</span></h6>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -135,7 +146,7 @@
 
     <?php require "partials/_footer.php"; ?>
     <script>
-        document.getElementById("icon").addEventListener("click", ()=>{
+        document.getElementById("icon").addEventListener("click", () => {
             let classroom_code = document.getElementById("code").innerText;
             navigator.clipboard.writeText(classroom_code);
             let list = document.getElementById("icon").classList;
