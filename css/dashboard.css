@@ -27,13 +27,13 @@
 
 .classroom-title {
     color: white;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
 }
 
 .classroom-desc {
     color: white;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
 }
 
 .classroom-code {
@@ -159,4 +159,12 @@
 
 .trash:hover {
     color: red;
+}
+
+.test-time {
+    font-weight: 600;
+}
+
+.date, .time {
+    font-size: 0.9rem;
 }

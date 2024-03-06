@@ -99,29 +99,35 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     </div>
     <div class="test-container">
         <h5 class="text-center">Scheduled Tests</h5>
+        <?php
+        $sql = "select * from exams where of_classroom='$_SESSION[in_classroom]'";
+        $result = mysqli_query($conn, $sql);
+        $numRows = mysqli_num_rows($result);
+        if ($numRows > 0) {
+            for ($i = 0; $i < $numRows; $i++) {
+                $row = mysqli_fetch_assoc($result);
+                echo '
         <div class="test">
             <a href="" class="test-detail">
-                <span class="test-title">Class test-1</span>
-                <p class="test-description m-0">Total marks - 25</p>
+                <span class="test-title">' . $row["exam_title"] . '</span>
+                <p class="test-description m-0">' . $row["exam_description"] . '</p>
             </a>
             <div class="test-control">
                 <span class="test-time">Scheduled at : </span><br>
+                    <span class="date">' . date('jS F Y', strtotime($row["exam_date"])) . '</span><br>
+                    <span class="time">' . date('h:i A', strtotime($row["exam_time"])) . '</span><br>
                 <i class="bi bi-pencil-fill update"></i>
                 <i class="bi bi-trash-fill trash"></i>
             </div>
-        </div>
-        <div class="test">
-            <a href="" class="test-detail">
-                <span class="test-title">Class test-1</span>
-                <p class="test-description m-0">Total marks - 25</p>
-            </a>
-            <div class="test-control">
-                <span class="test-time">Scheduled at : </span><br>
-                <i class="bi bi-pencil-fill update"></i>
-                <i class="bi bi-trash-fill trash"></i>
-            </div>
-        </div>
-
+        </div>';
+            }
+        } else {
+            echo '
+            <div class="">
+                <h1 class="text-center">No Scheduled Test</h1>
+            </div>';
+        }
+        ?>
     </div>
 
     <!-- deleteModal -->
