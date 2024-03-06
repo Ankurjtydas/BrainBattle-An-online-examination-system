@@ -23,6 +23,7 @@ if ($numRows == 1) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,33 +89,33 @@ if ($numRows == 1) {
     </div>
     <div class="test-container">
         <h2 class="text-center">Scheduled Tests</h2>
+        <?php
+        $sql = "select * from exams where of_classroom='$_SESSION[in_classroom]'";
+        $result = mysqli_query($conn, $sql);
+        $numRows = mysqli_num_rows($result);
+        if ($numRows > 0) {
+            for ($i = 0; $i < $numRows; $i++) {
+                $row = mysqli_fetch_assoc($result);
+                echo '
         <div class="test">
             <a href="" class="test-detail">
-                <span class="test-title">Class test-1</span>
-                <p class="test-description m-0">Total marks - 25</p>
+                <span class="test-title">' . $row["exam_title"] . '</span>
+                <p class="test-description m-0">' . $row["exam_description"] . '</p>
             </a>
             <div class="test-control">
                 <span class="test-time">Scheduled at : </span><br>
+                <span class="date">' . date('jS F Y', strtotime($row["exam_date"])) . '</span><br>
+                <span class="time">' . date('h:i A', strtotime($row["exam_time"])) . '</span><br>
             </div>
-        </div>
-        <div class="test">
-            <div class="test-detail">
-                <span class="test-title">Class test-1</span>
-                <p class="test-description m-0">Total marks - 25</p>
-            </div>
-            <div class="test-control">
-                <span class="test-time">Scheduled at : </span><br>
-            </div>
-        </div>
-        <div class="test">
-            <div class="test-detail">
-                <span class="test-title">Class test-1</span>
-                <p class="test-description m-0">Total marks - 25</p>
-            </div>
-            <div class="test-control">
-                <span class="test-time">Scheduled at : </span><br>
-            </div>
-        </div>
+        </div>';
+            }
+        } else {
+            echo '
+            <div class="">
+                <h1 class="text-center">No Scheduled Test</h1>
+            </div>';
+        }
+        ?>
 
     </div>
 

@@ -65,7 +65,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 
     <div class="dashboard-container">
 
-        <a href="create_test.php" class="dashboard-item">
+        <a href="create_test.php" id="create_test" class="dashboard-item">
             <div class="item-image">
                 <img src="images/create.jpg" alt="">
             </div>
@@ -106,6 +106,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         if ($numRows > 0) {
             for ($i = 0; $i < $numRows; $i++) {
                 $row = mysqli_fetch_assoc($result);
+                $examId = $row["exam_id"];
                 echo '
         <div class="test">
             <a href="" class="test-detail">
@@ -117,14 +118,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                     <span class="date">' . date('jS F Y', strtotime($row["exam_date"])) . '</span><br>
                     <span class="time">' . date('h:i A', strtotime($row["exam_time"])) . '</span><br>
                 <i class="bi bi-pencil-fill update"></i>
-                <i class="bi bi-trash-fill trash"></i>
+                <i class="bi bi-trash-fill trash testDeleteBtn" data-bs-toggle="modal" data-bs-target="#deleteTest"><input type="hidden" value="' . $examId . '"></i>
             </div>
         </div>';
             }
         } else {
             echo '
             <div class="">
-                <h1 class="text-center">No Scheduled Test</h1>
+                <h1 class="text-center">No Scheduled Tests</h1>
             </div>';
         }
         ?>
@@ -150,6 +151,26 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         </div>
     </div>
 
+    <!-- deleteTest -->
+    <div class="modal fade" id="deleteTest" tabindex="-1" aria-labelledby="deleteTestLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteTestLabel">Delete Test</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Are you sure to delete the test. <span class="text-danger">Once you delete it cannot be
+                            undone.</span></h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="partials/_handleDeleteTest.php?id=" type="button" class="btn btn-primary" id="cdeleteBtn">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php require "partials/_footer.php"; ?>
     <script>
         document.getElementById("icon").addEventListener("click", () => {
@@ -159,6 +180,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             list.add("bi-clipboard2-check");
             list.remove("bi-clipboard2");
         })
+
+        document.querySelectorAll(".testDeleteBtn").forEach((e)=>{
+            e.addEventListener("click", ()=>{
+                document.getElementById("cdeleteBtn").addEventListener("click", (element)=>{
+                    element.target.href += e.querySelector("input").value;
+                })
+            })
+        })
+
+
+        // const d = new Date();
+        // let timeout = Math.round(d.getTime() / 1000) + 10;
+        // let interval = setInterval(function(){
+        //     let n = new Date();
+        //     let time = Math.round(n.getTime()/1000);
+        //     document.getElementById("timer").innerText = (timeout-time);
+        //     console.log(time);
+        //     if((timeout-time)<=0){
+        //         clearInterval(interval);
+        //     }
+        // },1000);
     </script>
 </body>
 
