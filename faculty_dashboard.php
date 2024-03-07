@@ -63,17 +63,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         </div>
     </div>
 
+    <hr>
+
     <div class="dashboard-container">
 
         <a href="create_test.php" id="create_test" class="dashboard-item">
             <div class="item-image">
-                <img src="images/create.jpg" alt="">
+                <img src="images/create.png" alt="">
             </div>
             <span>Create New Test</span>
         </a>
         <a href="" class="dashboard-item">
             <div class="item-image">
-                <img src="images/update.png" alt="">
+                <img src="images/group.webp" alt="">
             </div>
             <span>People</span>
         </a>
@@ -81,22 +83,24 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             <div class="item-image">
                 <img src="images/update.png" alt="">
             </div>
-            <span>Update Test</span>
+            <span>...</span>
         </a>
         <a href="" class="dashboard-item">
             <div class="item-image">
                 <img src="images/update.png" alt="">
             </div>
-            <span>Update Test</span>
+            <span>...</span>
         </a>
         <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
             <div class="item-image">
-                <img src="images/delete.png" alt="">
+                <img src="images/trash.png" alt="">
             </div>
             <span>Delete Classroom</span>
         </a>
-
     </div>
+
+    <hr>
+
     <div class="test-container">
         <h5 class="text-center">Scheduled Tests</h5>
         <?php

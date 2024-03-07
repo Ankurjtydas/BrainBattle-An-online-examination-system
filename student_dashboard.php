@@ -57,13 +57,13 @@ if ($numRows == 1) {
 
         <a href="" class="dashboard-item">
             <div class="item-image">
-                <img src="images/create.jpg" alt="">
+                <img src="images/create.png" alt="">
             </div>
             <span> ...</span>
         </a>
         <a href="" class="dashboard-item">
             <div class="item-image">
-                <img src="images/update.png" alt="">
+                <img src="images/group.webp" alt="">
             </div>
             <span>People</span>
         </a>
