@@ -107,7 +107,7 @@
 .item-image img {
     width: 50%;
     object-fit: contain;
-    border-radius: 15px;
+    /* border-radius: 15px; */
 }
 
 .dashboard-item span {
@@ -145,6 +145,7 @@
 
 .test-title {
     font-weight: bold;
+    font-size: 1.2rem;
 }
 
 .test-control > i {
@@ -166,4 +167,10 @@
 
 .date, .time {
     font-size: 0.9rem;
+}
+
+hr {
+    width: 60%;
+    margin: 1rem auto;
+    border: 1px solid black;
 }
