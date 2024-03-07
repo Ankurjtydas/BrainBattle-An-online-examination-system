@@ -14,7 +14,7 @@
                 header("Location: ../index.php");
                 
                 // update users table; removing user from classroom
-                $sql = "UPDATE `users` SET `in_classroom` = null WHERE `user_id` = $_SESSION[user_id]";
+                $sql = "UPDATE `users` SET `in_classroom` = null, `role` = null WHERE `in_classroom` = $_SESSION[in_classroom]";
                 mysqli_query($conn, $sql);
                 $_SESSION["in_classroom"] = null;
                 $_SESSION["role"] = null;

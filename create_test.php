@@ -1,3 +1,20 @@
+<?php
+session_status() == PHP_SESSION_ACTIVE ?: session_start();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null || $_SESSION["role"] != "faculty") {
+    header("Location: index.php");
+    exit;
+}
+require "partials/_dbconnect.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $examTitle = $_POST["examTitle"];
+    $examDescription = $_POST["examDescription"];
+    $noOfQuestions = $_POST["noOfQuestions"];
+    $examDate = $_POST["examDate"];
+    $examTime = $_POST["examTime"];
+    $timePerQuestion = $_POST["timePerQuestion"];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,103 +23,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require "partials/_bootstrap_css.php"; ?>
     <link rel="stylesheet" href="css/test_create.css">
-    <title>Document</title>
+    <title>Exam Creation</title>
 </head>
 
 <body>
     <?php require "partials/_header.php"; ?>
 
     <div class="container">
-        <!-- <form action="" method="post"> -->
-            <div class="test-details">
-                <div class="body">
-                    <div class="detail-item">
-                        <label for="examTitle" class="form-label">Exam title</label>
-                        <input type="text" class="form-control" id="examTitle" name="examTitle"
-                            placeholder="e.g. Mathematics Class-test 1">
+        <form action="create_test.php" method="post">
+            <div class="head">
+                <h2 class="text-center">Set Exam Details</h2>
+                <div class="test-details">
+                    <div class="body">
+                        <div class="detail-item">
+                            <label for="examTitle" class="form-label">Exam title</label>
+                            <?php 
+                            if (!isset($examTitle)) {
+                                echo '<input type="text" class="form-control" id="examTitle" name="examTitle" placeholder="e.g. Mathematics Class-test 1" required>';
+                            } else {
+                                echo '<input type="text" class="form-control" id="examTitle" name="examTitle" placeholder="e.g. Mathematics Class-test 1" value="' . $examTitle . '" required>';
+                            }
+                            ?>
+                        </div>
+                        <div class="detail-item">
+                            <label for="examDescription" class="form-label">Description description</label>
+                            <?php 
+                            if (!isset($examDescription)) {
+                                echo '<textarea class="form-control desc" id="examDescription" name="examDescription"
+                                placeholder="e.g. Total marks - 100; Pass marks - 35"></textarea>';
+                            } else {
+                                echo '<textarea class="form-control desc" id="examDescription" name="examDescription"
+                                placeholder="e.g. Total marks - 100; Pass marks - 35">' . $examDescription . '</textarea>';
+                            }
+                            ?>
+                            
+                        </div>
+                        <div class="detail-item">
+                            <label for="noOfQuestions" class="form-label">No. of questions</label>
+                            <?php 
+                            if (!isset($noOfQuestions)) {
+                                echo '<input type="number" min="1" value="1" class="form-control" id="noOfQuestions"
+                                name="noOfQuestions">';
+                            } else {
+                                echo '<input type="number" min="1" class="form-control" id="noOfQuestions"
+                                name="noOfQuestions" value="' . $noOfQuestions . '">';
+                            }
+                            ?>
+                        </div>
                     </div>
-                    <div class="detail-item">
-                        <label for="examDescription" class="form-label">Description description</label>
-                        <textarea class="form-control desc" id="examDescription" name="examDescription"
-                            placeholder="e.g. Total marks - 100; Pass marks - 35"></textarea>
+                    <div class="body">
+                        <div class="detail-item">
+                            <label for="examDate" class="form-label">Set Exam Date</label>
+                            <?php 
+                            if (!isset($examDate)) {
+                                echo '<input type="date" class="form-control" id="examDate" name="examDate" required>';
+                            } else {
+                                echo '<input type="date" class="form-control" id="examDate" name="examDate" value="' . $examDate . '" required>';
+                            }
+                            ?>
+                        </div>
+                        <div class="detail-item">
+                            <label for="examTime" class="form-label">Set Exam Time</label>
+                            <?php 
+                            if (!isset($examTime)) {
+                                echo '<input type="time" class="form-control" id="examTime" name="examTime" required>';
+                            } else {
+                                echo '<input type="time" class="form-control" id="examTime" name="examTime" value="' . $examTime . '" required>';
+                            }
+                            ?>
+                        </div>
+                        <div class="detail-item">
+                            <label for="timePerQuestion" class="form-label">Time per question</label>
+                            <?php 
+                            if (!isset($timePerQuestion)) {
+                                echo '<input type="number" min="10" value="10" class="form-control" id="timePerQuestion"
+                                name="timePerQuestion">';
+                            } else {
+                                echo '<input type="number" min="10" value="' . $timePerQuestion . '" class="form-control" id="timePerQuestion"
+                                name="timePerQuestion">';
+                            }
+                            ?>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Apply</button>
                     </div>
-                    <div class="detail-item">
-                        <label for="noOfQuestions" class="form-label">No. of questions</label>
-                        <input type="number" min="1" value="1" class="form-control" id="noOfQuestions"
-                            name="noOfQuestions">
-                    </div>
-                </div>
-                <div class="body">
-                    <div class="detail-item">
-                        <label for="examDate" class="form-label">Set Exam Date</label>
-                        <input type="date" class="form-control" id="examDate" name="examDate">
-                    </div>
-                    <div class="detail-item">
-                        <label for="examTime" class="form-label">Set Exam Time</label>
-                        <input type="time" class="form-control" id="examTime" name="examTime">
-                    </div>
-                    <div class="detail-item">
-                        <label for="timePerQuestion" class="form-label">Time per question</label>
-                        <input type="number" min="10" value="10" class="form-control" id="timePerQuestion"
-                            name="timePerQuestion">
-                    </div>
-                    <button type="submit" onclick="showalert()" class="btn btn-primary">Apply</button>
                 </div>
             </div>
-        <!-- </form> -->
-        <hr>
-        <div class="test-questions">
-            <h5 class="text-center mt-1">Set Questions</h5>
-            <div class="test-item">
-                <div class="question">
-                    <span>Question no. 1 : </span>
-                    <textarea oninput="auto_grow(this)" class="question-field" name="qno1" id="qno1"></textarea>
-                </div>
-                <div class="options">
-                    <div class="option-item">
-                        <span>Option A : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                            name="option1" id="option1"></textarea>
-                    </div>
-                    <div class="option-item">
-                        <span>Option B : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                            name="option2" id="option2"></textarea>
-                    </div>
-                    <div class="option-item">
-                        <span>Option C : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                            name="option3" id="option3"></textarea>
-                    </div>
-                    <div class="option-item">
-                        <span>Option D : </span><textarea oninput="auto_grow(this)" class="option-field" type="text"
-                            name="option4" id="option4"></textarea>
-                    </div>
-                    <div class="option-item">
-                        <label for="answer">Correct answer :</label>
-                        <select id="answer">
-                            <option value="A">Option A</option><hr>
-                            <option value="B">Option B</option><hr>
-                            <option value="C">Option C</option><hr>
-                            <option value="D">Option D</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Finish</button>
-        </div>
+        </form>
+        <form action="partials/_handleExamCreation.php" method="post">
+            <?php
+            if (isset($noOfQuestions)) {
+                echo '
+                    <div class="test-questions">
+                    <hr>
+                    <h4 class="text-center mt-1">Set Questions</h4>';
+                for ($i = 1; $i <= $noOfQuestions; $i++) {
+                    echo '
+                            <div class="test-item">
+                                <div class="question">
+                                    <span>Question no. ' . $i . ' : </span>
+                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText' . $i . '" id="questionText' . $i . '"></textarea>
+                                </div>
+                                <div class="options">
+                                    <div class="option-item">
+                                        <span>Option A : </span><textarea oninput="auto_grow(this)" class="option-field" type="text" name="optionA' . $i . '" id="optionA' . $i . '"></textarea>
+                                    </div>
+                                    <div class="option-item">
+                                        <span>Option B : </span><textarea oninput="auto_grow(this)" class="option-field" type="text" name="optionB' . $i . '" id="optionB' . $i . '"></textarea>
+                                    </div>
+                                    <div class="option-item">
+                                        <span>Option C : </span><textarea oninput="auto_grow(this)" class="option-field" type="text" name="optionC' . $i . '" id="optionC' . $i . '"></textarea>
+                                    </div>
+                                    <div class="option-item">
+                                        <span>Option D : </span><textarea oninput="auto_grow(this)" class="option-field" type="text" name="optionD' . $i . '" id="optionD' . $i . '"></textarea>
+                                    </div>
+                                    <div class="option-item">
+                                        <label for="answer' . $i . '">Correct answer :</label>
+                                        <select id="answer' . $i . '" name="answer' . $i . '" class="answer">
+                                            <option value="A">Option A</option>
+                                            <hr>
+                                            <option value="B">Option B</option>
+                                            <hr>
+                                            <option value="C">Option C</option>
+                                            <hr>
+                                            <option value="D">Option D</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>';
+                }
+                echo '
+                            <input type="hidden" value="' . $noOfQuestions . '" name="noOfQns">
+                            <input type="hidden" value="' . $examTitle . '" name="examTitle">
+                            <input type="hidden" value="' . $examDescription . '" name="examDescription">
+                            <input type="hidden" value="' . $noOfQuestions . '" name="noOfQuestions">
+                            <input type="hidden" value="' . $examDate . '" name="examDate">
+                            <input type="hidden" value="' . $examTime . '" name="examTime">
+                            <input type="hidden" value="' . $examTime . '" name="examTime">
+                            <input type="hidden" value="' . $timePerQuestion . '" name="timePerQuestion">
+                            <button type="submit" class="btn btn-primary">Finish</button>
+                            </div>';
+                        }
+            ?>
+        </form>
     </div>
     <script>
         let number = document.getElementById("noOfQuestions");
-        number.addEventListener("focusout", ()=>{
+        number.addEventListener("focusout", () => {
             console.log(number.value);
-            if(number.value < 1 && number.value != ""){
-                    number.value = 1;
+            if (number.value < 1 && number.value != "") {
+                number.value = 1;
             }
         })
 
         let time = document.getElementById("timePerQuestion");
-        time.addEventListener("focusout", ()=>{
-            console.log(new Date().getTime());
-            if(time.value < 10 ){
-                    time.value = 10;
+        time.addEventListener("focusout", () => {
+            if (time.value < 10) {
+                time.value = 10;
             }
         })
 

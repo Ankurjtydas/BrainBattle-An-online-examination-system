@@ -23,7 +23,7 @@
                     $result = mysqli_query($conn, $sql);
                     if($result==1){
                         $alert = "You have register successfully. You can now login into you account.";
-                        header("Location: ../register.php?success=true&alert=$alert");
+                        header("Location: ../login.php?success=true&alert=$alert");
                     }
                 }
             }else{
