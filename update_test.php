@@ -130,7 +130,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($noOfQuestions)) {
                 $sql = "select * from questions where of_exam=$examId";
                 $result = mysqli_query($conn, $sql);
-                $numRows = mysqli_num_rows($result);
                 echo '
                 <div class="test-questions">
                 <hr>
@@ -160,9 +159,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <label for="answer' . $i . '">Correct answer :</label>
                                         <select id="answer' . $i . '" name="answer' . $i . '" class="answer">';
                                             if($row["correct_option"] == "A") {
-                                                echo '<option value="A" selected>Option A</option>';
+                                                echo '<option value="" selected>Select option</option>';
                                             } else{
-                                                echo '<option value="A">Option A</option>';
+                                                echo '<option value="">Select option</option>';
+                                            }
+                                            if($row["correct_option"] == "A") {
+                                                echo '<hr>
+                                                <option value="A" selected>Option A</option>';
+                                            } else{
+                                                echo '<hr>
+                                                <option value="A">Option A</option>';
                                             }
                                             if($row["correct_option"] == "B") {
                                                 echo '<hr>
@@ -213,6 +219,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class="option-item">
                                         <label for="answer' . $i . '">Correct answer :</label>
                                         <select id="answer' . $i . '" name="answer' . $i . '" class="answer">
+                                            <option value="">Select option</option>
+                                            <hr>
                                             <option value="A">Option A</option>
                                             <hr>
                                             <option value="B">Option B</option>
@@ -235,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="hidden" value="' . $examTime . '" name="examTime">
                             <input type="hidden" value="' . $examTime . '" name="examTime">
                             <input type="hidden" value="' . $timePerQuestion . '" name="timePerQuestion">
-                            <button type="submit" class="btn btn-primary">Finish</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                             </div>';
                         }
             ?>
