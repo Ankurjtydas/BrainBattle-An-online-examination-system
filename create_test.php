@@ -152,7 +152,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>';
                 }
                 echo '
-                            <input type="hidden" value="' . $noOfQuestions . '" name="noOfQns">
                             <input type="hidden" value="' . $examTitle . '" name="examTitle">
                             <input type="hidden" value="' . $examDescription . '" name="examDescription">
                             <input type="hidden" value="' . $noOfQuestions . '" name="noOfQuestions">

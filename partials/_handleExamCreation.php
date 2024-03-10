@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $examDate = $_POST["examDate"];
     $examTime = $_POST["examTime"];
     $timePerQuestion = $_POST["timePerQuestion"];
-    $noOfQuestions = $_POST["noOfQns"];
 
     // add exam details to database
     $sql = "INSERT INTO `exams` (`exam_title`, `exam_description`, `no_of_questions`, `exam_date`, `exam_time`, `time_per_question`, `of_classroom`, `create_at`) VALUES ('$examTitle', '$examDescription', '$noOfQuestions', '$examDate', '$examTime', '$timePerQuestion', '$_SESSION[in_classroom]', current_timestamp())";

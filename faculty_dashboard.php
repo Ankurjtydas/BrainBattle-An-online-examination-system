@@ -121,7 +121,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 <span class="test-time">Scheduled at : </span><br>
                     <span class="date">' . date('jS F Y', strtotime($row["exam_date"])) . '</span><br>
                     <span class="time">' . date('h:i A', strtotime($row["exam_time"])) . '</span><br>
-                <i class="bi bi-pencil-fill update"></i>
+                <a href="update_test.php?id='. $examId .'" style="color:black;"><i class="bi bi-pencil-fill update testUpdateBtn"></i></a>
                 <i class="bi bi-trash-fill trash testDeleteBtn" data-bs-toggle="modal" data-bs-target="#deleteTest"><input type="hidden" value="' . $examId . '"></i>
             </div>
         </div>';
@@ -169,7 +169,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="partials/_handleDeleteTest.php?id=" type="button" class="btn btn-primary" id="cdeleteBtn">Delete</a>
+                    <a href="partials/_handleDeleteTest.php?id=" type="button" class="btn btn-primary"
+                        id="cdeleteBtn">Delete</a>
                 </div>
             </div>
         </div>
@@ -177,34 +178,34 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 
     <?php require "partials/_footer.php"; ?>
     <script>
-        document.getElementById("icon").addEventListener("click", () => {
-            let classroom_code = document.getElementById("code").innerText;
-            navigator.clipboard.writeText(classroom_code);
-            let list = document.getElementById("icon").classList;
-            list.add("bi-clipboard2-check");
-            list.remove("bi-clipboard2");
-        })
+    document.getElementById("icon").addEventListener("click", () => {
+        let classroom_code = document.getElementById("code").innerText;
+        navigator.clipboard.writeText(classroom_code);
+        let list = document.getElementById("icon").classList;
+        list.add("bi-clipboard2-check");
+        list.remove("bi-clipboard2");
+    })
 
-        document.querySelectorAll(".testDeleteBtn").forEach((e)=>{
-            e.addEventListener("click", ()=>{
-                document.getElementById("cdeleteBtn").addEventListener("click", (element)=>{
-                    element.target.href += e.querySelector("input").value;
-                })
+    document.querySelectorAll(".testDeleteBtn").forEach((e) => {
+        e.addEventListener("click", () => {
+            document.getElementById("cdeleteBtn").addEventListener("click", (element) => {
+                element.target.href += e.querySelector("input").value;
             })
         })
+    })
 
 
-        // const d = new Date();
-        // let timeout = Math.round(d.getTime() / 1000) + 10;
-        // let interval = setInterval(function(){
-        //     let n = new Date();
-        //     let time = Math.round(n.getTime()/1000);
-        //     document.getElementById("timer").innerText = (timeout-time);
-        //     console.log(time);
-        //     if((timeout-time)<=0){
-        //         clearInterval(interval);
-        //     }
-        // },1000);
+    // const d = new Date();
+    // let timeout = Math.round(d.getTime() / 1000) + 10;
+    // let interval = setInterval(function(){
+    //     let n = new Date();
+    //     let time = Math.round(n.getTime()/1000);
+    //     document.getElementById("timer").innerText = (timeout-time);
+    //     console.log(time);
+    //     if((timeout-time)<=0){
+    //         clearInterval(interval);
+    //     }
+    // },1000);
     </script>
 </body>
 
