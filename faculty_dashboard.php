@@ -113,10 +113,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 $examId = $row["exam_id"];
                 echo '
         <div class="test">
-            <a href="" class="test-detail">
+            <div href="" class="test-detail">
                 <span class="test-title">' . $row["exam_title"] . '</span>
                 <p class="test-description m-0">' . $row["exam_description"] . '</p>
-            </a>
+            </div>
             <div class="test-control">
                 <span class="test-time">Scheduled at : </span><br>
                     <span class="date">' . date('jS F Y', strtotime($row["exam_date"])) . '</span><br>
