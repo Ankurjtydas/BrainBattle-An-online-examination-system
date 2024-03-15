@@ -104,7 +104,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <div class="test-container">
         <h5 class="text-center">Scheduled Tests</h5>
         <?php
-        $sql = "select * from exams where of_classroom='$_SESSION[in_classroom]'";
+        $sql = "select * from exams where of_classroom='$_SESSION[in_classroom]' order by exam_date, exam_time";
         $result = mysqli_query($conn, $sql);
         $numRows = mysqli_num_rows($result);
         if ($numRows > 0) {
@@ -114,8 +114,29 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 echo '
         <div class="test">
             <div href="" class="test-detail">
-                <span class="test-title">' . $row["exam_title"] . '</span>
-                <p class="test-description m-0">' . $row["exam_description"] . '</p>
+                <div class="detail">
+                    <span class="test-title">' . $row["exam_title"] . '</span>
+                    <p class="test-description m-0">' . $row["exam_description"] . '</p>
+                </div>
+                <div class="timer" id="timer'. $i .'">
+                    <span id="timertext'. $i .'">Starting in : </span>
+                    <span class="time">
+                        <script>
+                            examDate = "'. $row["exam_date"] .'";
+                            ed = new Date(examDate);
+                            cd = new Date();
+                            if((ed.getDate() - cd.getDate()) == 0){
+                                document.write("Exam Starting Soon");
+                                document.getElementById("timer'. $i .'").style.display = "block";
+                            }else if((ed.getDate() - cd.getDate()) < 0){
+                                document.write("Exam Expired");
+                                document.getElementById("timer'. $i .'").style.display = "block";
+                                document.getElementById("timertext'. $i .'").style.display = "none";
+                                document.getElementById("timer'. $i .'").style.color = "red";
+                            }
+                            </script>
+                    </span>
+                </div>
             </div>
             <div class="test-control">
                 <span class="test-time">Scheduled at : </span><br>

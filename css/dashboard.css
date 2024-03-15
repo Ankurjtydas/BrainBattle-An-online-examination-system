@@ -129,6 +129,8 @@
 
 .test {
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
     width: 100%;
     padding: 5px 0.8rem;
     margin: 5px 0;
@@ -143,14 +145,26 @@
 }
 
 .test-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
     width: 80%;
     text-decoration: none;
     color: black;
 }
 
+.detail {
+    width: 30%;
+}
+
 .test-title {
     font-weight: bold;
     font-size: 1.2rem;
+}
+
+.timer {
+    margin: auto;
+    display: none;
 }
 
 .test-control > i {
