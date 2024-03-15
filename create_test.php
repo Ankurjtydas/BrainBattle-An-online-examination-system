@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require "partials/_bootstrap_css.php"; ?>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/test_create.css">
     <title>Exam Creation</title>
 </head>
@@ -152,7 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>';
                 }
                 echo '
-                            <input type="hidden" value="' . $noOfQuestions . '" name="noOfQns">
                             <input type="hidden" value="' . $examTitle . '" name="examTitle">
                             <input type="hidden" value="' . $examDescription . '" name="examDescription">
                             <input type="hidden" value="' . $noOfQuestions . '" name="noOfQuestions">
