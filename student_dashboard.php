@@ -90,49 +90,76 @@ if ($numRows == 1) {
     <div class="test-container">
         <h2 class="text-center">Scheduled Tests</h2>
         <?php
-        $sql = "select * from exams where of_classroom='$_SESSION[in_classroom]' order by exam_date, exam_time";
+        $sql = "select * from exams where of_classroom='$_SESSION[in_classroom]' order by exam_date_time";
         $result = mysqli_query($conn, $sql);
         $numRows = mysqli_num_rows($result);
         if ($numRows > 0) {
+            $displayedExams = 0;
+            date_default_timezone_set("Asia/Kolkata");
             for ($i = 0; $i < $numRows; $i++) {
                 $row = mysqli_fetch_assoc($result);
+                $examId = $row["exam_id"];
+                $examDateTime = new DateTime($row["exam_date_time"]);
+                $currentDateTime = new DateTime();
+                echo $currentDateTime->format("%H %m %s");
+                $currentDateTime->modify("+10 seconds");
+                echo $currentDateTime->format("%H %m %s");
+                $timeLeft = $examDateTime->diff($currentDateTime);
+                if( $timeLeft->invert == 1) {
+                    $displayedExams++;
                 echo '
-        <div class="test">
-            <a href="" class="test-detail">
+        <div class="test" id="test'. $i .'">
+            <div class="test-detail" style="cursor: pointer;">
                 <div class="detail">
                     <span class="test-title">' . $row["exam_title"] . '</span>
                     <p class="test-description m-0">' . $row["exam_description"] . '</p>
                 </div>
                 <div class="timer" id="timer'. $i .'">
-                    <span id="timertext'. $i .'">Starting in : </span>
-                    <span class="time">
+                    <span id="timertext'. $i .'"></span>
+                    <span class="time" id="time'. $i .'">
                         <script>
-                            examDate = "'. $row["exam_date"] .'";
-                            ed = new Date(examDate);
-                            cd = new Date();
-                            if((ed.getDate() - cd.getDate()) == 0){
-                                document.write("Exam Starting Soon");
-                                document.getElementById("timer'. $i .'").style.display = "block";
-                            }else if((ed.getDate() - cd.getDate()) < 0){
-                                document.write("Exam Expired");
-                                document.getElementById("timer'. $i .'").style.display = "block";
-                                document.getElementById("timertext'. $i .'").style.display = "none";
-                                document.getElementById("timer'. $i .'").style.color = "red";
-                            }
-                            </script>
+                            examDate'. $i .' = "'. $row["exam_date_time"].'";
+                            ed'. $i .' = new Date(examDate'. $i .');
+                            setInterval(()=>{
+                                cd = new Date();
+                                hoursLeft = Math.floor((ed'. $i .'.getTime()/(1000*60*60)-cd.getTime()/(1000*60*60))%60);
+                                minutesLeft = Math.floor((ed'. $i .'.getTime()/(1000*60)-cd.getTime()/(1000*60))%60);
+                                secondsLeft = Math.floor((ed'. $i .'.getTime()/1000-cd.getTime()/1000)%60);
+                                if((ed'. $i .'.getDate() - cd.getDate()) == 0){
+                                    document.getElementById("timer'. $i .'").style.display = "block";
+                                    if(hoursLeft <1)
+                                        document.getElementById("timer'. $i .'").style.color = "red";
+                                    if(secondsLeft<=0){
+                                        if(secondsLeft==0)
+                                            location.reload();
+                                        if(secondsLeft <= -10)
+                                            location.reload();
+                                        document.getElementById("time'. $i .'").innerText = "Exam has started. Join Before : "+(10+secondsLeft)+"seconds";
+                                    }else
+                                        document.getElementById("time'. $i .'").innerText = "Starting in : "+hoursLeft+" : "+minutesLeft+" : "+secondsLeft;
+                                }
+                            },1000)
+                        </script>
                     </span>
                 </div>
-            </a>
+            </div>
             <div class="test-control">
                 <span class="test-time">Scheduled at : </span><br>
-                <span class="date">' . date('jS F Y', strtotime($row["exam_date"])) . '</span><br>
-                <span class="time">' . date('h:i A', strtotime($row["exam_time"])) . '</span><br>
+                <span class="date">' . date('jS F Y', strtotime($row["exam_date_time"])) . '</span><br>
+                <span class="time">' . date('h:i A', strtotime($row["exam_date_time"])) . '</span><br>
             </div>
         </div>';
+                }
+            }
+            if($displayedExams == 0){
+                echo '
+            <div class="test justify-content-center">
+                <h1 class="text-center">No Scheduled Test</h1>
+            </div>';
             }
         } else {
             echo '
-            <div class="">
+            <div class="test justify-content-center">
                 <h1 class="text-center">No Scheduled Test</h1>
             </div>';
         }
@@ -146,6 +173,25 @@ if ($numRows == 1) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="leaveModalLabel">Leave Classroom</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Are you sure to leave the classroom.</h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="partials/_handleLeaveClass.php" type="button" class="btn btn-primary">Leave</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- appearExamModal -->
+    <div class="modal fade" id="appearExamModal" tabindex="-1" aria-labelledby="appearExamLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="appearExamLabel">Leave Classroom</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

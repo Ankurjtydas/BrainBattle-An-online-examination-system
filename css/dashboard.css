@@ -132,6 +132,7 @@
     flex-wrap: wrap;
     gap: 0.7rem;
     width: 100%;
+    min-height: 100px;
     padding: 5px 0.8rem;
     margin: 5px 0;
     border: 1px solid black;

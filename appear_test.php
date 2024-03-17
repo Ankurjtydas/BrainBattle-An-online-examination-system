@@ -1,4 +1,26 @@
+<?php
+session_status() == PHP_SESSION_ACTIVE ?: session_start();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null || $_SESSION["role"] != "student") {
+    header("Location: index.php");
+    exit;
+}
 
+require "partials/_dbconnect.php";
+$sql = "select * from exams where exam_id=$_SESSION";
+$result = mysqli_query($conn, $sql);
+$numRows = mysqli_num_rows($result);
+if ($numRows == 1) {
+    $row = mysqli_fetch_assoc($result);
+    if ($_SESSION["in_classroom"] == $row["classroom_id"]) {
+        $_SESSION["classroom_name"] = $row["classroom_name"];
+        $_SESSION["classroom_description"] = $row["classroom_description"];
+    }
+} else {
+    $alert = "The classroom have been deleted.";
+    header("Location: index.php?cls=n&alert=$alert");
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +44,8 @@
     <div class="screen">
         <div class="test-container">
             <?php
-            for ($i = 1; $i <= 3; $i++) {
+            for ($i = 1; $i <= 5; $i++) {
+
                 echo '
             <div class="test-box" id="' . $i . '">
                 <div class="test-header">
@@ -64,10 +87,10 @@
                     </div>
                 </div>
                 <div class="test-footer">';
-                if ($i != 3) {
+                if ($i != 5) {
                     echo '<button class="btn btn-primary next" value="next' . $i . '">Next</button>';
                 } else {
-                    echo '<button class="btn btn-primary submit">Submit</button>';
+                    echo '<button onclick="submit()" class="btn btn-primary submit">Submit</button>';
                 }
                 echo '
                 </div>
@@ -81,22 +104,22 @@
     <script>
 
         let d = new Date();
-        let totalTime = Math.round(d.getTime() / 1000) + 10;
+        let totalTime = Math.round(d.getTime() / 1000) + 5;
         let interval;
 
         document.getElementById("1").style.display = "block";
         timer(1);
         
         function timer(id) {
-            console.log(id);
             d = new Date();
-            totalTime = Math.round(d.getTime() / 1000) + 10;
+            totalTime = Math.round(d.getTime() / 1000) + 5;
             interval = setInterval(function () {
             let n = new Date();
             let time = Math.round(n.getTime() / 1000);
             if ((totalTime - time) < 0) {
                 clearInterval(interval);
-                alert("Time up");
+                document.getElementById(id).childNodes[5].firstChild.click();
+                // alert("Time up");
             }else
                 document.getElementById("time" + id).innerText = (totalTime - time);
         }, 1000);
@@ -106,6 +129,7 @@
 
         document.querySelectorAll(".next").forEach((e) => {
             e.addEventListener("click", () => {
+                console.log("Next question appears");
                 let nextId = parseInt(e.parentNode.parentNode.id) + 1;
                 if (document.getElementById(nextId) != null) {
                     e.parentNode.parentNode.style.display = "none";
@@ -114,8 +138,15 @@
                     clearInterval(interval);
                     timer(nextId)},1000);
                 }
+                else{
+                    document.getElementById(nextId).childNodes[5].firstChild.click();
+                }
             })
         })
+
+        function submit() {
+            console.log("Exam submitted");
+        }
     </script>
 </body>
 

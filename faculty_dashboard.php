@@ -102,58 +102,86 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <hr>
 
     <div class="test-container">
-        <h5 class="text-center">Scheduled Tests</h5>
+        <h2 class="text-center">Scheduled Tests</h2>
         <?php
-        $sql = "select * from exams where of_classroom='$_SESSION[in_classroom]' order by exam_date, exam_time";
+        $sql = "select * from exams where of_classroom='$_SESSION[in_classroom]' order by exam_date_time";
         $result = mysqli_query($conn, $sql);
         $numRows = mysqli_num_rows($result);
         if ($numRows > 0) {
+            $displayedExams = 0;
+            date_default_timezone_set("Asia/Kolkata");
             for ($i = 0; $i < $numRows; $i++) {
                 $row = mysqli_fetch_assoc($result);
                 $examId = $row["exam_id"];
+                $examDateTime = new DateTime($row["exam_date_time"]);
+                $currentDateTime = new DateTime();
+                // echo $currentDateTime->format("H m s").'<br>';
+                $currentDateTime->modify("-10 seconds");
+                // echo $currentDateTime->format("H m s")."<br>";
+                $timeLeft = $examDateTime->diff($currentDateTime);
+                if( $timeLeft->invert == 1) {
+                    $displayedExams++;
                 echo '
-        <div class="test">
-            <div href="" class="test-detail">
+        <div class="test" id="test'. $i .'">
+            <div class="test-detail">
                 <div class="detail">
                     <span class="test-title">' . $row["exam_title"] . '</span>
                     <p class="test-description m-0">' . $row["exam_description"] . '</p>
                 </div>
                 <div class="timer" id="timer'. $i .'">
-                    <span id="timertext'. $i .'">Starting in : </span>
-                    <span class="time">
+                    <span id="timertext'. $i .'"></span>
+                    <span class="time" id="time'. $i .'">
                         <script>
-                            examDate = "'. $row["exam_date"] .'";
-                            ed = new Date(examDate);
-                            cd = new Date();
-                            if((ed.getDate() - cd.getDate()) == 0){
-                                document.write("Exam Starting Soon");
-                                document.getElementById("timer'. $i .'").style.display = "block";
-                            }else if((ed.getDate() - cd.getDate()) < 0){
-                                document.write("Exam Expired");
-                                document.getElementById("timer'. $i .'").style.display = "block";
-                                document.getElementById("timertext'. $i .'").style.display = "none";
-                                document.getElementById("timer'. $i .'").style.color = "red";
-                            }
-                            </script>
+                            examDate'. $i .' = "'. $row["exam_date_time"].'";
+                            ed'. $i .' = new Date(examDate'. $i .');
+                            setInterval(()=>{
+                                cd = new Date();
+                                hoursLeft = Math.floor((ed'. $i .'.getTime()/(1000*60*60)-cd.getTime()/(1000*60*60))%60);
+                                minutesLeft = Math.floor((ed'. $i .'.getTime()/(1000*60)-cd.getTime()/(1000*60))%60);
+                                secondsLeft = Math.floor((ed'. $i .'.getTime()/1000-cd.getTime()/1000)%60);
+                                if((ed'. $i .'.getDate() - cd.getDate()) == 0){
+                                    document.getElementById("timer'. $i .'").style.display = "block";
+                                    if(hoursLeft <1)
+                                        document.getElementById("timer'. $i .'").style.color = "red";
+                                    if(secondsLeft<=0){
+                                        if(secondsLeft==0)
+                                            location.reload();
+                                        if(secondsLeft <= -10)
+                                            location.reload();
+                                        document.getElementById("time'. $i .'").innerText = "Exam has started. Disappearing in : "+(10+secondsLeft)+"seconds";
+                                    }    
+                                    else
+                                        document.getElementById("time'. $i .'").innerText = "Starting in : "+hoursLeft+" : "+minutesLeft+" : "+secondsLeft;
+                                }
+                            },1000)
+                        </script>
                     </span>
                 </div>
             </div>
             <div class="test-control">
                 <span class="test-time">Scheduled at : </span><br>
-                    <span class="date">' . date('jS F Y', strtotime($row["exam_date"])) . '</span><br>
-                    <span class="time">' . date('h:i A', strtotime($row["exam_time"])) . '</span><br>
+                    <span class="date">' . date('jS F Y', strtotime($row["exam_date_time"])) . '</span><br>
+                    <span class="time">' . date('h:i A', strtotime($row["exam_date_time"])) . '</span><br>
                 <a href="update_test.php?id='. $examId .'" style="color:black;"><i class="bi bi-pencil-fill update testUpdateBtn"></i></a>
                 <i class="bi bi-trash-fill trash testDeleteBtn" data-bs-toggle="modal" data-bs-target="#deleteTest"><input type="hidden" value="' . $examId . '"></i>
             </div>
         </div>';
+                }
+            }
+            if($displayedExams == 0){
+                echo '
+            <div class="test justify-content-center">
+                <h1 class="text-center">No Scheduled Test</h1>
+            </div>';
             }
         } else {
             echo '
-            <div class="">
-                <h1 class="text-center">No Scheduled Tests</h1>
+            <div class="test justify-content-center">
+                <h1 class="text-center">No Scheduled Test</h1>
             </div>';
         }
         ?>
+
     </div>
 
     <!-- deleteModal -->
@@ -176,7 +204,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         </div>
     </div>
 
-    <!-- deleteTest -->
+    <!-- deleteTestModal -->
     <div class="modal fade" id="deleteTest" tabindex="-1" aria-labelledby="deleteTestLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
