@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $examTitle = $_POST["examTitle"];
     $examDescription = $_POST["examDescription"];
     $noOfQuestions = $_POST["noOfQuestions"];
-    $examDateTime = $_POST["exam_date_time"];
+    $examDateTime = $_POST["examDateTime"];
     $timePerQuestion = $_POST["timePerQuestion"];
 }
 ?>
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php 
                             if (!isset($examDateTime)) {
                                 echo '
-                                <input type="datetime-local" class="form-control" id="examDate" name="examDate" required>';
+                                <input type="datetime-local" class="form-control" id="examDateTime" name="examDateTime" required>';
                             } else {
                                 echo '<input type="datetime-local" class="form-control" id="examDateTime" name="examDateTime" value="' . $examDateTime . '" required>';
                             }
@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="hidden" value="' . $examTitle . '" name="examTitle">
                             <input type="hidden" value="' . $examDescription . '" name="examDescription">
                             <input type="hidden" value="' . $noOfQuestions . '" name="noOfQuestions">
-                            <input type="hidden" value="' . $examDateTime . '" name="examDate">
+                            <input type="hidden" value="' . $examDateTime . '" name="examDateTime">
                             <input type="hidden" value="' . $timePerQuestion . '" name="timePerQuestion">
                             <button type="submit" class="btn btn-primary">Finish</button>
                             </div>';

@@ -99,17 +99,22 @@ if ($numRows == 1) {
             for ($i = 0; $i < $numRows; $i++) {
                 $row = mysqli_fetch_assoc($result);
                 $examId = $row["exam_id"];
+                $noOfQuestions = $row["no_of_questions"];
+                $timePerQuestion = $row["time_per_question"];
                 $examDateTime = new DateTime($row["exam_date_time"]);
                 $currentDateTime = new DateTime();
-                echo $currentDateTime->format("%H %m %s");
-                $currentDateTime->modify("+10 seconds");
-                echo $currentDateTime->format("%H %m %s");
+                // echo $currentDateTime->format("%H %m %s");
+                $currentDateTime->modify("+15 seconds");
+                // echo $currentDateTime->format("%H %m %s");
                 $timeLeft = $examDateTime->diff($currentDateTime);
                 if( $timeLeft->invert == 1) {
                     $displayedExams++;
                 echo '
         <div class="test" id="test'. $i .'">
-            <div class="test-detail" style="cursor: pointer;">
+            <div class="test-detail" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#appearExamModal">
+                <input type="hidden" value="'. $examId .'">
+                <input type="hidden" value="'. $noOfQuestions .'">
+                <input type="hidden" value="'. $timePerQuestion .'">
                 <div class="detail">
                     <span class="test-title">' . $row["exam_title"] . '</span>
                     <p class="test-description m-0">' . $row["exam_description"] . '</p>
@@ -132,9 +137,9 @@ if ($numRows == 1) {
                                     if(secondsLeft<=0){
                                         if(secondsLeft==0)
                                             location.reload();
-                                        if(secondsLeft <= -10)
+                                        if(secondsLeft <= -15)
                                             location.reload();
-                                        document.getElementById("time'. $i .'").innerText = "Exam has started. Join Before : "+(10+secondsLeft)+"seconds";
+                                        document.getElementById("time'. $i .'").innerText = "Exam has started. Join Before : "+(15+secondsLeft)+"seconds";
                                     }else
                                         document.getElementById("time'. $i .'").innerText = "Starting in : "+hoursLeft+" : "+minutesLeft+" : "+secondsLeft;
                                 }
@@ -149,6 +154,8 @@ if ($numRows == 1) {
                 <span class="time">' . date('h:i A', strtotime($row["exam_date_time"])) . '</span><br>
             </div>
         </div>';
+        echo '
+            ';
                 }
             }
             if($displayedExams == 0){
@@ -188,25 +195,42 @@ if ($numRows == 1) {
     
     <!-- appearExamModal -->
     <div class="modal fade" id="appearExamModal" tabindex="-1" aria-labelledby="appearExamLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="appearExamLabel">Leave Classroom</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h6>Are you sure to leave the classroom.</h6>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="partials/_handleLeaveClass.php" type="button" class="btn btn-primary">Leave</a>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="appearExamLabel">Join Exam</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="appear_test.php" method="post">
+                        <div class="modal-body">
+                            <input type="hidden" name="examId" id="examId" value="">
+                            <h6>Instructions for the Exam</h6>
+                            <ul>
+                            <li>Total no. of questions : <span id="totalQuestions"></span></li>
+                            <li>Time for each question : <span id="seconds"></span> seconds</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Join</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+
     <?php require "partials/_footer.php"; ?>
     <script>
-        
+        document.querySelectorAll(".test-detail").forEach((e)=>{
+            e.addEventListener("click", ()=>{
+                let eId = e.childNodes[1].value;
+                let noOfQuestions = e.childNodes[3].value;
+                let timePerQuestion = e.childNodes[5].value;
+                document.getElementById("examId").value = eId;
+                document.getElementById("totalQuestions").innerText = noOfQuestions;
+                document.getElementById("seconds").innerText = timePerQuestion;
+            })
+        })
     </script>
 
 </body>

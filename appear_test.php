@@ -4,20 +4,25 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     header("Location: index.php");
     exit;
 }
-
-require "partials/_dbconnect.php";
-$sql = "select * from exams where exam_id=$_SESSION";
-$result = mysqli_query($conn, $sql);
-$numRows = mysqli_num_rows($result);
-if ($numRows == 1) {
-    $row = mysqli_fetch_assoc($result);
-    if ($_SESSION["in_classroom"] == $row["classroom_id"]) {
-        $_SESSION["classroom_name"] = $row["classroom_name"];
-        $_SESSION["classroom_description"] = $row["classroom_description"];
-    }
-} else {
-    $alert = "The classroom have been deleted.";
-    header("Location: index.php?cls=n&alert=$alert");
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $examId = $_POST["examId"];
+    require "partials/_dbconnect.php";
+    // $sql = "select * from exams where exam_id='$_GET[id]'";
+    // $result = mysqli_query($conn, $sql);
+    // $numRows = mysqli_num_rows($result);
+    // if ($numRows == 1) {
+    //     $row = mysqli_fetch_assoc($result);
+    //     if ($_SESSION["in_classroom"] == $row["classroom_id"]) {
+    //         $_SESSION["classroom_name"] = $row["classroom_name"];
+    //         $_SESSION["classroom_description"] = $row["classroom_description"];
+    //     }
+    // } else {
+    //         $alert = "The classroom have been deleted.";
+    //         header("Location: index.php?cls=n&alert=$alert");
+    //         exit;
+    //     }
+}else{
+    header("Location: index.php");
     exit;
 }
 ?>
@@ -50,6 +55,7 @@ if ($numRows == 1) {
             <div class="test-box" id="' . $i . '">
                 <div class="test-header">
                     <span>Question No. ' . $i . '</span>
+                    <span>Exam Title</span>
                     <div class="timer">
                         <span>Timer</span>
                         <div class="time" id="time' . $i . '">10</div>

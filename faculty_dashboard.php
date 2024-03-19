@@ -218,7 +218,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="partials/_handleDeleteTest.php?id=" type="button" class="btn btn-primary"
+                    <a href="partials/_handleDeleteTest.php?" type="button" class="btn btn-primary"
                         id="cdeleteBtn">Delete</a>
                 </div>
             </div>
@@ -238,7 +238,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     document.querySelectorAll(".testDeleteBtn").forEach((e) => {
         e.addEventListener("click", () => {
             document.getElementById("cdeleteBtn").addEventListener("click", (element) => {
-                element.target.href += e.querySelector("input").value;
+                element.target.href +="id="+ e.querySelector("input").value;
             })
         })
     })

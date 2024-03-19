@@ -194,3 +194,7 @@ hr {
     margin: 1rem auto;
     border: 1px solid black;
 }
+
+.modal-body ul li {
+    list-style: none;
+}
