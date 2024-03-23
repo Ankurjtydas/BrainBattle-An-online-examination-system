@@ -104,7 +104,7 @@ if ($numRows == 1) {
                 $examDateTime = new DateTime($row["exam_date_time"]);
                 $currentDateTime = new DateTime();
                 // echo $currentDateTime->format("%H %m %s");
-                $currentDateTime->modify("+15 seconds");
+                $currentDateTime->modify("-15 seconds");
                 // echo $currentDateTime->format("%H %m %s");
                 $timeLeft = $examDateTime->diff($currentDateTime);
                 if( $timeLeft->invert == 1) {
@@ -139,7 +139,7 @@ if ($numRows == 1) {
                                             location.reload();
                                         if(secondsLeft <= -15)
                                             location.reload();
-                                        document.getElementById("time'. $i .'").innerText = "Exam has started. Join Before : "+(15+secondsLeft)+"seconds";
+                                        document.getElementById("time'. $i .'").innerText = "Exam has started. Join Before : "+(15+secondsLeft)+" seconds";
                                     }else
                                         document.getElementById("time'. $i .'").innerText = "Starting in : "+hoursLeft+" : "+minutesLeft+" : "+secondsLeft;
                                 }
@@ -229,6 +229,7 @@ if ($numRows == 1) {
                 document.getElementById("examId").value = eId;
                 document.getElementById("totalQuestions").innerText = noOfQuestions;
                 document.getElementById("seconds").innerText = timePerQuestion;
+                sessionStorage.clear();
             })
         })
     </script>
