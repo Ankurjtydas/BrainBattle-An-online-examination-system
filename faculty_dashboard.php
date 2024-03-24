@@ -171,13 +171,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             if($displayedExams == 0){
                 echo '
             <div class="test justify-content-center">
-                <h1 class="text-center">No Scheduled Test</h1>
+                <h4 class="text-center">No Scheduled Test</h4>
             </div>';
             }
         } else {
             echo '
             <div class="test justify-content-center">
-                <h1 class="text-center">No Scheduled Test</h1>
+                <h4 class="text-center">No Scheduled Test</h4>
             </div>';
         }
         ?>

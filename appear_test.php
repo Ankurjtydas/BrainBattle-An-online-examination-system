@@ -7,7 +7,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 }
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $examId = $_POST["examId"];
-    echo var_dump($_POST);
     require "partials/_dbconnect.php";
     $sql = "select * from exams where exam_id=$examId";
     $result = mysqli_query($conn, $sql);
@@ -15,7 +14,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($numRows == 1) {
         $row = mysqli_fetch_assoc($result);
         $examTitle = $row["exam_title"];
-        $noOfQuestions = $row["no_of_questions"];
         $timePerQuestion = $row["time_per_question"];
     }
 }else{
@@ -73,7 +71,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             if(secondsLeft == -1)
                                 location.reload();
                             document.getElementById("waittime").style.display = "none";
-                            sessionStorage.clear();
+                            sessionStorage.remove("currentQuestion");
+                            sessionStorage.remove("total");
+                            sessionStorage.remove("now");
                         }
                         else
                             document.getElementById("waittime").innerText = "Starting in : " + daysLeft + "d : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft + "s";
@@ -86,6 +86,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $currentDateTime = new DateTime();
             $timeLeft = $examDateTime->diff($currentDateTime);
             if( $timeLeft->invert == 0) {
+                echo '<form action="partials/_handleExamSubmission.php" method="post">
+                        <input type="hidden" name="examId" value="'. $examId .'">
+                        <script> document.addEventListener("DOMContentLoaded", function(){start();}) </script>';
                 $sql = "select * from questions where of_exam = $examId";
                 $result2 = mysqli_query($conn, $sql);
                 $numRows2 = mysqli_num_rows($result2);
@@ -97,8 +100,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     $optionC = $row2["option_c"];
                     $optionD = $row2["option_d"];
 
-                    echo '<script> document.addEventListener("DOMContentLoaded", function(){start();}) </script>
-                    
+                    echo '
                     <div class="test-box" id="' . $i . '">
                         <div class="test-header">
                             <span>Question No. ' . $i . '</span>
@@ -116,22 +118,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             <hr class="appear">
                             <div class="options">
                                 <div class="option-item">
-                                    <input type="radio" name="o" id="optionA' . $i . '" value="A">
+                                    <input type="radio" name="answer'. $i .'" id="optionA' . $i . '" value="A">
                                     <label for="optionA' . $i . '"><span> A: </span></label>
                                     <label for="optionA' . $i . '">'. $optionA .'</label>
                                 </div>
                                 <div class="option-item">
-                                    <input type="radio" name="o" id="optionB' . $i . '" value="B">
+                                    <input type="radio" name="answer'. $i .'" id="optionB' . $i . '" value="B">
                                     <label for="optionB' . $i . '"><span> B: </span></label>
                                     <label for="optionB' . $i . '">'. $optionB .'</label>
                                 </div>
                                 <div class="option-item">
-                                    <input type="radio" name="o" id="optionC' . $i . '" value="C">
+                                    <input type="radio" name="answer'. $i .'" id="optionC' . $i . '" value="C">
                                     <label for="optionC' . $i . '"><span> C: </span></label>
                                     <label for="optionC' . $i . '">'. $optionC .'</label>
                                 </div>
                                 <div class="option-item">
-                                    <input type="radio" name="o" id="optionD' . $i . '" value="D">
+                                    <input type="radio" name="answer'. $i .'" id="optionD' . $i . '" value="D">
                                     <label for="optionD' . $i . '"><span> D: </span></label>
                                     <label for="optionD' . $i . '">'. $optionD .'</label>
                                 </div>
@@ -139,15 +141,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="test-footer">';
                         if ($i != $numRows2) {
-                            echo '<button class="btn btn-primary next" value="next' . $i . '">Next</button>';
+                            echo '<button type="button" class="btn btn-primary next" value="next' . $i . '">Next</button>';
                         } else {
-                            echo '<button type="submit" onclick="submit()" class="btn btn-primary submit" id="submit">Submit</button>';
+                            echo '<button type="button" class="btn btn-primary submit" id="submit">Submit</button>';
                         }
                         echo '
                         </div>
-                    </div>
-                    ';
+                    </div>';
                 }
+                echo '<button type="submit" class="btn btn-primary submit" id="submitAll">Submit</button>
+                </form>';
             }
             ?>
         </div>
@@ -163,9 +166,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     let totalTime;
 
     function start() {
+        document.getElementById("submitAll").style.visibility = "hidden";
         if (JSON.parse(sessionStorage.getItem("total")) == null) {
             d = new Date();
-            d.setTime(d.getTime() + 15000);
+            d.setTime(d.getTime() + <?php echo $timePerQuestion * 1000 ?>);
             sessionStorage.setItem("total", JSON.stringify(d));
         } else {
             d = new Date(JSON.parse(sessionStorage.getItem("total")));
@@ -185,11 +189,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             document.getElementById("waiting").innerText = "Starting...";
             setTimeout(() => {
-                console.log(currentQuestion);
                 document.getElementById(currentQuestion).style.display = "block";
                 timer(currentQuestion);
             }, 1000);
         }
+    }
 
         function timer(id) {
             if (sessionStorage.getItem("total") == null) {
@@ -218,23 +222,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }, 1000);
         }
-    }
 
     document.querySelectorAll(".next").forEach((e) => {
         e.addEventListener("click", () => {
             console.log("Next question appears");
             let nextId = parseInt(e.parentNode.parentNode.id) + 1;
             currentQuestion = nextId;
-            console.log(currentQuestion);
             if (document.getElementById(nextId) != null) {
                 e.parentNode.parentNode.style.display = "none";
                 document.getElementById("waiting").innerText = "Please wait...";
                 clearInterval(interval);
                 setTimeout(() => {
-                    location.reload();
                     document.getElementById(nextId).style.display = "block";
                     d = new Date();
-                    d.setTime(d.getTime() + 15000);
+                    d.setTime(d.getTime() + <?php echo $timePerQuestion * 1000 ?>);
                     sessionStorage.setItem("total", JSON.stringify(d));
                     n = new Date();
                     timer(nextId);
@@ -243,14 +244,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         })
     })
 
-    function submit() {
-        document.getElementById("submit").parentNode.parentNode.style.display = "none";
-        document.getElementById("waiting").innerText = "Submitting...";
-        setTimeout(() => {
-            console.log("Exam submitted");
-            window.location.href = ""
-        }, 1000);
-    }
+        document.getElementById("submit").addEventListener("click", ()=>{
+            document.getElementById("submit").parentNode.parentNode.style.display = "none";
+            document.getElementById("waiting").innerText = "Submitting...";
+            setTimeout(() => {
+                console.log("Exam submitted");
+                document.getElementById("submitAll").click();
+            }, 1000);
+
+        })
 
     window.onbeforeunload = function() {
         sessionStorage.setItem("currentQuestion", currentQuestion);

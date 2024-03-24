@@ -53,6 +53,8 @@ if ($numRows == 1) {
         </div>
     </div>
 
+    <hr>
+
     <div class="dashboard-container">
 
         <a href="" class="dashboard-item">
@@ -85,8 +87,10 @@ if ($numRows == 1) {
             </div>
             <span>Leave Class</span>
         </a>
-
     </div>
+
+    <hr>
+
     <div class="test-container">
         <h2 class="text-center">Scheduled Tests</h2>
         <?php
@@ -161,13 +165,13 @@ if ($numRows == 1) {
             if($displayedExams == 0){
                 echo '
             <div class="test justify-content-center">
-                <h1 class="text-center">No Scheduled Test</h1>
+                <h4 class="text-center">No Scheduled Test</h4>
             </div>';
             }
         } else {
             echo '
             <div class="test justify-content-center">
-                <h1 class="text-center">No Scheduled Test</h1>
+                <h4 class="text-center">No Scheduled Test</h4>
             </div>';
         }
         ?>
