@@ -139,7 +139,7 @@ if ($numRows == 1) {
                                     if(hoursLeft <1)
                                         document.getElementById("timer'. $i .'").style.color = "red";
                                     if(secondsLeft<=0){
-                                        if(secondsLeft==0)
+                                        if(secondsLeft== 0)
                                             location.reload();
                                         if(secondsLeft <= -15)
                                             location.reload();
@@ -233,7 +233,9 @@ if ($numRows == 1) {
                 document.getElementById("examId").value = eId;
                 document.getElementById("totalQuestions").innerText = noOfQuestions;
                 document.getElementById("seconds").innerText = timePerQuestion;
-                sessionStorage.clear();
+                sessionStorage.removeItem("currentQuestion");
+                sessionStorage.removeItem("total");
+                sessionStorage.removeItem("now");
             })
         })
     </script>

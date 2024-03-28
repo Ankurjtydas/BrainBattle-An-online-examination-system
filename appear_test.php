@@ -71,9 +71,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             if(secondsLeft == -1)
                                 location.reload();
                             document.getElementById("waittime").style.display = "none";
-                            sessionStorage.remove("currentQuestion");
-                            sessionStorage.remove("total");
-                            sessionStorage.remove("now");
+                            sessionStorage.removeItem("currentQuestion");
+                            sessionStorage.removeItem("total");
+                            sessionStorage.removeItem("now");
                         }
                         else
                             document.getElementById("waittime").innerText = "Starting in : " + daysLeft + "d : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft + "s";
