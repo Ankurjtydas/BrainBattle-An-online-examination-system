@@ -7,12 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $examTitle = $_POST["examTitle"];
     $examDescription = $_POST["examDescription"];
     $noOfQuestions = $_POST["noOfQuestions"];
-    $examDate = $_POST["examDate"];
-    $examTime = $_POST["examTime"];
+    $examDateTime = $_POST["examDateTime"];
     $timePerQuestion = $_POST["timePerQuestion"];
 
     // update exam details to database
-    $sql = "UPDATE `exams` SET `exam_title` = '$examTitle', `exam_description` = '$examDescription', `no_of_questions` = '$noOfQuestions', `exam_date` = '$examDate', `exam_time` = '$examTime', `time_per_question` = '$timePerQuestion' WHERE `exam_id` = $examId";
+    $sql = "UPDATE `exams` SET `exam_title` = '$examTitle', `exam_description` = '$examDescription', `no_of_questions` = '$noOfQuestions', `exam_date_time` = '$examDateTime', `time_per_question` = '$timePerQuestion' WHERE `exam_id` = $examId";
     mysqli_query($conn, $sql);
 
     // delete all questions of this exam

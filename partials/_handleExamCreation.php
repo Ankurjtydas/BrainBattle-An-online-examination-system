@@ -6,12 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $examTitle = $_POST["examTitle"];
     $examDescription = $_POST["examDescription"];
     $noOfQuestions = $_POST["noOfQuestions"];
-    $examDate = $_POST["examDate"];
-    $examTime = $_POST["examTime"];
+    $examDateTime = $_POST["examDateTime"];
     $timePerQuestion = $_POST["timePerQuestion"];
 
     // add exam details to database
-    $sql = "INSERT INTO `exams` (`exam_title`, `exam_description`, `no_of_questions`, `exam_date`, `exam_time`, `time_per_question`, `of_classroom`, `create_at`) VALUES ('$examTitle', '$examDescription', '$noOfQuestions', '$examDate', '$examTime', '$timePerQuestion', '$_SESSION[in_classroom]', current_timestamp())";
+    $sql = "INSERT INTO `exams` (`exam_title`, `exam_description`, `no_of_questions`, `exam_date_time`, `time_per_question`, `of_classroom`, `create_at`) VALUES ('$examTitle', '$examDescription', '$noOfQuestions', '$examDateTime', '$timePerQuestion', '$_SESSION[in_classroom]', current_timestamp())";
     $result = mysqli_query($conn, $sql);
 
     // get id of created exam
