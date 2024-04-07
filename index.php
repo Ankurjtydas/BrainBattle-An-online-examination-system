@@ -8,7 +8,7 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Welcome to BrainBattle</title>
+	<title>Home - BrainBattle</title>
 	<?php require "partials/_bootstrap_css.php"; ?>
 	<link rel="stylesheet" href="css/style.css">
 </head>
@@ -29,7 +29,7 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 			<?php
 			if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] == false) {
 				// display when user is not logged in
-				echo '<a href="login.php" class="px-4 py-2 my-2">Get Started</a>';
+				echo '<a href="login.php" class="px-4 py-2 my-2 btn">Get Started</a>';
 
 			} else {
 				if ($_SESSION["in_classroom"] != null) {
@@ -42,12 +42,12 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 
 					}
 					// display when user is already in a classroom
-					echo '<a href="' . $dashboard . '" class="px-4 py-2 my-2">Go to Dashboard</a>';
+					echo '<a href="' . $dashboard . '" class="px-4 py-2 my-2 btn">Go to Dashboard</a>';
 
 				} else {
 					// display when user is logged in
-					echo '<a href="" data-bs-toggle="modal" data-bs-target="#createClassroomModal">Create Classroom</a>
-            <a href="" data-bs-toggle="modal" data-bs-target="#joinClassroomModal">Join Classroom</a>';
+					echo '<a class="btn" href="" data-bs-toggle="modal" data-bs-target="#createClassroomModal">Create Classroom</a>
+            <a class="btn" href="" data-bs-toggle="modal" data-bs-target="#joinClassroomModal">Join Classroom</a>';
 
 				}
 			}

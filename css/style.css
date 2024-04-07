@@ -45,14 +45,16 @@
 #header-section .container {
     max-width: 100vw;
     margin-bottom: 0.6rem;
+    max-height: 600px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
-    padding: 0 5rem;
+    padding: 0 1rem;
     padding-bottom: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #header-section .container::before {
@@ -80,7 +82,7 @@
     margin-bottom: 1.5rem;
 }
 
-#header-section .container a {
+#header-section .container .btn {
     width: 15rem;
     padding: 0.6rem 1.2rem;
     margin: 0.3rem 0;
@@ -89,9 +91,11 @@
     background-color: rgb(36, 117, 194);
     text-decoration: none;
     color: white;
+    position: sticky;
+    bottom: 0;
 }
 
-#header-section .container a:hover {
+#header-section .container .btn:hover {
     background-color: rgb(74, 133, 189);
 }
 
