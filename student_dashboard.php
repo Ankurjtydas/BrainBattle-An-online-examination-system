@@ -71,7 +71,7 @@ if ($numRows == 1) {
         </a>
         <a href="" class="dashboard-item">
             <div class="item-image">
-                <img src="images/update.png" alt="">
+                <img src="images/result.png" alt="">
             </div>
             <span>Results</span>
         </a>
