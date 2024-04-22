@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 60vw;
+    margin: 0 auto;
+}
+
+.desc h1 {
+    margin: 1rem 0;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.heading {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+}
+
+.noOfStudents {
+    font-size: 1.2rem;
+}
+
+.item {
+    border-bottom: 1px solid rgb(184, 184, 184);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    box-sizing: border-box;
+    margin: 0.6rem auto;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+}
+
+.name img {
+    border: 1px solid black;
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: rgb(235, 235, 235);
+    box-sizing: border-box;
+}
+
+i {
+    cursor: pointer;
+}
+
+i:hover {
+    color: red;
+}
+
+/* hr {
+    width: 85%;
+    margin: 1.5rem auto;
+    border: 1px solid black;
+} */

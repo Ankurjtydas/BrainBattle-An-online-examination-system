@@ -63,15 +63,15 @@ if ($numRows == 1) {
             </div>
             <span> ...</span>
         </a>
-        <a href="" class="dashboard-item">
+        <a href="people.php" class="dashboard-item">
             <div class="item-image">
                 <img src="images/group.webp" alt="">
             </div>
             <span>People</span>
         </a>
-        <a href="" class="dashboard-item">
+        <a href="results_list.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/update.png" alt="">
+                <img src="images/result.png" alt="">
             </div>
             <span>Results</span>
         </a>
