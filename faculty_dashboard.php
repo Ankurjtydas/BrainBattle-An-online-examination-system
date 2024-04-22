@@ -79,7 +79,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             </div>
             <span>People</span>
         </a>
-        <a href="" class="dashboard-item">
+        <a href="results_list.php" class="dashboard-item">
             <div class="item-image">
                 <img src="images/result.png" alt="">
             </div>
