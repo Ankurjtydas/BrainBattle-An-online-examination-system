@@ -16,7 +16,6 @@
 
 .test {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.7rem;
     width: 100%;
@@ -34,12 +33,19 @@
 
 .test-detail {
     display: flex;
-    flex-direction: column;
+    width: 80%;
     flex-wrap: wrap;
-    max-width: 400px;
     text-decoration: none;
     color: black;
-    cursor: pointer;
+    /* cursor: pointer; */
+}
+
+.detail {
+    width: 30%;
+}
+
+.status {
+    margin: auto;
 }
 
 .test-title {
