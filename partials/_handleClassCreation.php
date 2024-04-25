@@ -2,10 +2,8 @@
     session_status() == PHP_SESSION_ACTIVE?: session_start();
     require "_dbconnect.php";
 
-    header("Location: ../faculty_dashboard.php");
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $classroomTitle = htmlspecialchars($_POST["classroomTitle"]);
-        echo $classroomTitle;
         $classroomDescription = htmlspecialchars($_POST["classroomDescription"]);
         
         $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -46,8 +44,10 @@
             // update users table
             $sql = "UPDATE `users` SET `in_classroom` = '$_SESSION[in_classroom]', `role` = 'faculty' WHERE `user_id` = $_SESSION[user_id]";
             mysqli_query($conn, $sql);
+            header("Location: ../faculty_dashboard.php");
             exit;
         }
     }
+    header("Location: ../index.php");
 
 ?>

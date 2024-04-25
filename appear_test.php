@@ -6,7 +6,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     exit;
 }
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $examId = $_POST["examId"];
+    $examId = htmlspecialchars($_POST["examId"]);
     require "partials/_dbconnect.php";
     $sql = "select * from exams where exam_id=$examId";
     $result = mysqli_query($conn, $sql);

@@ -9,7 +9,7 @@
     }
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $classroomCode = $_POST["classroomCode"];
+        $classroomCode = htmlspecialchars($_POST["classroomCode"]);
         
         $sql = "select * from classrooms where classroom_code='$classroomCode'";
         $result = mysqli_query($conn, $sql);
@@ -21,14 +21,14 @@
             if($result2 == 1){
                 $_SESSION["in_classroom"] = $row["classroom_id"];
                 $_SESSION["role"] = "student";
-                header("Location: ../student_dashboard.php");
             }
             $sql2 = "select * from users where `in_classroom` = $row[classroom_id] and `role` = 'student'";
             $result2 = mysqli_query($conn, $sql2);
             $numRows2 = mysqli_num_rows($result2);
             $sql2 = "UPDATE `classrooms` SET `no_of_students` = $numRows2 WHERE `classroom_id` = $row[classroom_id]";
-            $result2 = mysqli_query($conn, $sql2);
-
+            mysqli_query($conn, $sql2);
+            header("Location: ../student_dashboard.php");
+            exit;
         }else{
             $alert = "The classroom doesn't exist.";
             header("Location: ../index.php?success=false&alert=$alert");

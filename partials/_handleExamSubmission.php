@@ -3,7 +3,7 @@ session_status() == PHP_SESSION_ACTIVE ? : session_start();
 require "_dbconnect.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $examId = $_POST["examId"];
+    $examId = htmlspecialchars($_POST["examId"]);
     $markScored = 0;
     $sql = "select * from questions where of_exam =$examId";
     $result = mysqli_query($conn, $sql);
@@ -16,10 +16,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $markScored++;
         }
     }
-    echo 'You scored '. $markScored .' out of '. $numRows;
+    // echo 'You scored '. $markScored .' out of '. $numRows;
     $insertSql = "INSERT INTO `results` (`of_exam`, `by_user`, `mark_obtained`, `total_marks`) VALUES ('$examId', '$_SESSION[user_id]', '$markScored', '$numRows')";
     mysqli_query($conn, $insertSql);
     header("Location: ../result.php");
+    exit;
 }else{
     header("Location: ../index.php");
     exit;

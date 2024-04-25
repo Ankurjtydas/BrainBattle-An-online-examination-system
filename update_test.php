@@ -13,6 +13,14 @@ if (isset($_GET["id"])) {
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 
+    // check if the exam belongs to the logged in user's class
+    $of_classroom = $row["of_classroom"];
+    if($_SESSION["in_classroom"] != $of_classroom){
+        $alert = "This exam do not belong to your class";
+        header("Location: index.php?success=false&alert=$alert");
+        exit;
+    }
+
     $examTitle = $row["exam_title"];
     $examDescription = $row["exam_description"];
     $noOfQuestions = $row["no_of_questions"];
@@ -20,12 +28,12 @@ if (isset($_GET["id"])) {
     $timePerQuestion = $row["time_per_question"];
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $examId = $_POST["examId"];
-    $examTitle = $_POST["examTitle"];
-    $examDescription = $_POST["examDescription"];
-    $noOfQuestions = $_POST["noOfQuestions"];
-    $examDateTime = $_POST["examDateTime"];
-    $timePerQuestion = $_POST["timePerQuestion"];
+    $examId = htmlspecialchars($_POST["examId"]);
+    $examTitle = htmlspecialchars($_POST["examTitle"]);
+    $examDescription = htmlspecialchars($_POST["examDescription"]);
+    $noOfQuestions = htmlspecialchars($_POST["noOfQuestions"]);
+    $examDateTime = htmlspecialchars($_POST["examDateTime"]);
+    $timePerQuestion = htmlspecialchars($_POST["timePerQuestion"]);
 }
 ?>
 <!DOCTYPE html>
@@ -37,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php require "partials/_bootstrap_css.php"; ?>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/test_create.css">
-    <title>Exam Creation</title>
+    <title>Update Exam</title>
 </head>
 
 <body>

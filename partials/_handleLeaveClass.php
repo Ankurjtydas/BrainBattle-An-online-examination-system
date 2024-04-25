@@ -8,14 +8,12 @@ if ($_SESSION["in_classroom"] != null) {
         mysqli_query($conn, $sql);
         
         // get number of students in the classroom
-        echo var_dump($_SESSION)."<br>";
         $sql = "select * from users where `in_classroom` = $_SESSION[in_classroom] and `role` = 'student'";
         $result = mysqli_query($conn, $sql);
         $numRows = mysqli_num_rows($result);
-        echo $numRows;
 
         $sql2 = "UPDATE `classrooms` SET `no_of_students` = $numRows WHERE `classroom_id` = $_SESSION[in_classroom]";
-        $result2 = mysqli_query($conn, $sql2);
+        mysqli_query($conn, $sql2);
 
         $_SESSION["in_classroom"] = null;
         $_SESSION["role"] = null;

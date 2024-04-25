@@ -27,7 +27,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?php echo $_SESSION["classroom_name"] ?>
+        Classroom - <?php echo $_SESSION["classroom_name"] ?>
     </title>
     <?php require "partials/_bootstrap_css.php"; ?>
     <link rel="stylesheet" href="css/style.css">
@@ -134,26 +134,26 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                         <script>
                             examDate'. $i .' = "'. $row["exam_date_time"].'";
                             ed'. $i .' = new Date(examDate'. $i .');
-                            setInterval(()=>{
+                            setInterval(() => {
                                 cd = new Date();
-                                hoursLeft = Math.floor((ed'. $i .'.getTime()/(1000*60*60)-cd.getTime()/(1000*60*60))%60);
-                                minutesLeft = Math.floor((ed'. $i .'.getTime()/(1000*60)-cd.getTime()/(1000*60))%60);
-                                secondsLeft = Math.floor((ed'. $i .'.getTime()/1000-cd.getTime()/1000)%60);
-                                if((ed'. $i .'.getDate() - cd.getDate()) == 0){
-                                    document.getElementById("timer'. $i .'").style.display = "block";
-                                    if(hoursLeft <1)
-                                        document.getElementById("timer'. $i .'").style.color = "red";
-                                    if(secondsLeft<=0){
-                                        if(secondsLeft==0)
-                                            location.reload();
-                                        if(secondsLeft <= -10)
-                                            location.reload();
-                                        document.getElementById("time'. $i .'").innerText = "Exam has started. Disappearing in : "+(10+secondsLeft)+"seconds";
-                                    }    
-                                    else
-                                        document.getElementById("time'. $i .'").innerText = "Starting in : "+hoursLeft+" : "+minutesLeft+" : "+secondsLeft;
+                                hoursLeft = Math.floor((ed'. $i .'.getTime() / (1000 * 60 * 60) - cd.getTime() / (1000 * 60 * 60)) % 60);
+                            minutesLeft = Math.floor((ed'. $i .'.getTime() / (1000 * 60) - cd.getTime() / (1000 * 60)) % 60);
+                            secondsLeft = Math.floor((ed'. $i .'.getTime() / 1000 - cd.getTime() / 1000) % 60);
+                            if ((ed'. $i .'.getDate() - cd.getDate()) == 0) {
+                                document.getElementById("timer'. $i .'").style.display = "block";
+                                if (hoursLeft < 1)
+                                    document.getElementById("timer'. $i .'").style.color = "red";
+                                if (secondsLeft <= 0) {
+                                    if (secondsLeft == 0)
+                                        location.reload();
+                                    if (secondsLeft <= -10)
+                                        location.reload();
+                                    document.getElementById("time'. $i .'").innerText = "Exam has started. Disappearing in : " + (10 + secondsLeft) + "seconds";
                                 }
-                            },1000)
+                                else
+                                    document.getElementById("time'. $i .'").innerText = "Starting in : " + hoursLeft + " : " + minutesLeft + " : " + secondsLeft;
+                            }
+                            }, 1000)
                         </script>
                     </span>
                 </div>
@@ -198,7 +198,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="partials/_handleDeleteClass.php" type="button" class="btn btn-primary">Delete</a>
+                    <form action="partials/_handleDeleteClass.php" method="post">
+                        <input type="hidden" name="classId" value="<?php echo $_SESSION['in_classroom']?>">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -218,8 +221,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="partials/_handleDeleteTest.php?" type="button" class="btn btn-primary"
-                        id="cdeleteBtn">Delete</a>
+                    <form action="partials/_handleDeleteTest.php" method="post" id="cdeleteBtn">
+                        <input type="hidden" name="examId" id="examId" value="">
+                        <button type="submits" class="btn btn-primary">Delete</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -227,34 +232,32 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 
     <?php require "partials/_footer.php"; ?>
     <script>
-    document.getElementById("icon").addEventListener("click", () => {
-        let classroom_code = document.getElementById("code").innerText;
-        navigator.clipboard.writeText(classroom_code);
-        let list = document.getElementById("icon").classList;
-        list.add("bi-clipboard2-check");
-        list.remove("bi-clipboard2");
-    })
+        document.getElementById("icon").addEventListener("click", () => {
+            let classroom_code = document.getElementById("code").innerText;
+            navigator.clipboard.writeText(classroom_code);
+            let list = document.getElementById("icon").classList;
+            list.add("bi-clipboard2-check");
+            list.remove("bi-clipboard2");
+        })
 
-    document.querySelectorAll(".testDeleteBtn").forEach((e) => {
-        e.addEventListener("click", () => {
-            document.getElementById("cdeleteBtn").addEventListener("click", (element) => {
-                element.target.href +="id="+ e.querySelector("input").value;
+        document.querySelectorAll(".testDeleteBtn").forEach((e) => {
+            e.addEventListener("click", () => {
+                document.getElementById("examId").value = e.querySelector("input").value;
             })
         })
-    })
 
 
-    // const d = new Date();
-    // let timeout = Math.round(d.getTime() / 1000) + 10;
-    // let interval = setInterval(function(){
-    //     let n = new Date();
-    //     let time = Math.round(n.getTime()/1000);
-    //     document.getElementById("timer").innerText = (timeout-time);
-    //     console.log(time);
-    //     if((timeout-time)<=0){
-    //         clearInterval(interval);
-    //     }
-    // },1000);
+        // const d = new Date();
+        // let timeout = Math.round(d.getTime() / 1000) + 10;
+        // let interval = setInterval(function(){
+        //     let n = new Date();
+        //     let time = Math.round(n.getTime()/1000);
+        //     document.getElementById("timer").innerText = (timeout-time);
+        //     console.log(time);
+        //     if((timeout-time)<=0){
+        //         clearInterval(interval);
+        //     }
+        // },1000);
     </script>
 </body>
 

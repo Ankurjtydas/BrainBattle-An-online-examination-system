@@ -7,11 +7,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 require "partials/_dbconnect.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $examTitle = $_POST["examTitle"];
-    $examDescription = $_POST["examDescription"];
-    $noOfQuestions = $_POST["noOfQuestions"];
-    $examDateTime = $_POST["examDateTime"];
-    $timePerQuestion = $_POST["timePerQuestion"];
+    $examTitle = htmlspecialchars($_POST["examTitle"]);
+    $examDescription = htmlspecialchars($_POST["examDescription"]);
+    $noOfQuestions = htmlspecialchars($_POST["noOfQuestions"]);
+    $examDateTime = htmlspecialchars($_POST["examDateTime"]);
+    $timePerQuestion = htmlspecialchars($_POST["timePerQuestion"]);
 }
 ?>
 <!DOCTYPE html>

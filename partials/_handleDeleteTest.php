@@ -1,11 +1,10 @@
 <?php
 session_status() == PHP_SESSION_ACTIVE ?: session_start();
 require "_dbconnect.php";
-
-if ($_SESSION["in_classroom"] != null) {
-    if ($_SESSION["role"] == "faculty") {
-        if (isset($_GET["id"])) {
-            $examId = $_GET["id"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $examId = htmlspecialchars($_POST["examId"]);
+    if ($_SESSION["in_classroom"] != null) {
+        if ($_SESSION["role"] == "faculty") {
 
             // delete exam with get Id
             $sql = "DELETE FROM  `exams` WHERE `exam_id` = '$examId'";
@@ -22,5 +21,6 @@ if ($_SESSION["in_classroom"] != null) {
         }
     }
 }
+header("Location: ../index.php");
 
 ?>
