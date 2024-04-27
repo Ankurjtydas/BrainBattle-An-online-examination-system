@@ -20,7 +20,8 @@
                     header("Location: ../register.php?success=false&alert=$alert");
                     exit;
                 }else{
-                    $sql = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`) VALUES ('$first_name', '$last_name', '$email', '$password')";
+                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                    $sql = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`) VALUES ('$first_name', '$last_name', '$email', '$hashed_password')";
                     $result = mysqli_query($conn, $sql);
                     if($result==1){
                         $alert = "You have register successfully. You can now login into you account.";
