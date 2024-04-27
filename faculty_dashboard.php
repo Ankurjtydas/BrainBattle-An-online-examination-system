@@ -41,7 +41,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <div class="classroom">
         <div class="classroom-details">
             <div class="faculty-image">
-                <img src="" alt="Faculty Profile Image">
+                <span class="faculty-name"><?php
+                $sql = "select * from users where user_id = $row[classroom_faculty]";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
+                ?></span>
             </div>
             <div class="classroom-text">
                 <span class="classroom-title">
@@ -116,42 +121,42 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 $examDateTime = new DateTime($row["exam_date_time"]);
                 $currentDateTime = new DateTime();
                 // echo $currentDateTime->format("H m s").'<br>';
-                $currentDateTime->modify("-10 seconds");
+                $currentDateTime->modify("-15 seconds");
                 // echo $currentDateTime->format("H m s")."<br>";
                 $timeLeft = $examDateTime->diff($currentDateTime);
-                if( $timeLeft->invert == 1) {
+                if ($timeLeft->invert == 1) {
                     $displayedExams++;
-                echo '
-        <div class="test" id="test'. $i .'">
+                    echo '
+        <div class="test" id="test' . $i . '">
             <div class="test-detail">
                 <div class="detail">
                     <span class="test-title">' . $row["exam_title"] . '</span>
                     <p class="test-description m-0">' . $row["exam_description"] . '</p>
                 </div>
-                <div class="timer" id="timer'. $i .'">
-                    <span id="timertext'. $i .'"></span>
-                    <span class="time" id="time'. $i .'">
+                <div class="timer" id="timer' . $i . '">
+                    <span id="timertext' . $i . '"></span>
+                    <span class="time" id="time' . $i . '">
                         <script>
-                            examDate'. $i .' = "'. $row["exam_date_time"].'";
-                            ed'. $i .' = new Date(examDate'. $i .');
+                            examDate' . $i . ' = "' . $row["exam_date_time"] . '";
+                            ed' . $i . ' = new Date(examDate' . $i . ');
                             setInterval(() => {
                                 cd = new Date();
-                                hoursLeft = Math.floor((ed'. $i .'.getTime() / (1000 * 60 * 60) - cd.getTime() / (1000 * 60 * 60)) % 60);
-                            minutesLeft = Math.floor((ed'. $i .'.getTime() / (1000 * 60) - cd.getTime() / (1000 * 60)) % 60);
-                            secondsLeft = Math.floor((ed'. $i .'.getTime() / 1000 - cd.getTime() / 1000) % 60);
-                            if ((ed'. $i .'.getDate() - cd.getDate()) == 0) {
-                                document.getElementById("timer'. $i .'").style.display = "block";
+                                hoursLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60 * 60) - cd.getTime() / (1000 * 60 * 60)) % 60);
+                            minutesLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60) - cd.getTime() / (1000 * 60)) % 60);
+                            secondsLeft = Math.floor((ed' . $i . '.getTime() / 1000 - cd.getTime() / 1000) % 60);
+                            if ((ed' . $i . '.getDate() - cd.getDate()) == 0) {
+                                document.getElementById("timer' . $i . '").style.display = "block";
                                 if (hoursLeft < 1)
-                                    document.getElementById("timer'. $i .'").style.color = "red";
+                                    document.getElementById("timer' . $i . '").style.color = "red";
                                 if (secondsLeft <= 0) {
                                     if (secondsLeft == 0)
                                         location.reload();
                                     if (secondsLeft <= -10)
                                         location.reload();
-                                    document.getElementById("time'. $i .'").innerText = "Exam has started. Disappearing in : " + (10 + secondsLeft) + "seconds";
+                                    document.getElementById("time' . $i . '").innerText = "Exam has started. Disappearing in : " + (10 + secondsLeft) + "seconds";
                                 }
                                 else
-                                    document.getElementById("time'. $i .'").innerText = "Starting in : " + hoursLeft + " : " + minutesLeft + " : " + secondsLeft;
+                                    document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + " : " + minutesLeft + " : " + secondsLeft;
                             }
                             }, 1000)
                         </script>
@@ -162,13 +167,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 <span class="test-time">Scheduled at : </span><br>
                     <span class="date">' . date('jS F Y', strtotime($row["exam_date_time"])) . '</span><br>
                     <span class="time">' . date('h:i A', strtotime($row["exam_date_time"])) . '</span><br>
-                <a href="update_test.php?id='. $examId .'" style="color:black;"><i class="bi bi-pencil-fill update testUpdateBtn"></i></a>
+                <a href="update_test.php?id=' . $examId . '" style="color:black;"><i class="bi bi-pencil-fill update testUpdateBtn"></i></a>
                 <i class="bi bi-trash-fill trash testDeleteBtn" data-bs-toggle="modal" data-bs-target="#deleteTest"><input type="hidden" value="' . $examId . '"></i>
             </div>
         </div>';
                 }
             }
-            if($displayedExams == 0){
+            if ($displayedExams == 0) {
                 echo '
             <div class="test justify-content-center">
                 <h4 class="text-center">No Scheduled Test</h4>
@@ -199,7 +204,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <form action="partials/_handleDeleteClass.php" method="post">
-                        <input type="hidden" name="classId" value="<?php echo $_SESSION['in_classroom']?>">
+                        <input type="hidden" name="classId" value="<?php echo $_SESSION['in_classroom'] ?>">
                         <button type="submit" class="btn btn-primary">Delete</button>
                     </form>
                 </div>
