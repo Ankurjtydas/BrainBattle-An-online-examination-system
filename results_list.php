@@ -1,10 +1,14 @@
 <?php
 session_status() == PHP_SESSION_ACTIVE? : session_start();
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true){
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null){
     header("Location: index.php");
     exit;
 }else{
     require "partials/_dbconnect.php";
+    $sql = "select * from classrooms where classroom_id = '$_SESSION[in_classroom]'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $totalStudents = $row["no_of_students"];
 }
 ?>
 
@@ -31,7 +35,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true){
             $result = mysqli_query($conn, $sql);
             $numRows = mysqli_num_rows($result);
             if($numRows > 0){
-                echo $numRows;
                 $displayedResults = 0;
                 date_default_timezone_set("Asia/Kolkata");
                 for($i=0; $i<$numRows; $i++){
@@ -39,7 +42,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true){
                     $examId = $row["exam_id"];
                     $examDateTime = new DateTime($row["exam_date_time"]);
                     $currentDateTime = new DateTime();
-                    $currentDateTime->modify("-15 seconds");
+                    // $currentDateTime->modify("-15 seconds");
                     $timeLeft = $examDateTime->diff($currentDateTime);
                     if($timeLeft->invert == 0){
                         $displayedResults++;
@@ -54,7 +57,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true){
                             if($numRows2 == 1){
                                 $row2 = mysqli_fetch_assoc($result2);
                                 $resultId = $row2["result_id"];
-                                echo '<a href="result.php?result='.$resultId.'" class="test-detail">';
+                                echo '<a href="result_student.php?result='.$resultId.'" class="test-detail">';
                             }else{
                                 echo '<a href="" class="test-detail">';
                             }
@@ -66,7 +69,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true){
                     </div>
                     <div class="status">';
                         if($_SESSION["role"] == "faculty"){
-                            echo '<span class="remark"></span>';
+                            $sql = "select * from results where of_exam = '$examId'";
+                            $result = mysqli_query($conn, $sql);
+                            $totalStudentsAppeared = mysqli_num_rows($result);
+                            echo '<span class="remark">'. $totalStudentsAppeared.'/'. $totalStudents .' students appeared</span>';
                         }else{
                             if($numRows2 == 1){
                                 echo '<span class="text-success">Appeared</span>';
