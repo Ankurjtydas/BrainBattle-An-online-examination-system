@@ -1,7 +1,7 @@
 <?php
 session_status() == PHP_SESSION_ACTIVE?:session_start();
 require "partials/_dbconnect.php";
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null){
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null || $_SESSION["role"] != "student"){
     header("Location: index.php");
     exit;
 }

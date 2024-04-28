@@ -52,7 +52,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["
                         echo '
             <div class="test">';
                         if($_SESSION["role"] == "faculty"){
-                            echo '<a href="result_faculty.php?result='.$examId.'" class="test-detail">';
+                            echo '<a href="result_faculty.php?exam='.$examId.'" class="test-detail">';
                         }else{
                             if($numRows2 == 1){
                                 $row2 = mysqli_fetch_assoc($result2);
