@@ -7,7 +7,7 @@
     width: 65vw;
     height: fit-content;
     margin: 0 auto;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .desc h1 {
@@ -37,20 +37,23 @@
     flex-wrap: wrap;
     text-decoration: none;
     color: black;
-    /* cursor: pointer; */
+    gap: 0.7rem;
 }
 
 .detail {
     width: 30%;
-}
-
-.status {
-    margin: auto;
+    min-width: 150px;
 }
 
 .test-title {
     font-weight: bold;
     font-size: 1.2rem;
+}
+
+.status {
+    margin: auto;
+    font-size: 0.9rem;
+    color: green;
 }
 
 .test-time {

@@ -29,7 +29,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["
         <div class="desc">
             <h1>Results</h1>
         </div>
-        <div class="result_container">
+        <div class="result-container">
             <?php
             $sql = "select * from exams where of_classroom = '$_SESSION[in_classroom]' order by exam_date_time desc";
             $result = mysqli_query($conn, $sql);

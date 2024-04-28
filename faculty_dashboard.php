@@ -88,7 +88,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             <div class="item-image">
                 <img src="images/result.png" alt="">
             </div>
-            <span>Result</span>
+            <span>Results</span>
         </a>
         <a href="" class="dashboard-item">
             <div class="item-image">
