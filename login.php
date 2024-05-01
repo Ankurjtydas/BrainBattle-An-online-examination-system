@@ -13,6 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log in to BrainBattle</title>
   <?php require "partials/_bootstrap_css.php"; ?>
+  <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/login.css">
 </head>
 
@@ -24,7 +25,7 @@
       <form action="partials/_handleLogin.php" method="POST">
         <div class="login col-12">
           <h4 class="text-center mb-3">Login</h4>
-          <div class="row mb-3 justify-content-center">
+          <div class="row mb-3">
             <div class="col-3">
               <label for="email" class="col-form-label">Email</label>
             </div>
@@ -32,7 +33,7 @@
               <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline">
             </div>
           </div>
-          <div class="row mb-3 justify-content-center">
+          <div class="row mb-3">
             <div class="col-3">
               <label for="password" class="col-form-label">Password</label>
             </div>
@@ -41,7 +42,7 @@
               <a href="#">Forget Password?</a>
             </div>
           </div>
-          <div class="row mb-3 justify-content-center">
+          <div class="row mb-3">
             <input type="submit" class="btn btn-primary" value="Login">
           </div>
           <hr>

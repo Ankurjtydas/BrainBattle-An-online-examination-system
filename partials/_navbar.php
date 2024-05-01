@@ -4,7 +4,7 @@
   echo '
   <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">BrainBattle</a>
+      <a class="navbar-brand" href="/">BrainBattle</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -13,11 +13,13 @@
         <ul class="navbar-nav ms-auto mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" href="#">Contact Us</a>
+            <hr class="line">
           </li>';
           if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true){
             echo '
             <li class="nav-item">
               <a class="nav-link" href="login.php">Login</a>
+              <hr class="line">
             </li>
             <li class="nav-item">
               <a class="nav-link" href="register.php">Register</a>
@@ -28,7 +30,7 @@
             echo '
             <li class="nav-item profile">
               <div class="dropdown">
-                <div class="profile-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="profile-name p-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <span>'. strtoupper($first_name[0]) . strtoupper($last_name[0]) .'</span>
                 </div>
                 <ul class="dropdown-menu">
@@ -37,6 +39,21 @@
                   <li><a class="dropdown-item" href="partials/_handleLogout.php">Logout</a></li>
                 </ul>
               </div>
+            </li>
+            <li class="nav-item profile-list">
+              <a class="nav-link" href="#" style="display: flex; align-items: center;">Profile
+                <div class="p-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span>'. strtoupper($first_name[0]) . strtoupper($last_name[0]) .'</span>
+                </div>
+              </a>
+              <hr class="line">
+            </li>
+            <li class="nav-item profile-list">
+              <a class="nav-link" href="#">Some Action</a>
+              <hr class="line">
+            </li>
+            <li class="nav-item profile-list">
+              <a class="nav-link" href="partials/_handleLogout.php">Logout</a>
             </li>';
           }
           echo '

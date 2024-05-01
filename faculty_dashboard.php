@@ -30,7 +30,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         Classroom - <?php echo $_SESSION["classroom_name"] ?>
     </title>
     <?php require "partials/_bootstrap_css.php"; ?>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -45,7 +45,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 $sql = "select * from users where user_id = $row[classroom_faculty]";
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($result);
-                echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
+                echo strtoupper($row["first_name"][0]) . strtoupper($row["last_name"][0]);
                 ?></span>
             </div>
             <div class="classroom-text">
@@ -165,8 +165,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             </div>
             <div class="test-control">
                 <span class="test-time">Scheduled at : </span><br>
-                    <span class="date">' . date('jS F Y', strtotime($row["exam_date_time"])) . '</span><br>
-                    <span class="time">' . date('h:i A', strtotime($row["exam_date_time"])) . '</span><br>
+                    &nbsp;<span class="date">' . date('jS F Y', strtotime($row["exam_date_time"])) . '</span><br>
+                    &nbsp;<span class="time">' . date('h:i A', strtotime($row["exam_date_time"])) . '</span><br>
                 <a href="update_test.php?id=' . $examId . '" style="color:black;"><i class="bi bi-pencil-fill update testUpdateBtn"></i></a>
                 <i class="bi bi-trash-fill trash testDeleteBtn" data-bs-toggle="modal" data-bs-target="#deleteTest"><input type="hidden" value="' . $examId . '"></i>
             </div>
@@ -239,6 +239,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <script>
         document.getElementById("icon").addEventListener("click", () => {
             let classroom_code = document.getElementById("code").innerText;
+            if(navigator.clipboard)
+            console.log("API available");
+            console.log(classroom_code);
             navigator.clipboard.writeText(classroom_code);
             let list = document.getElementById("icon").classList;
             list.add("bi-clipboard2-check");
