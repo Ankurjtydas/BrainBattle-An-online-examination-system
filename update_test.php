@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require "partials/_bootstrap_css.php"; ?>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/test_create.css">
     <title>Update Exam</title>
 </head>
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="head">
                 <h2 class="text-center">Update Exam Details</h2>
                 <div class="test-details">
-                    <div class="body">
+                    <div class="part">
                         <?php echo '<input type="hidden" name="examId" value="'. $examId .'">'; ?>
                         <div class="detail-item">
                             <label for="examTitle" class="form-label">Exam title</label>
@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             ?>
                         </div>
                     </div>
-                    <div class="body">
+                    <div class="part">
                         <div class="detail-item">
                             <label for="examDateTime" class="form-label">Set Exam Date</label>
                             <?php 
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             ?>
                         </div>
                         <div class="detail-item">
-                            <label for="timePerQuestion" class="form-label">Time per question (in second)</label>
+                            <label for="timePerQuestion" class="form-label">Time per question (in seconds)</label>
                             <?php 
                             if (!isset($timePerQuestion)) {
                                 echo '<input type="number" min="10" value="10" class="form-control" id="timePerQuestion"
@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         </form>
-        <form action="partials/_handleExamUpdation.php" method="post">
+        <form action="partials/_handleExamUpdation.php" method="post" class="body">
             <?php
             if (isset($noOfQuestions)) {
                 $sql = "select * from questions where of_exam=$examId";
@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="test-item">
                                 <div class="question">
                                     <span>Question no. ' . $i . ' : </span>
-                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText' . $i . '" id="questionText' . $i . '">'. $row["question_text"] .'</textarea>
+                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText' . $i . '" id="questionText' . $i . '" required>'. $row["question_text"] .'</textarea>
                                 </div>
                                 <div class="options">
                                     <div class="option-item">
@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class="option-item">
                                         <label for="answer' . $i . '">Correct answer :</label>
                                         <select id="answer' . $i . '" name="answer' . $i . '" class="answer">';
-                                            if($row["correct_option"] == "A") {
+                                            if($row["correct_option"] == "") {
                                                 echo '<option value="" selected>Select option</option>';
                                             } else{
                                                 echo '<option value="">Select option</option>';
@@ -198,7 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="test-item">
                                 <div class="question">
                                     <span>Question no. ' . $i . ' : </span>
-                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText' . $i . '" id="questionText' . $i . '"></textarea>
+                                    <textarea oninput="auto_grow(this)" class="question-field" name="questionText' . $i . '" id="questionText' . $i . '" required></textarea>
                                 </div>
                                 <div class="options">
                                     <div class="option-item">
@@ -215,7 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                     <div class="option-item">
                                         <label for="answer' . $i . '">Correct answer :</label>
-                                        <select id="answer' . $i . '" name="answer' . $i . '" class="answer">
+                                        <select id="answer' . $i . '" name="answer' . $i . '" class="answer" required>
                                             <option value="">Select option</option>
                                             <hr>
                                             <option value="A">Option A</option>

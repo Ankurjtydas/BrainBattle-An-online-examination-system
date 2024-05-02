@@ -7,7 +7,7 @@ body::before {
     content: "";
     background: url(https://source.unsplash.com/1600x800/?services,job,task);
     filter: brightness(70%);
-    height: 105%;
+    height: 100%;
     width: 100%;
     position: absolute;
     z-index: -1;
@@ -27,6 +27,7 @@ body::before {
 }
 
 .login-container .box {
+    width: 500px;
     background-color: white;
     margin: 20px auto;
     border-radius: 10px;
@@ -37,4 +38,26 @@ body::before {
 .login-container .box hr {
     width: 95%;
     margin-bottom: 5px;
+}
+
+@media only screen and (max-width:600px) {
+    .login-container .box {
+        width: 90vw;
+        font-size: 1.2rem;
+    }
+    .login-container .box h4 {
+        font-size: 2rem;
+    }
+    #password {
+        margin-bottom: 1rem;
+    }
+    .btn {
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (max-width:460px) {
+    .row .col-9 {
+        min-width: 100%;
+    }
 }

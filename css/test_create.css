@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .container {
     width: 70vw;
     height: 100vh;
@@ -18,14 +23,14 @@
     gap: 0 2rem;
 }
 
-.body {
+.part {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 38%;
 }
 
-.body button {
+.part button {
     align-self: flex-end;
     margin: 10px 0;
     border-radius: 20px;
@@ -37,13 +42,13 @@
 }
 
 .desc {
-    max-height: 80px;
+    max-height: 90px;
 }
 
 .test-questions {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -60,7 +65,7 @@
     align-items: baseline;
 }
 
-.question>span {
+.question > span {
     font-weight: bold;
 }
 
@@ -129,4 +134,16 @@ hr {
     width: 90%;
     margin: 0 auto;
     margin-top: 1rem;
+}
+
+@media screen and (max-width:600px) {
+    * {font-size: 1.1rem;}
+    .container {width: 98vw;}
+    .head h2 {font-size: 1.8rem; margin-bottom: 1rem;}
+    .head .test-details {gap: 0rem; flex-direction: column; padding: 10px;}
+    .head .test-details .part {width: 100%;}
+    .test-questions .test-item .question {flex-direction: column;}
+    .test-questions .test-item .question .question-field {align-self: flex-end; width: 95%; line-height: 1.2;}
+    .options .option-item span {min-width: max-content;}
+    .options .option-item .option-field {width: 100%; line-height: 1.2;}
 }

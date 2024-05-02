@@ -7,7 +7,7 @@ body::before {
     content: "";
     background: url(https://source.unsplash.com/1600x800/?services,job,task);
     filter: brightness(70%);
-    height: 105%;
+    height: 110%;
     width: 100%;
     position: absolute;
     z-index: -1;
@@ -27,6 +27,7 @@ body::before {
 }
 
 .register-container .box {
+    width: 500px;
     background-color: white;
     margin: 20px auto;
     border-radius: 10px;
@@ -41,9 +42,31 @@ body::before {
 
 .row {
     align-items: center;
+    flex-wrap: wrap;
 }
 
 #cpassword-label {
     display: none;
-    padding-left: 28%;
+}
+
+@media screen and (max-width:600px) {
+    .register-container .box {
+        width: 90vw;
+        font-size: 1.2rem;
+    }
+    .register-container .box h4 {
+        font-size: 2rem;
+    }
+    .btn {
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (max-width:460px) {
+    .row .col-9 {
+        min-width: 100%;
+    }
+    .row .col-3 {
+        width: fit-content;
+    }
 }

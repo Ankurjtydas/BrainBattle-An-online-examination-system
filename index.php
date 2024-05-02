@@ -10,6 +10,7 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Home - BrainBattle</title>
 	<?php require "partials/_bootstrap_css.php"; ?>
+	<link rel="stylesheet" href="css/navbar.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -17,7 +18,7 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 	<?php require "partials/_header.php"; ?>
 	<section id="header-section">
 		<div class="container">
-			<h2>An Online Examination System For Seamless, Fair, and Efficient Online Exams</h2>
+			<h1>An Online Examination System For Seamless, Fair, and Efficient Online Exams</h1>
 			<p class="mark bg-dark text-light p1">A Robust Online Testing Platform For Conducting Remote Online
 				Examinations</p>
 			<p class="p2">In the evolving landscape of education, BrainBattle stands as a beacon of innovation,
@@ -57,8 +58,8 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 	<hr>
 	<section id="body-section">
 		<div class="container mt-2">
-			<h2 class="text-center">We Conduct Virtual Test And Entrance Exams Worldwide, Using Our Robust Online Exam
-				Platform</h2>
+			<h1 class="text-center">We Conduct Virtual Test And Entrance Exams Worldwide, Using Our Robust Online Exam
+				Platform</h1>
 		</div>
 	</section>
 
@@ -68,7 +69,7 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="createClassroomModalLabel">Create Your Classroom</h1>
+					<h2 class="modal-title" id="createClassroomModalLabel">Create Your Classroom</h2>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<form action="partials/_handleClassCreation.php" method="POST">
@@ -99,7 +100,7 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="joinClassroomModalLabel">Join a Classroom</h1>
+					<h2 class="modal-title" id="joinClassroomModalLabel">Join a Classroom</h2>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<form action="partials/_handleClassJoining.php" method="POST">

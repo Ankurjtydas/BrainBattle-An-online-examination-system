@@ -115,9 +115,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             </div>
         </div>
     </div>
-
-    <?php require "partials/_footer.php"?>
-
+  
     <script>
         document.querySelectorAll(".removeBtn").forEach((e)=>{
             e.addEventListener("click", ()=>{

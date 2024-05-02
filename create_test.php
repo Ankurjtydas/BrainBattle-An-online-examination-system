@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             ?>
                         </div>
                         <div class="detail-item">
-                            <label for="timePerQuestion" class="form-label">Time per question (in second)</label>
+                            <label for="timePerQuestion" class="form-label">Time per question (in seconds)</label>
                             <?php 
                             if (!isset($timePerQuestion)) {
                                 echo '<input type="number" min="10" value="10" class="form-control" id="timePerQuestion"
