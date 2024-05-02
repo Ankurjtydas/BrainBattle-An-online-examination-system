@@ -68,7 +68,7 @@ if(isset($_GET["result"])){
     <div class="container">
         <div class="image"></div>   
         <h2 class="name"><?php echo $_SESSION["first_name"]." ".$_SESSION["first_name"]?></h2>
-        <span class="score"><?php echo "Scored ".$markScored." out of ".$totalMarks;?></span>
+        <span class="score"><?php echo "Scored  ".$markScored." out of ".$totalMarks;?></span>
     </div>
 </body>
 </html>
