@@ -90,12 +90,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             </div>
             <span>Results</span>
         </a>
-        <a href="" class="dashboard-item">
-            <div class="item-image">
-                <img src="images/update.png" alt="">
-            </div>
-            <span>...</span>
-        </a>
         <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
             <div class="item-image">
                 <img src="images/trash.png" alt="">
@@ -144,19 +138,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                                 hoursLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60 * 60) - cd.getTime() / (1000 * 60 * 60)) % 60);
                             minutesLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60) - cd.getTime() / (1000 * 60)) % 60);
                             secondsLeft = Math.floor((ed' . $i . '.getTime() / 1000 - cd.getTime() / 1000) % 60);
-                            if ((ed' . $i . '.getDate() - cd.getDate()) == 0) {
+                            if (hoursLeft<24) {
                                 document.getElementById("timer' . $i . '").style.display = "block";
                                 if (hoursLeft < 1)
                                     document.getElementById("timer' . $i . '").style.color = "red";
-                                if (secondsLeft <= 0) {
-                                    if (secondsLeft == 0)
+                                if (secondsLeft < 0) {
+                                    if (secondsLeft == -1)
                                         location.reload();
-                                    if (secondsLeft <= -10)
+                                    if (secondsLeft <= -15)
                                         location.reload();
-                                    document.getElementById("time' . $i . '").innerText = "Exam has started. Disappearing in : " + (10 + secondsLeft) + "seconds";
+                                    document.getElementById("time' . $i . '").innerText = "Exam has started. Disappearing in : " + (15 + secondsLeft) + "seconds";
                                 }
                                 else
-                                    document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + " : " + minutesLeft + " : " + secondsLeft;
+                                    document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft +"s";
                             }
                             }, 1000)
                         </script>

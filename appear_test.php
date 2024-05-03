@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php echo $examTitle ?>
     </title>
     <?php require "partials/_bootstrap_css.php"; ?>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/appear_test.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -112,30 +112,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="test-item">
                             <div class="question">
-                                <span>Q. </span>
-                                <p>'. $question .'</p>
+                                <span>Q: </span>
+                                <p class="question-text">'. $question .'</p>
                             </div>
                             <hr class="appear">
                             <div class="options">
                                 <div class="option-item">
                                     <input type="radio" name="answer'. $i .'" id="optionA' . $i . '" value="A">
                                     <label for="optionA' . $i . '"><span> A: </span></label>
-                                    <label for="optionA' . $i . '">'. $optionA .'</label>
+                                    <label for="optionA' . $i . '" class="option-text">'. $optionA .'</label>
                                 </div>
                                 <div class="option-item">
                                     <input type="radio" name="answer'. $i .'" id="optionB' . $i . '" value="B">
                                     <label for="optionB' . $i . '"><span> B: </span></label>
-                                    <label for="optionB' . $i . '">'. $optionB .'</label>
+                                    <label for="optionB' . $i . '" class="option-text">'. $optionB .'</label>
                                 </div>
                                 <div class="option-item">
                                     <input type="radio" name="answer'. $i .'" id="optionC' . $i . '" value="C">
                                     <label for="optionC' . $i . '"><span> C: </span></label>
-                                    <label for="optionC' . $i . '">'. $optionC .'</label>
+                                    <label for="optionC' . $i . '" class="option-text">'. $optionC .'</label>
                                 </div>
                                 <div class="option-item">
                                     <input type="radio" name="answer'. $i .'" id="optionD' . $i . '" value="D">
                                     <label for="optionD' . $i . '"><span> D: </span></label>
-                                    <label for="optionD' . $i . '">'. $optionD .'</label>
+                                    <label for="optionD' . $i . '" class="option-text">'. $optionD .'</label>
                                 </div>
                             </div>
                         </div>

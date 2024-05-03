@@ -4,11 +4,11 @@
 }
 
 .container {
-    width: 60vw;
+    width: 700px;
     margin: 0 auto;
 }
 
-.desc h1 {
+.desc h2 {
     margin: 1rem 0;
     text-align: center;
     text-decoration: underline;
@@ -16,12 +16,14 @@
 
 .heading {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
 }
 
 .noOfStudents {
     font-size: 1.2rem;
+    min-width: max-content;
 }
 
 .item {
@@ -30,9 +32,9 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0.7rem 1rem;
+    padding: 0.5rem 1rem;
     box-sizing: border-box;
-    margin: 0.6rem auto;
+    margin: 0.4rem auto;
 }
 
 .name {
@@ -59,8 +61,11 @@ i:hover {
     color: red;
 }
 
-/* hr {
-    width: 85%;
-    margin: 1.5rem auto;
-    border: 1px solid black;
-} */
+@media screen and (max-width:600px) {
+    .container * {font-size: 1.1rem;}
+    .container {width: 90vw;}
+    .container h1 {font-size: 1.8rem;}
+    .container h2 {font-size: 1.7rem;}
+    .container h3 {font-size: 1.3rem;}
+    .noOfStudents span {font-size: 0.9rem;}
+}

@@ -85,7 +85,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .classroom-code span {
-    text-wrap: nowrap;
+    min-width: max-content;
     color: white;
     padding: 3px 2px;
 }
@@ -250,12 +250,13 @@ hr {
         margin: 0.6rem 0;
         margin-right: 0.4rem;
     }
-    #icon {font-size: 2rem; padding: 0;}
+    #icon {font-size: 1.8rem; padding: 0;}
     .dashboard-container {width: 90vw;}
     hr {width: 90%;}
     .test-container { width: 95vw;}
     .test-container h2 {font-size: 1.8rem;}
+    .test-container .test {line-height: 1.3;}
     .test-container .test-title {font-size: 1.3rem;}
-    .test-container .test-control i {font-size: 1.5rem;}
+    .test-container .test-control i {font-size: 1.3rem; margin: 0 10px;}
     .date, .time {font-size: 1rem;}
 }

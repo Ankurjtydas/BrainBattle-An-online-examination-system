@@ -63,7 +63,10 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 		</div>
 	</section>
 
-	<!-- createClassroomModal -->
+	<?php
+	if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true && $_SESSION["in_classroom"] == null){
+		echo '
+		<!-- createClassroomModal -->
 	<div class="modal fade" id="createClassroomModal" tabindex="-1" aria-labelledby="createClassroomModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog">
@@ -118,8 +121,9 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 				</form>
 			</div>
 		</div>
-	</div>
-
+	</div>';
+}
+?>
 	<?php require "partials/_footer.php"; ?>
 </body>
 

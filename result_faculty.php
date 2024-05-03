@@ -28,7 +28,7 @@ if (isset($_GET["exam"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $row["exam_title"] . ' - Result'; ?></title>
     <?php include "partials/_bootstrap_css.php"; ?>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/result_faculty.css">
 </head>
 
@@ -64,14 +64,14 @@ if (isset($_GET["exam"])) {
                 for ($i = 1; $i <= $totalStudents; $i++) {
                     $row = mysqli_fetch_assoc($result);
                     $sql = "select * from results where of_exam = '$examId' and by_user = '$row[user_id]'";
-                    $result = mysqli_query($conn, $sql);
-                    $numRows = mysqli_num_rows($result);
+                    $result2 = mysqli_query($conn, $sql);
+                    $numRows = mysqli_num_rows($result2);
                     echo '
                         <tr>
                             <td class="sl">' . $i . '</td>
                             <td class="name">' . $row["first_name"] . ' ' . $row["last_name"] . '</td>';
                     if ($numRows == 1) {
-                        $row2 = mysqli_fetch_assoc($result);
+                        $row2 = mysqli_fetch_assoc($result2);
                         echo '<td class="mark">' . $row2["mark_obtained"] . '</td>';
                     }else{
                         echo '<td class="mark">F</td>';

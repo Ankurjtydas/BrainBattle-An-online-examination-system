@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require "partials/_bootstrap_css.php"; ?>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/test_create.css">
     <title>Exam Creation</title>
 </head>
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="head">
                 <h2 class="text-center">Set Exam Details</h2>
                 <div class="test-details">
-                    <div class="body">
+                    <div class="part">
                         <div class="detail-item">
                             <label for="examTitle" class="form-label">Exam title</label>
                             <?php 
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             ?>
                         </div>
                     </div>
-                    <div class="body">
+                    <div class="part">
                         <div class="detail-item">
                             <label for="examDateTime" class="form-label">Set Exam Date & Time</label>
                             <?php 

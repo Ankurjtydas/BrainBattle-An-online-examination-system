@@ -34,7 +34,7 @@
                   <span>'. strtoupper($first_name[0]) . strtoupper($last_name[0]) .'</span>
                 </div>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
                   <li><a class="dropdown-item" href="#">Another action</a></li>
                   <li><a class="dropdown-item" href="partials/_handleLogout.php">Logout</a></li>
                 </ul>

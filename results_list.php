@@ -1,5 +1,6 @@
 <?php
-session_status() == PHP_SESSION_ACTIVE? : session_start();
+session_status() == PHP_SESSION_ACTIVE? : session_start();  
+date_default_timezone_set("Asia/Kolkata");
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null){
     header("Location: index.php");
     exit;
@@ -19,7 +20,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
     <?php require "partials/_bootstrap_css.php"?>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/results_list.css">
 </head>
 <body>
@@ -36,7 +37,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["
             $numRows = mysqli_num_rows($result);
             if($numRows > 0){
                 $displayedResults = 0;
-                date_default_timezone_set("Asia/Kolkata");
                 for($i=0; $i<$numRows; $i++){
                     $row = mysqli_fetch_assoc($result);
                     $examId = $row["exam_id"];
@@ -70,8 +70,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["
                     <div class="status">';
                         if($_SESSION["role"] == "faculty"){
                             $sql = "select * from results where of_exam = '$examId'";
-                            $result = mysqli_query($conn, $sql);
-                            $totalStudentsAppeared = mysqli_num_rows($result);
+                            $result3 = mysqli_query($conn, $sql);
+                            $totalStudentsAppeared = mysqli_num_rows($result3);
                             echo '<span class="remark">'. $totalStudentsAppeared.'/'. $totalStudents .' students appeared</span>';
                         }else{
                             if($numRows2 == 1){
