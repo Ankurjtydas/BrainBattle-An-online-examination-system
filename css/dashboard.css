@@ -22,7 +22,7 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     width: 70vw;
     height: 40vh;
-    background-color: blue;
+    background-color: #009fff;
     margin: 0 auto;
     border-radius: 30px;
 }
