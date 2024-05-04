@@ -1,26 +1,40 @@
 <?php
-session_status() == PHP_SESSION_ACTIVE?:session_start();
+session_status() == PHP_SESSION_ACTIVE ?: session_start();
 require "partials/_dbconnect.php";
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null || $_SESSION["role"] != "student"){
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION["in_classroom"] == null || $_SESSION["role"] != "student") {
     header("Location: index.php");
     exit;
 }
-if(isset($_GET["result"])){
+if (isset($_GET["result"])) {
     $resultId = $_GET["result"];
     $sql = "select * from results where result_id = '$resultId'";
     $result = mysqli_query($conn, $sql);
+    $numRows = mysqli_num_rows($result);
+
+    // exit if the result id doesn't exist
+    if ($numRows != 1) {
+        $alert = "The result doesn't exist.";
+        header("Location: index.php?success=false&alert=$alert");
+        exit;
+    }
     $row = mysqli_fetch_assoc($result);
-    if($_SESSION["user_id"] != $row["by_user"]){
+
+    // check if this result id belongs to the user or not
+    if ($_SESSION["user_id"] != $row["by_user"]) {
         header("Location: index.php");
         exit;
     }
     $markScored = $row["mark_obtained"];
     $totalMarks = $row["total_marks"];
+} else {
+    header("Location: index.php");
+    exit;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +49,6 @@ if(isset($_GET["result"])){
     body {
         width: 100vw;
         height: 100vh;
-        /* background-color: rgb(240, 240, 240); */
         position: relative;
         display: flex;
         justify-content: center;
@@ -64,11 +77,13 @@ if(isset($_GET["result"])){
         font-size: 1.2rem;
     }
 </style>
+
 <body>
     <div class="container">
-        <div class="image"></div>   
-        <h2 class="name"><?php echo $_SESSION["first_name"]." ".$_SESSION["first_name"]?></h2>
-        <span class="score"><?php echo "Scored ".$markScored." out of ".$totalMarks;?></span>
+        <div class="image"></div>
+        <h2 class="name"><?php echo $_SESSION["first_name"] . " " . $_SESSION["first_name"] ?></h2>
+        <span class="score"><?php echo "Scored " . $markScored . " out of " . $totalMarks; ?></span>
     </div>
 </body>
+
 </html>

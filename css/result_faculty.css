@@ -3,12 +3,18 @@
     padding: 0;
 }
 
+body {
+    background-color: lightblue;
+}
+
 .container {
     width: 70vw;
+    height: 85vh;
     margin: 0 auto;
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
+    background-color: white;
+    padding: 0;
 }
 
 #result {
@@ -22,14 +28,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 70%;
+    width: 100%;
 }
 
 .exam-detail textarea {
     text-align: center;
     resize: none;
     overflow: hidden;
-    width: 100%;
+    width: 70%;
     min-height: 150px;
     font-size: 1.4rem;
     font-weight: 600;
@@ -38,7 +44,7 @@
 }
 
 .result-table {
-    width: 90%;
+    width: 80%;
     border-collapse: collapse;
     margin: 1rem 0;
     border: 2px solid black;
@@ -46,15 +52,19 @@
 
 .sl {
     width: 10%;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .name {
     text-align: center;
+    vertical-align: middle;
 }
 
-.mark {
+.result-table .marks {
     width: 20%;
     text-align: center;
+    vertical-align: middle;
 }
 
 #print-btn {
@@ -69,5 +79,11 @@
         visibility: visible;
     }
     .container {width: 100vw;}
+    .result-table {width: 80%;}
     .buttons, .buttons * {display: none;}
+}
+
+@media screen and (max-width:600px) {
+    .container {width: 100vw;}
+    .result-table {width: 90%;}
 }

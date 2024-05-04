@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // echo 'You scored '. $markScored .' out of '. $numRows;
     $insertSql = "INSERT INTO `results` (`of_exam`, `by_user`, `mark_obtained`, `total_marks`, `created_at`) VALUES ('$examId', '$_SESSION[user_id]', '$markScored', '$numRows', current_timestamp())";
     mysqli_query($conn, $insertSql);
-    header("Location: ../result.php");
+    header("Location: ../result_student.php");
     exit;
 }else{
     header("Location: ../index.php");

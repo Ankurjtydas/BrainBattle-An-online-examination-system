@@ -119,6 +119,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true && $_SESSION["r
     </div>';
 }
   ?>
+  <?php require "partials/_footer.php"; ?>
 
     <script>
         document.querySelectorAll(".removeBtn").forEach((e)=>{

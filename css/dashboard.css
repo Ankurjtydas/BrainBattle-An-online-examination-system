@@ -22,6 +22,7 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     width: 70vw;
     height: 40vh;
+    min-height: 250px;
     background-color: blue;
     margin: 0 auto;
     border-radius: 30px;
@@ -37,13 +38,31 @@ body::-webkit-scrollbar-thumb {
 }
 
 .faculty-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: fit-content;
+}
+
+.faculty-name {
+    width: 80px;
     aspect-ratio: 1/1;
     background-color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.faculty-name .name {
+    margin: 6px;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.faculty-image .remark {
+    color: white;
+    font-weight: 600;
 }
 
 .classroom-text {
@@ -53,12 +72,6 @@ body::-webkit-scrollbar-thumb {
 
 .classroom-text::-webkit-scrollbar {
     width: 0.2em;
-}
-
-.faculty-name {
-    margin: 6px;
-    font-size: 2.5rem;
-    font-weight: bold;
 }
 
 .classroom-title {
@@ -88,6 +101,10 @@ body::-webkit-scrollbar-thumb {
     min-width: max-content;
     color: white;
     padding: 3px 2px;
+}
+
+.classroom-code .copy-code {
+    display: flex;
 }
 
 .classroom-code #code {
@@ -154,7 +171,6 @@ body::-webkit-scrollbar-thumb {
 .test-container {
     width: 70vw;
     margin: 1rem auto;
-    padding: 0 1rem;
     margin: 0 auto;
     margin-bottom: 2rem;
 }
@@ -233,7 +249,7 @@ hr {
 
 @media screen and (max-width:600px) {
     * {font-size: 1.1rem;}
-    .classroom {width: 95vw; height: 35vh;}
+    .classroom {width: 98vw; height: 35vh; border-radius: 30px;}
     .classroom .classroom-details .classroom-title {font-size: 1.8rem;}
     .classroom .classroom-details .classroom-desc {font-size: 1rem;}
     .classroom .classroom-code {
@@ -243,6 +259,7 @@ hr {
         height: 90%;
         margin: 0 1rem;
     }
+    .classroom-code .copy-code {align-items: center;}
     .classroom-code #code {
         display: flex;
         align-items: center;
@@ -250,7 +267,7 @@ hr {
         margin: 0.6rem 0;
         margin-right: 0.4rem;
     }
-    #icon {font-size: 1.8rem; padding: 0;}
+    #icon {font-size: 1.5rem; padding: 0;}
     .dashboard-container {width: 90vw;}
     hr {width: 90%;}
     .test-container { width: 95vw;}

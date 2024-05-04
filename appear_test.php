@@ -8,6 +8,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $examId = htmlspecialchars($_POST["examId"]);
     require "partials/_dbconnect.php";
+
+    // check if the user already appeared in the exam or not
+    $sql = "select * from results where of_exam=$examId and by_user=$_SESSION[user_id]";
+    $result = mysqli_query($conn, $sql);
+    $numRows = mysqli_num_rows($result);
+    if($numRows != 0){
+        $alert = "You have already give this exam.";
+        header("Location: student_dashboard.php?success=false&alert=$alert");
+        exit;
+    }
+
     $sql = "select * from exams where exam_id=$examId";
     $result = mysqli_query($conn, $sql);
     $numRows = mysqli_num_rows($result);
@@ -15,6 +26,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
         $examTitle = $row["exam_title"];
         $timePerQuestion = $row["time_per_question"];
+    }else{
+        header("Location: student_dashboard.php");
+        exit;
     }
 }else{
     header("Location: index.php");

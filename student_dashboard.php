@@ -40,19 +40,22 @@ if ($numRows == 1) {
     <div class="classroom">
         <div class="classroom-details">
             <div class="faculty-image">
-                <span class="faculty-name"><?php
-                $sql = "select * from users where user_id = $row[classroom_faculty]";
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
-                ?></span>
+                <div class="faculty-name">
+                    <span class="name"><?php
+                    $sql = "select * from users where user_id = $row[classroom_faculty]";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
+                    ?></span>
+                </div>
+                <span class="remark">Faculty</span>
             </div>
             <div class="classroom-text">
                 <span class="classroom-title">
                     <?php echo $_SESSION["classroom_name"] ?>
                 </span><br>
                 <span class="classroom-desc">
-                    <?php echo $_SESSION["classroom_description"] ?>
+                    <?php echo nl2br($_SESSION["classroom_description"]); ?>
                 </span>
             </div>
         </div>
@@ -62,12 +65,6 @@ if ($numRows == 1) {
 
     <div class="dashboard-container">
 
-        <!-- <a href="" class="dashboard-item">
-            <div class="item-image">
-                <img src="images/create.png" alt="">
-            </div>
-            <span> ...</span>
-        </a> -->
         <a href="people.php" class="dashboard-item">
             <div class="item-image">
                 <img src="images/group.webp" alt="">
@@ -80,12 +77,6 @@ if ($numRows == 1) {
             </div>
             <span>Results</span>
         </a>
-        <!-- <a href="" class="dashboard-item">
-            <div class="item-image">
-                <img src="images/update.png" alt="">
-            </div>
-            <span>...</span>
-        </a> -->
         <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#leaveModal">
             <div class="item-image">
                 <img src="images/leave.png" alt="">

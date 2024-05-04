@@ -41,12 +41,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <div class="classroom">
         <div class="classroom-details">
             <div class="faculty-image">
-                <span class="faculty-name"><?php
-                $sql = "select * from users where user_id = $row[classroom_faculty]";
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                echo strtoupper($row["first_name"][0]) . strtoupper($row["last_name"][0]);
-                ?></span>
+                <div class="faculty-name">
+                    <span class="name"><?php
+                    $sql = "select * from users where user_id = $row[classroom_faculty]";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
+                    ?></span>
+                </div>
+                <span class="remark">Faculty</span>
             </div>
             <div class="classroom-text">
                 <span class="classroom-title">
@@ -59,7 +62,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         </div>
         <div class="classroom-code">
             <span>Code : </span>
-            <div style="display:flex;">
+            <div class="copy-code">
                 <div id="code">
                     <?php echo $_SESSION["classroom_code"] ?>
                 </div>
@@ -233,8 +236,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <script>
         document.getElementById("icon").addEventListener("click", () => {
             let classroom_code = document.getElementById("code").innerText;
-            if(navigator.clipboard)
-            console.log("API available");
+            if (navigator.clipboard)
+                console.log("API available");
             console.log(classroom_code);
             navigator.clipboard.writeText(classroom_code);
             let list = document.getElementById("icon").classList;
