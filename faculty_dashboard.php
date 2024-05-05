@@ -77,25 +77,25 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 
         <a href="create_test.php" id="create_test" class="dashboard-item">
             <div class="item-image">
-                <img src="images/create.png" alt="">
+                <img src="images/icons/create.png" alt="">
             </div>
             <span>Create New Test</span>
         </a>
         <a href="people.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/group.webp" alt="">
+                <img src="images/icons/group.webp" alt="">
             </div>
             <span>People</span>
         </a>
         <a href="results_list.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/result.png" alt="">
+                <img src="images/icons/result.png" alt="">
             </div>
             <span>Results</span>
         </a>
         <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
             <div class="item-image">
-                <img src="images/trash.png" alt="">
+                <img src="images/icons/trash.png" alt="">
             </div>
             <span>Delete Classroom</span>
         </a>

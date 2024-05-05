@@ -58,13 +58,26 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 	<hr>
 	<section id="body-section">
 		<div class="container mt-2">
-			<h1 class="text-center">We Conduct Virtual Test And Entrance Exams Worldwide, Using Our Robust Online Exam
-				Platform</h1>
+			<h1 class="text-center">We Conduct Virtual Test And Entrance Exams Worldwide, Using Our Robust Online Exam Platform</h1>
+			<div class="services">
+				<div class="item">
+					<img src="images/iit.jpg" alt="">
+				</div>
+				<div class="item">
+					<img src="images/entrance.jpg" alt="">
+				</div>
+				<div class="item">
+					<img src="images/test.jpg" alt="">
+				</div>
+				<div class="item">
+					<img src="images/virtual.jpg" alt="">
+				</div>
+			</div>
 		</div>
 	</section>
 
 	<?php
-	if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true && $_SESSION["in_classroom"] == null){
+	if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true && $_SESSION["in_classroom"] == null) {
 		echo '
 		<!-- createClassroomModal -->
 	<div class="modal fade" id="createClassroomModal" tabindex="-1" aria-labelledby="createClassroomModalLabel"
@@ -122,8 +135,8 @@ session_status() == PHP_SESSION_ACTIVE ?: session_start();
 			</div>
 		</div>
 	</div>';
-}
-?>
+	}
+	?>
 	<?php require "partials/_footer.php"; ?>
 </body>
 

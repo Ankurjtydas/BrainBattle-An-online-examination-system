@@ -66,7 +66,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                         <?php echo $numRows - 1; ?>
                     </span>
                     <span>
-                        <?php if(($numRows-1) == 1) echo 'student'; else echo 'students'?>
+                        <?php if(($numRows-1) == 1) echo 'student'; else echo 'students';?>
                     </span>
                 </div>
             </div>
@@ -79,7 +79,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                         echo '
                         <div class="item">
                             <div class="name">
-                                <img src="images/people.png" alt="Image">
+                                <img src="images/icons/people.png" alt="Image">
                                 <span>' . $row["first_name"] . ' ' . $row["last_name"] . '</span>
                             </div>';
                             if($_SESSION["role"] == "faculty")

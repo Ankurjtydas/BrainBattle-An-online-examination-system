@@ -30,6 +30,7 @@
     opacity: 0.3;
     background-repeat: no-repeat;
     background-position: center 0vh;
+    filter: brightness(70%);
 }
 
 #header-section .container .p1 {
@@ -61,6 +62,39 @@
 
 #header-section .container .btn:hover {
     background-color: rgb(74, 133, 189);
+}
+
+/* #body-section {
+    background-color: rgb(247, 247, 247);
+} */
+
+#body-section .container {
+    width: 90vw;
+    margin: 0 auto;
+    padding: 0;;
+}
+
+#body-section .services {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: fit-content;
+    justify-content: center;
+}
+
+#body-section .services .item {
+    margin: 10px;
+    max-width: 250px;
+    max-height: 160px;
+    overflow: auto;
+    border-radius: 20px;
+}
+
+#body-section .services .item img {
+    filter: brightness(85%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 hr {

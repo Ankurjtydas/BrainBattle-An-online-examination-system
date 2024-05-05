@@ -33,7 +33,6 @@
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
             $_SESSION["in_classroom"] = $row["classroom_id"];
-            $_SESSION["classroom_code"] = $row["classroom_code"];
             $_SESSION["role"] = "faculty";
 
 

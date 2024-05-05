@@ -67,19 +67,19 @@ if ($numRows == 1) {
 
         <a href="people.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/group.webp" alt="">
+                <img src="images/icons/group.webp" alt="">
             </div>
             <span>People</span>
         </a>
         <a href="results_list.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/result.png" alt="">
+                <img src="images/icons/result.png" alt="">
             </div>
             <span>Results</span>
         </a>
         <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#leaveModal">
             <div class="item-image">
-                <img src="images/leave.png" alt="">
+                <img src="images/icons/leave.png" alt="">
             </div>
             <span>Leave Class</span>
         </a>
