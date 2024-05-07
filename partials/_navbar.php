@@ -10,11 +10,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact Us</a>
-            <hr class="line">
-          </li>';
+        <ul class="navbar-nav ms-auto mb-lg-0">';
           if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true){
             echo '
             <li class="nav-item">
@@ -34,7 +30,7 @@
                   <span>'. strtoupper($first_name[0]) . strtoupper($last_name[0]) .'</span>
                 </div>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
                   <li><a class="dropdown-item" href="#">Another action</a></li>
                   <li><a class="dropdown-item" href="partials/_handleLogout.php">Logout</a></li>
                 </ul>

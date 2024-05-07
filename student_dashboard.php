@@ -40,19 +40,22 @@ if ($numRows == 1) {
     <div class="classroom">
         <div class="classroom-details">
             <div class="faculty-image">
-                <span class="faculty-name"><?php
-                $sql = "select * from users where user_id = $row[classroom_faculty]";
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
-                ?></span>
+                <div class="faculty-name">
+                    <span class="name"><?php
+                    $sql = "select * from users where user_id = $row[classroom_faculty]";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
+                    ?></span>
+                </div>
+                <span class="remark">Faculty</span>
             </div>
             <div class="classroom-text">
                 <span class="classroom-title">
                     <?php echo $_SESSION["classroom_name"] ?>
                 </span><br>
                 <span class="classroom-desc">
-                    <?php echo $_SESSION["classroom_description"] ?>
+                    <?php echo nl2br($_SESSION["classroom_description"]); ?>
                 </span>
             </div>
         </div>
@@ -62,33 +65,21 @@ if ($numRows == 1) {
 
     <div class="dashboard-container">
 
-        <a href="" class="dashboard-item">
-            <div class="item-image">
-                <img src="images/create.png" alt="">
-            </div>
-            <span> ...</span>
-        </a>
         <a href="people.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/group.webp" alt="">
+                <img src="images/icons/group.webp" alt="">
             </div>
             <span>People</span>
         </a>
         <a href="results_list.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/result.png" alt="">
+                <img src="images/icons/result.png" alt="">
             </div>
             <span>Results</span>
         </a>
-        <a href="" class="dashboard-item">
-            <div class="item-image">
-                <img src="images/update.png" alt="">
-            </div>
-            <span>...</span>
-        </a>
         <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#leaveModal">
             <div class="item-image">
-                <img src="images/leave.png" alt="">
+                <img src="images/icons/leave.png" alt="">
             </div>
             <span>Leave Class</span>
         </a>
@@ -139,18 +130,18 @@ if ($numRows == 1) {
                                 hoursLeft = Math.floor((ed' . $i . '.getTime()/(1000*60*60)-cd.getTime()/(1000*60*60))%60);
                                 minutesLeft = Math.floor((ed' . $i . '.getTime()/(1000*60)-cd.getTime()/(1000*60))%60);
                                 secondsLeft = Math.floor((ed' . $i . '.getTime()/1000-cd.getTime()/1000)%60);
-                                if((ed' . $i . '.getDate() - cd.getDate()) == 0){
+                                if(hoursLeft<24){
                                     document.getElementById("timer' . $i . '").style.display = "block";
                                     if(hoursLeft <1)
                                         document.getElementById("timer' . $i . '").style.color = "red";
-                                    if(secondsLeft<=0){
-                                        if(secondsLeft== 0)
+                                    if(secondsLeft < 0){
+                                        if(secondsLeft == -1)
                                             location.reload();
                                         if(secondsLeft <= -15)
                                             location.reload();
                                         document.getElementById("time' . $i . '").innerText = "Exam has started. Join Before : "+(15+secondsLeft)+" seconds";
                                     }else
-                                        document.getElementById("time' . $i . '").innerText = "Starting in : "+hoursLeft+" : "+minutesLeft+" : "+secondsLeft;
+                                        document.getElementById("time' . $i . '").innerText = "Starting in : "+hoursLeft+"h : "+minutesLeft+"m : "+secondsLeft+"s";
                                 }
                             },1000)
                         </script>

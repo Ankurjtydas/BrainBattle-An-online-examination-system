@@ -41,12 +41,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <div class="classroom">
         <div class="classroom-details">
             <div class="faculty-image">
-                <span class="faculty-name"><?php
-                $sql = "select * from users where user_id = $row[classroom_faculty]";
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                echo strtoupper($row["first_name"][0]) . strtoupper($row["last_name"][0]);
-                ?></span>
+                <div class="faculty-name">
+                    <span class="name"><?php
+                    $sql = "select * from users where user_id = $row[classroom_faculty]";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
+                    ?></span>
+                </div>
+                <span class="remark">Faculty</span>
             </div>
             <div class="classroom-text">
                 <span class="classroom-title">
@@ -59,7 +62,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         </div>
         <div class="classroom-code">
             <span>Code : </span>
-            <div style="display:flex;">
+            <div class="copy-code">
                 <div id="code">
                     <?php echo $_SESSION["classroom_code"] ?>
                 </div>
@@ -74,31 +77,25 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 
         <a href="create_test.php" id="create_test" class="dashboard-item">
             <div class="item-image">
-                <img src="images/create.png" alt="">
+                <img src="images/icons/create.png" alt="">
             </div>
             <span>Create New Test</span>
         </a>
         <a href="people.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/group.webp" alt="">
+                <img src="images/icons/group.webp" alt="">
             </div>
             <span>People</span>
         </a>
         <a href="results_list.php" class="dashboard-item">
             <div class="item-image">
-                <img src="images/result.png" alt="">
+                <img src="images/icons/result.png" alt="">
             </div>
             <span>Results</span>
         </a>
-        <a href="" class="dashboard-item">
-            <div class="item-image">
-                <img src="images/update.png" alt="">
-            </div>
-            <span>...</span>
-        </a>
         <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
             <div class="item-image">
-                <img src="images/trash.png" alt="">
+                <img src="images/icons/trash.png" alt="">
             </div>
             <span>Delete Classroom</span>
         </a>
@@ -144,19 +141,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                                 hoursLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60 * 60) - cd.getTime() / (1000 * 60 * 60)) % 60);
                             minutesLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60) - cd.getTime() / (1000 * 60)) % 60);
                             secondsLeft = Math.floor((ed' . $i . '.getTime() / 1000 - cd.getTime() / 1000) % 60);
-                            if ((ed' . $i . '.getDate() - cd.getDate()) == 0) {
+                            if (hoursLeft<24) {
                                 document.getElementById("timer' . $i . '").style.display = "block";
                                 if (hoursLeft < 1)
                                     document.getElementById("timer' . $i . '").style.color = "red";
-                                if (secondsLeft <= 0) {
-                                    if (secondsLeft == 0)
+                                if (secondsLeft < 0) {
+                                    if (secondsLeft == -1)
                                         location.reload();
-                                    if (secondsLeft <= -10)
+                                    if (secondsLeft <= -15)
                                         location.reload();
-                                    document.getElementById("time' . $i . '").innerText = "Exam has started. Disappearing in : " + (10 + secondsLeft) + "seconds";
+                                    document.getElementById("time' . $i . '").innerText = "Exam has started. Disappearing in : " + (15 + secondsLeft) + "seconds";
                                 }
                                 else
-                                    document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + " : " + minutesLeft + " : " + secondsLeft;
+                                    document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft +"s";
                             }
                             }, 1000)
                         </script>
@@ -239,8 +236,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <script>
         document.getElementById("icon").addEventListener("click", () => {
             let classroom_code = document.getElementById("code").innerText;
-            if(navigator.clipboard)
-            console.log("API available");
+            if (navigator.clipboard)
+                console.log("API available");
             console.log(classroom_code);
             navigator.clipboard.writeText(classroom_code);
             let list = document.getElementById("icon").classList;

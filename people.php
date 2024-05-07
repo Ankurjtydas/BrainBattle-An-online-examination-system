@@ -19,7 +19,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>People</title>
     <?php require "partials/_bootstrap_css.php"?>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/people.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -32,12 +32,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             $sqlForClassname = "select * from classrooms where classroom_id=$_SESSION[in_classroom]";
             $result2 = mysqli_query($conn, $sqlForClassname);
             $row2 = mysqli_fetch_assoc($result2);
-            echo '<h1>People in ' . $row2["classroom_name"] . '</h1>'
+            echo '<h2>People in ' . $row2["classroom_name"] . '</h2>'
                 ?>
         </div>
         <div class="faculty-container">
             <div class="heading">
-                <h2>Faculty</h2>
+                <h3>Faculty</h3>
             </div>
             <div class="item">
                 <div class="name">
@@ -57,16 +57,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 </div>
             </div>
         </div>
-        <!-- <hr> -->
+
         <div class="student-container">
             <div class="heading">
-                <h2>Students</h2>
+                <h3>Students</h3>
                 <div class="noOfStudents">
                     <span>
                         <?php echo $numRows - 1; ?>
                     </span>
                     <span>
-                        <?php if(($numRows-1) == 1) echo 'student'; else echo 'students'?>
+                        <?php if(($numRows-1) == 1) echo 'student'; else echo 'students';?>
                     </span>
                 </div>
             </div>
@@ -79,7 +79,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                         echo '
                         <div class="item">
                             <div class="name">
-                                <img src="images/people.png" alt="Image">
+                                <img src="images/icons/people.png" alt="Image">
                                 <span>' . $row["first_name"] . ' ' . $row["last_name"] . '</span>
                             </div>';
                             if($_SESSION["role"] == "faculty")
@@ -91,13 +91,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             </div>
         </div>
     </div>
-
+<?php
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true && $_SESSION["role"] == "faculty"){
+    echo '
     <!-- RemoveStudentModal -->
     <div class="modal fade" id="removeStudent" tabindex="-1" aria-labelledby="removeStudentLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="removeStudentLabel">Remove Student</h1>
+                    <h2 class="modal-title" id="removeStudentLabel">Remove Student</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -114,8 +116,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 </div>
             </div>
         </div>
-    </div>
-  
+    </div>';
+}
+  ?>
+  <?php require "partials/_footer.php"; ?>
+
     <script>
         document.querySelectorAll(".removeBtn").forEach((e)=>{
             e.addEventListener("click", ()=>{

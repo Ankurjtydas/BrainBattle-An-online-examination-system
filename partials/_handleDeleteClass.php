@@ -6,6 +6,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if($_SESSION["in_classroom"] != null){
         // echo var_dump($_SESSION);
         if($_SESSION["role"] == "faculty"){
+            // check if the user is faculty of this classroom or not
+            $sql = "select * from classrooms where `classroom_id` = $classId";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            if($row["classroom_faculty"] != $_SESSION["user_id"]){
+                header("Location: ../index.php");
+                exit;
+            }
 
             // delete current classroom
             $sql = "DELETE FROM  `classrooms` WHERE `classroom_id` = $classId";
@@ -19,7 +27,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 mysqli_query($conn, $sql);
                 $_SESSION["in_classroom"] = null;
                 $_SESSION["role"] = null;
-                $_SESSION["classroom_code"] = null;
                 exit;
             }
         }

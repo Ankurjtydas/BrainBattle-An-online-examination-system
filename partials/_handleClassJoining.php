@@ -3,7 +3,7 @@
     require "_dbconnect.php";
 
     if($_SESSION["in_classroom"] != null){
-        $alert = "Your are already in another class.";
+        $alert = "Your are already in a class.";
         header("Location: ../index.php?success=false&alert=$alert");
         exit;
     }
@@ -16,6 +16,11 @@
         $numRows = mysqli_num_rows($result);
         if($numRows == 1){
             $row = mysqli_fetch_assoc($result);
+            if($classroomCode !== $row["classroom_code"]){
+                $alert = "The classroom doesn't exist.";
+                header("Location: ../index.php?success=false&alert=$alert");
+                exit;
+            }
             $sql2 = "UPDATE `users` SET `in_classroom` = '$row[classroom_id]', `role` = 'student' WHERE `user_id` = $_SESSION[user_id]";
             $result2 = mysqli_query($conn, $sql2);
             if($result2 == 1){

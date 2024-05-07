@@ -8,6 +8,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $examId = htmlspecialchars($_POST["examId"]);
     require "partials/_dbconnect.php";
+
+    // check if the user already appeared in the exam or not
+    $sql = "select * from results where of_exam=$examId and by_user=$_SESSION[user_id]";
+    $result = mysqli_query($conn, $sql);
+    $numRows = mysqli_num_rows($result);
+    if($numRows != 0){
+        $alert = "You have already give this exam.";
+        header("Location: student_dashboard.php?success=false&alert=$alert");
+        exit;
+    }
+
     $sql = "select * from exams where exam_id=$examId";
     $result = mysqli_query($conn, $sql);
     $numRows = mysqli_num_rows($result);
@@ -15,6 +26,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
         $examTitle = $row["exam_title"];
         $timePerQuestion = $row["time_per_question"];
+    }else{
+        header("Location: student_dashboard.php");
+        exit;
     }
 }else{
     header("Location: index.php");
@@ -32,7 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php echo $examTitle ?>
     </title>
     <?php require "partials/_bootstrap_css.php"; ?>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/appear_test.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -112,30 +126,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="test-item">
                             <div class="question">
-                                <span>Q. </span>
-                                <p>'. $question .'</p>
+                                <span>Q: </span>
+                                <p class="question-text">'. $question .'</p>
                             </div>
                             <hr class="appear">
                             <div class="options">
                                 <div class="option-item">
                                     <input type="radio" name="answer'. $i .'" id="optionA' . $i . '" value="A">
                                     <label for="optionA' . $i . '"><span> A: </span></label>
-                                    <label for="optionA' . $i . '">'. $optionA .'</label>
+                                    <label for="optionA' . $i . '" class="option-text">'. $optionA .'</label>
                                 </div>
                                 <div class="option-item">
                                     <input type="radio" name="answer'. $i .'" id="optionB' . $i . '" value="B">
                                     <label for="optionB' . $i . '"><span> B: </span></label>
-                                    <label for="optionB' . $i . '">'. $optionB .'</label>
+                                    <label for="optionB' . $i . '" class="option-text">'. $optionB .'</label>
                                 </div>
                                 <div class="option-item">
                                     <input type="radio" name="answer'. $i .'" id="optionC' . $i . '" value="C">
                                     <label for="optionC' . $i . '"><span> C: </span></label>
-                                    <label for="optionC' . $i . '">'. $optionC .'</label>
+                                    <label for="optionC' . $i . '" class="option-text">'. $optionC .'</label>
                                 </div>
                                 <div class="option-item">
                                     <input type="radio" name="answer'. $i .'" id="optionD' . $i . '" value="D">
                                     <label for="optionD' . $i . '"><span> D: </span></label>
-                                    <label for="optionD' . $i . '">'. $optionD .'</label>
+                                    <label for="optionD' . $i . '" class="option-text">'. $optionD .'</label>
                                 </div>
                             </div>
                         </div>

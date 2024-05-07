@@ -7,11 +7,7 @@
     width: 65vw;
     height: fit-content;
     margin: 0 auto;
-    /* border: 2px solid black; */
-}
-
-.desc h1 {
-    text-align: center;
+    padding: 0;
 }
 
 .test {
@@ -25,18 +21,18 @@
     border: 1px solid black;
     border-radius: 20px;
     background-color: rgb(243, 243, 243);
+    text-decoration: none;
+    color: black;
 }
 
 .test:hover {
-    background-color: rgb(206, 206, 206);   
+    background-color: rgb(206, 206, 206);
 }
 
 .test-detail {
     display: flex;
     width: 80%;
     flex-wrap: wrap;
-    text-decoration: none;
-    color: black;
     gap: 0.7rem;
 }
 
@@ -60,6 +56,13 @@
     font-weight: 600;
 }
 
-.date, .time {
+.date,
+.time {
     font-size: 0.9rem;
+}
+
+@media screen and (max-width:600px) {
+    .container {
+        width: 95vw;
+    }
 }
