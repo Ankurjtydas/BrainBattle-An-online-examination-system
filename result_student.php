@@ -50,39 +50,93 @@ if (isset($_GET["result"])) {
         width: 100vw;
         height: 100vh;
         position: relative;
-        display: flex;
-        justify-content: center;
+        overflow: hidden;
+    }
+
+    body::before {
+        content: "";
+        background: url(images/result_background.jpeg);
+        position: absolute;
+        height: 100vh;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        opacity: 1;
+        background-repeat: no-repeat;
+        background-position: center 0vh;
+        filter: brightness(50%);
     }
 
     .container {
+        border: 2px solid lightblue;
         width: 100%;
-        height: 70%;
-        border: 2px solid black;
-        margin: 0 auto;
-        margin-top: 150px;
-        text-align: center;
-        position: relative;
-        padding: 20px;
+
     }
 
-    .name {
-        position: absolute;
-        top: -17px;
-        left: 50%;
+    .profile {
+        //border: 2px solid brown;
+        width: 500px;
+        padding: 30px;
+        margin-left: auto;
+        margin-right: auto;
+        height: fit-content;
+        margin-top: 110px;
         background-color: white;
-        padding: 4px 7px;
+        border-radius: 45px;
     }
 
-    .score {
-        font-size: 1.2rem;
+    .profile-image {
+        border: 2px solid lightblue;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        background: url(images/profile.png);
+        background-size: cover;
+    }
+
+    h2 {
+        width: fit-content;
+        margin: 15px auto;
+        margin-bottom: 50px;
+        font-size: 25px;
+    }
+
+    span {
+        display: block;
+        margin: 10px 0;
+
+    }
+
+    .details {
+        margin: 20px 0;
+        font-size: 20px;
+    }
+    .score{
+        display: inline;
+        font-weight: bold;
+        font-size: larger;
     }
 </style>
 
 <body>
     <div class="container">
-        <div class="image"></div>
-        <h2 class="name"><?php echo $_SESSION["first_name"] . " " . $_SESSION["first_name"] ?></h2>
-        <span class="score"><?php echo "Scored " . $markScored . " out of " . $totalMarks; ?></span>
+        <div class="profile">
+            <div class="profile-image">
+            </div>
+            <h2>hunmely hansepi</h2>
+            <div class="details">
+                <span>Name: Hunmely Hansepi</span>
+                <span>Exam title: CNS</span>
+                <span>Score: <span class="score">10</span> out of <span class="score">15</span></span>
+
+            </div>
+            <p>Note: Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam quasi temporibus possimus, rerum
+                laudantium eveniet!</p>
+
+        </div>
     </div>
 </body>
 
