@@ -3,6 +3,12 @@ nav * {
     padding: 0;
 }
 
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
 .nav-link:hover {
     background-color: rgb(66, 66, 66);
     border-radius: 20px;
