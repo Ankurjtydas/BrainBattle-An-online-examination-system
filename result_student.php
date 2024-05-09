@@ -26,6 +26,11 @@ if (isset($_GET["result"])) {
     }
     $markScored = $row["mark_obtained"];
     $totalMarks = $row["total_marks"];
+
+    // retrieving the details of exam
+    $sql = "select * from exams where exam_id = $row[of_exam]";
+    $result2 = mysqli_query($conn, $sql);
+    $exam = mysqli_fetch_assoc($result2);
 } else {
     header("Location: index.php");
     exit;
@@ -36,108 +41,33 @@ if (isset($_GET["result"])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result - Exam Title</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Result - Exam Title</title>
+	<?php require "partials/_bootstrap_css.php"; ?>
+	<link rel="stylesheet" href="css/navbar.css">
+	<link rel="stylesheet" href="css/result_student.css">
 </head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        width: 100vw;
-        height: 100vh;
-        position: relative;
-        overflow: hidden;
-    }
-
-    body::before {
-        content: "";
-        background: url(images/result_background.jpeg);
-        position: absolute;
-        height: 100vh;
-        width: 100%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        opacity: 1;
-        background-repeat: no-repeat;
-        background-position: center 0vh;
-        filter: brightness(50%);
-    }
-
-    .container {
-        border: 2px solid lightblue;
-        width: 100%;
-
-    }
-
-    .profile {
-        //border: 2px solid brown;
-        width: 500px;
-        padding: 30px;
-        margin-left: auto;
-        margin-right: auto;
-        height: fit-content;
-        margin-top: 110px;
-        background-color: white;
-        border-radius: 45px;
-    }
-
-    .profile-image {
-        border: 2px solid lightblue;
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        margin-left: auto;
-        margin-right: auto;
-        background: url(images/profile.png);
-        background-size: cover;
-    }
-
-    h2 {
-        width: fit-content;
-        margin: 15px auto;
-        margin-bottom: 50px;
-        font-size: 25px;
-    }
-
-    span {
-        display: block;
-        margin: 10px 0;
-
-    }
-
-    .details {
-        margin: 20px 0;
-        font-size: 20px;
-    }
-    .score{
-        display: inline;
-        font-weight: bold;
-        font-size: larger;
-    }
-</style>
 
 <body>
+    <?php require "partials/_header.php";?>
     <div class="container">
         <div class="profile">
             <div class="profile-image">
             </div>
-            <h2>hunmely hansepi</h2>
+            <h2 class="text-center profile-name"><?php echo $_SESSION["first_name"].' '. $_SESSION["last_name"]; ?></h2>
             <div class="details">
-                <span>Name: Hunmely Hansepi</span>
-                <span>Exam title: CNS</span>
-                <span>Score: <span class="score">10</span> out of <span class="score">15</span></span>
-
+                <span>Name : <?php echo $_SESSION["first_name"].' '. $_SESSION["last_name"]; ?></span>
+                <span>Exam title : <?php echo $exam["exam_title"]; ?></span>
+                <span>Exam date : <?php echo date("j/m/y", strtotime($exam["exam_date_time"])); ?></span>
+                <span>Score : You scored <span class="score"><?php echo $markScored; ?></span> out of <span class="score"><?php echo $totalMarks; ?></span></span>
             </div>
-            <p>Note: Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam quasi temporibus possimus, rerum
-                laudantium eveniet!</p>
+            <hr>
+            <p class="note">Note: Please take a screenshot for backup.</p>
 
         </div>
     </div>
+    <?php require "partials/_footer.php"; ?>
 </body>
 
 </html>
