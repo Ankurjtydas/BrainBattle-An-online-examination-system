@@ -42,6 +42,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    user-select: none;
 }
 
 .test-box {
@@ -55,6 +56,7 @@ body {
     border-radius: 10px;
     position: relative;
     overflow: hidden;
+    user-select: none;
 }
 
 .test-header {
