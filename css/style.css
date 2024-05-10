@@ -20,7 +20,7 @@
 
 #header-section .container::before {
     content: "";
-    background: url(https://source.unsplash.com/1600x600/?services,job,task);
+    background: url(../images/home_bg.jpg);
     position: absolute;
     height: 100%;
     width: 100%;
@@ -63,10 +63,6 @@
 #header-section .container .btn:hover {
     background-color: rgb(74, 133, 189);
 }
-
-/* #body-section {
-    background-color: rgb(247, 247, 247);
-} */
 
 #body-section .container {
     width: 90vw;

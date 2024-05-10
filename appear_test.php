@@ -5,7 +5,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     header("Location: index.php");
     exit;
 }
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $examId = htmlspecialchars($_POST["examId"]);
     require "partials/_dbconnect.php";
 
@@ -13,8 +13,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "select * from results where of_exam=$examId and by_user=$_SESSION[user_id]";
     $result = mysqli_query($conn, $sql);
     $numRows = mysqli_num_rows($result);
-    if($numRows != 0){
-        $alert = "You have already give this exam.";
+    if ($numRows != 0) {
+        $alert = "You have already given this exam.";
         header("Location: student_dashboard.php?success=false&alert=$alert");
         exit;
     }
@@ -26,11 +26,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
         $examTitle = $row["exam_title"];
         $timePerQuestion = $row["time_per_question"];
-    }else{
+    } else {
         header("Location: student_dashboard.php");
         exit;
     }
-}else{
+} else {
     header("Location: index.php");
     exit;
 }
@@ -66,10 +66,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $examDateTime = new DateTime($row["exam_date_time"]);
                 $currentDateTime = new DateTime();
                 $timeLeft = $examDateTime->diff($currentDateTime);
-                if( $timeLeft->invert == 1) {
-                echo '
+                if ($timeLeft->invert == 1) {
+                    echo '
                 <script>
-                    examDate = "'. $row["exam_date_time"] .'";
+                    examDate = "' . $row["exam_date_time"] . '";
                     ed = new Date(examDate);
                     let t = setInterval(() => {
                         cd = new Date();
@@ -93,15 +93,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             document.getElementById("waittime").innerText = "Starting in : " + daysLeft + "d : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft + "s";
                     }, 1000)
                 </script>';
-                }?>
+                } ?>
             </div>
             <?php
             $examDateTime = new DateTime($row["exam_date_time"]);
             $currentDateTime = new DateTime();
             $timeLeft = $examDateTime->diff($currentDateTime);
-            if( $timeLeft->invert == 0) {
+            if ($timeLeft->invert == 0) {
                 echo '<form action="partials/_handleExamSubmission.php" method="post">
-                        <input type="hidden" name="examId" value="'. $examId .'">
+                        <input type="hidden" name="examId" value="' . $examId . '">
                         <script> document.addEventListener("DOMContentLoaded", function(){start();}) </script>';
                 $sql = "select * from questions where of_exam = $examId";
                 $result2 = mysqli_query($conn, $sql);
@@ -117,49 +117,51 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '
                     <div class="test-box" id="' . $i . '">
                         <div class="test-header">
-                            <span>Question No. ' . $i . '</span>
-                            <span>'. $examTitle .'</span>
+                            <div class="qno-exam">
+                                <span>Question No. ' . $i . '</span>
+                                <span>' . $examTitle . '</span>
+                            </div>
                             <div class="timer">
                                 <span>Timer</span>
-                                <div class="time" id="time' . $i . '">'. $timePerQuestion .'</div>
+                                <div class="time" id="time' . $i . '">' . $timePerQuestion . '</div>
                             </div>
                         </div>
                         <div class="test-item">
                             <div class="question">
                                 <span>Q: </span>
-                                <p class="question-text">'. $question .'</p>
+                                <p class="question-text">' . $question . '</p>
                             </div>
                             <hr class="appear">
                             <div class="options">
                                 <div class="option-item">
-                                    <input type="radio" name="answer'. $i .'" id="optionA' . $i . '" value="A">
+                                    <input type="radio" name="answer' . $i . '" id="optionA' . $i . '" value="A">
                                     <label for="optionA' . $i . '"><span> A: </span></label>
-                                    <label for="optionA' . $i . '" class="option-text">'. $optionA .'</label>
+                                    <label for="optionA' . $i . '" class="option-text">' . $optionA . '</label>
                                 </div>
                                 <div class="option-item">
-                                    <input type="radio" name="answer'. $i .'" id="optionB' . $i . '" value="B">
+                                    <input type="radio" name="answer' . $i . '" id="optionB' . $i . '" value="B">
                                     <label for="optionB' . $i . '"><span> B: </span></label>
-                                    <label for="optionB' . $i . '" class="option-text">'. $optionB .'</label>
+                                    <label for="optionB' . $i . '" class="option-text">' . $optionB . '</label>
                                 </div>
                                 <div class="option-item">
-                                    <input type="radio" name="answer'. $i .'" id="optionC' . $i . '" value="C">
+                                    <input type="radio" name="answer' . $i . '" id="optionC' . $i . '" value="C">
                                     <label for="optionC' . $i . '"><span> C: </span></label>
-                                    <label for="optionC' . $i . '" class="option-text">'. $optionC .'</label>
+                                    <label for="optionC' . $i . '" class="option-text">' . $optionC . '</label>
                                 </div>
                                 <div class="option-item">
-                                    <input type="radio" name="answer'. $i .'" id="optionD' . $i . '" value="D">
+                                    <input type="radio" name="answer' . $i . '" id="optionD' . $i . '" value="D">
                                     <label for="optionD' . $i . '"><span> D: </span></label>
-                                    <label for="optionD' . $i . '" class="option-text">'. $optionD .'</label>
+                                    <label for="optionD' . $i . '" class="option-text">' . $optionD . '</label>
                                 </div>
                             </div>
                         </div>
                         <div class="test-footer">';
-                        if ($i != $numRows2) {
-                            echo '<button type="button" class="btn btn-primary next" value="next' . $i . '">Next</button>';
-                        } else {
-                            echo '<button type="button" class="btn btn-primary submit" id="submit">Submit</button>';
-                        }
-                        echo '
+                    if ($i != $numRows2) {
+                        echo '<button type="button" class="btn btn-primary next" value="next' . $i . '">Next</button>';
+                    } else {
+                        echo '<button type="button" class="btn btn-primary submit" id="submit">Submit</button>';
+                    }
+                    echo '
                         </div>
                     </div>';
                 }
@@ -172,42 +174,42 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <?php require "partials/_footer.php"; ?>
     <script>
-    let time;
-    let n;
-    let d;
-    let interval;
-    let currentQuestion;
-    let totalTime;
+        let time;
+        let n;
+        let d;
+        let interval;
+        let currentQuestion;
+        let totalTime;
 
-    function start() {
-        document.getElementById("submitAll").style.visibility = "hidden";
-        if (JSON.parse(sessionStorage.getItem("total")) == null) {
-            d = new Date();
-            d.setTime(d.getTime() + <?php echo $timePerQuestion * 1000 ?>);
-            sessionStorage.setItem("total", JSON.stringify(d));
-        } else {
-            d = new Date(JSON.parse(sessionStorage.getItem("total")));
-        }
+        function start() {
+            document.getElementById("submitAll").style.visibility = "hidden";
+            if (JSON.parse(sessionStorage.getItem("total")) == null) {
+                d = new Date();
+                d.setTime(d.getTime() + <?php echo $timePerQuestion * 1000 ?>);
+                sessionStorage.setItem("total", JSON.stringify(d));
+            } else {
+                d = new Date(JSON.parse(sessionStorage.getItem("total")));
+            }
 
-        totalTime = Math.round(d.getTime() / 1000);
+            totalTime = Math.round(d.getTime() / 1000);
 
-        if (sessionStorage.getItem("currentQuestion") == null)
-            currentQuestion = 1;
-        else {
-            currentQuestion = sessionStorage.getItem("currentQuestion");
-        }
+            if (sessionStorage.getItem("currentQuestion") == null)
+                currentQuestion = 1;
+            else {
+                currentQuestion = sessionStorage.getItem("currentQuestion");
+            }
 
-        if (currentQuestion > 1) {
-            document.getElementById(currentQuestion).style.display = "block";
-            timer(currentQuestion);
-        } else {
-            document.getElementById("waiting").innerText = "Starting...";
-            setTimeout(() => {
+            if (currentQuestion > 1) {
                 document.getElementById(currentQuestion).style.display = "block";
                 timer(currentQuestion);
-            }, 1000);
+            } else {
+                document.getElementById("waiting").innerText = "Starting...";
+                setTimeout(() => {
+                    document.getElementById(currentQuestion).style.display = "block";
+                    timer(currentQuestion);
+                }, 1000);
+            }
         }
-    }
 
         function timer(id) {
             if (sessionStorage.getItem("total") == null) {
@@ -217,7 +219,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 totalTime = Math.round(d.getTime() / 1000);
             }
 
-            interval = setInterval(function() {
+            interval = setInterval(function () {
 
                 if (sessionStorage.getItem("now") == null) {
                     n = new Date();
@@ -237,28 +239,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             }, 1000);
         }
 
-    document.querySelectorAll(".next").forEach((e) => {
-        e.addEventListener("click", () => {
-            console.log("Next question appears");
-            let nextId = parseInt(e.parentNode.parentNode.id) + 1;
-            currentQuestion = nextId;
-            if (document.getElementById(nextId) != null) {
-                e.parentNode.parentNode.style.display = "none";
-                document.getElementById("waiting").innerText = "Please wait...";
-                clearInterval(interval);
-                setTimeout(() => {
-                    document.getElementById(nextId).style.display = "block";
-                    d = new Date();
-                    d.setTime(d.getTime() + <?php echo $timePerQuestion * 1000 ?>);
-                    sessionStorage.setItem("total", JSON.stringify(d));
-                    n = new Date();
-                    timer(nextId);
-                }, 1000);
-            }
+        document.querySelectorAll(".next").forEach((e) => {
+            e.addEventListener("click", () => {
+                console.log("Next question appears");
+                let nextId = parseInt(e.parentNode.parentNode.id) + 1;
+                currentQuestion = nextId;
+                if (document.getElementById(nextId) != null) {
+                    e.parentNode.parentNode.style.display = "none";
+                    document.getElementById("waiting").innerText = "Please wait...";
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById(nextId).style.display = "block";
+                        d = new Date();
+                        d.setTime(d.getTime() + <?php echo $timePerQuestion * 1000 ?>);
+                        sessionStorage.setItem("total", JSON.stringify(d));
+                        n = new Date();
+                        timer(nextId);
+                    }, 1000);
+                }
+            })
         })
-    })
 
-        document.getElementById("submit").addEventListener("click", ()=>{
+        document.getElementById("submit").addEventListener("click", () => {
             document.getElementById("submit").parentNode.parentNode.style.display = "none";
             document.getElementById("waiting").innerText = "Submitting...";
             setTimeout(() => {
@@ -268,9 +270,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         })
 
-    window.onbeforeunload = function() {
-        sessionStorage.setItem("currentQuestion", currentQuestion);
-    }
+        window.onbeforeunload = function () {
+            sessionStorage.setItem("currentQuestion", currentQuestion);
+        }
     </script>
 
 </body>

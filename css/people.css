@@ -45,12 +45,19 @@
 }
 
 .name img {
-    border: 1px solid black;
     height: 100%;
     aspect-ratio: 1/1;
     border-radius: 50%;
     background-color: rgb(235, 235, 235);
     box-sizing: border-box;
+}
+
+.faculty-container img {
+    border: 1px solid red;
+}
+
+.student-container img {
+    border: 1px solid black;
 }
 
 i {
