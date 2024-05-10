@@ -9,7 +9,7 @@
         $password = htmlspecialchars($_POST["password"]);
         $cpassword = htmlspecialchars($_POST["cpassword"]);
 
-        if($password == $cpassword){
+        if($password === $cpassword){
             if($first_name!="" && $last_name!="" && $email!="" && $password!="" && $cpassword!=""){
 
                 $sql = "select * from users where email='$email'";

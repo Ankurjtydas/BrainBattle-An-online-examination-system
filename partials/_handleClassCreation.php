@@ -4,8 +4,14 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $classroomTitle = htmlspecialchars($_POST["classroomTitle"]);
-        $classroomDescription = htmlspecialchars($_POST["classroomDescription"]);
-        
+        $classroomDesc = htmlspecialchars($_POST["classroomDescription"]);
+        $classroomDescription = str_replace(" ", "&nbsp;", $classroomDesc);
+        if($classroomTitle == ""){
+            $alert = "Classroom title cannot be blank";
+            header("Location: ../index.php?success=false&alert=$alert");
+            exit;
+        }
+
         $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $randomCode = "";
         while(1){
@@ -25,8 +31,7 @@
         
         // add classroom in database
         $sql = "INSERT INTO `classrooms` (`classroom_name`, `classroom_description`, `classroom_faculty`, `classroom_code`, `create_at`) VALUES ('$classroomTitle', '$classroomDescription', '$_SESSION[user_id]', '$randomCode', current_timestamp())";
-        $result = mysqli_query($conn, $sql);
-        if($result == 1){
+        if(mysqli_query($conn, $sql)){
 
             // get id of currently created classroom
             $sql = "select * from classrooms where classroom_code='$randomCode'";

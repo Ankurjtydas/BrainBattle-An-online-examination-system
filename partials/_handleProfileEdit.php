@@ -6,9 +6,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true) {
 }
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     require "_dbconnect.php";
-    $new_first_name = $_POST["fname"];
-    $new_last_name = $_POST["lname"];
-    $new_email = $_POST["email"];
+    $new_first_name = htmlspecialchars($_POST["fname"]);
+    $new_last_name = htmlspecialchars($_POST["lname"]);
+    $new_email = htmlspecialchars($_POST["email"]);
 
     if($new_first_name !== $_SESSION["first_name"]){
         $sql = "UPDATE `users` SET `first_name` = '$new_first_name' WHERE email = '$_SESSION[email]'";

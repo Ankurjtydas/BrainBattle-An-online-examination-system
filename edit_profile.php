@@ -62,26 +62,4 @@
     </div>
     <?php require "partials/_footer.php"; ?>
 </body>
-<script>
-    let password = document.getElementById("password");
-    let cpassword = document.getElementById("cpassword");
-    let label = document.getElementById("cpassword-label");
-
-    cpassword.addEventListener("keyup", () => {
-        if (cpassword.value != "") {
-            label.style.display = "block";
-            if (password.value == cpassword.value) {
-                label.innerText = "Password matched";
-                label.style.color = "green";
-            } else {
-                label.innerText = "Password do not match";
-                label.style.color = "red";
-            }
-        } else {
-            label.style.display = "none";
-        }
-    })
-
-</script>
-
 </html>

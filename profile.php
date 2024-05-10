@@ -5,11 +5,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true) {
     header("Location: index.php");
     exit;
 }
-
-$sql = "select * from classrooms where classroom_id = '$_SESSION[in_classroom]'";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-$className = $row["classroom_name"];
 ?>
 
 <!DOCTYPE html>
@@ -43,12 +38,23 @@ $className = $row["classroom_name"];
                 </div>
                 <div class="item">
                     <label>Classroom : </label>
-                    <span><?php echo $className . ' (' . $_SESSION["role"] . ')'; ?></span>
+                    
+                        <?php
+                        if($_SESSION["in_classroom"] != null){
+                            $sql = "select * from classrooms where classroom_id = '$_SESSION[in_classroom]'";
+                            $result = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            echo '<span>'.$row["classroom_name"] . ' (' . $_SESSION["role"] . ')';
+                        }else{
+                            echo '<span class="text-danger">You are currently not in a class';
+                        }
+                        ?>
+                    </span>
                 </div>
             </div>
             <hr>
             <div class="buttons">
-                <button class="btn btn-warning change-pass-btn">Change password</button>
+                <a href="change_password.php" class="btn btn-warning change-pass-btn">Change password</a>
                 <a href="edit_profile.php" class="edit btn btn-primary">Edit profile</a>
             </div>
         </div>

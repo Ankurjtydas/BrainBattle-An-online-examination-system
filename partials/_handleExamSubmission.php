@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($conn, $sql);
     $numRows = mysqli_num_rows($result);
     if ($numRows != 0) {
-        $alert = "You have already appeard this exam.";
+        $alert = "You have already given this exam.";
         header("Location: ../student_dashboard.php?success=false&alert=$alert");
         exit;
     }
@@ -30,7 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // echo 'You scored '. $markScored .' out of '. $numRows;
     $insertSql = "INSERT INTO `results` (`of_exam`, `by_user`, `mark_obtained`, `total_marks`, `created_at`) VALUES ('$examId', '$_SESSION[user_id]', '$markScored', '$numRows', current_timestamp())";
     mysqli_query($conn, $insertSql);
-    header("Location: ../result_student.php");
+    $sql = "select * from results where by_user = '$_SESSION[user_id]' order by created_at desc limit 1";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    header("Location: ../result_student.php?result=$row[result_id]");
     exit;
 } else {
     header("Location: ../index.php");
