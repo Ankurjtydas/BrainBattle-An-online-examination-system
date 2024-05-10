@@ -41,7 +41,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
             </div>
             <div class="item">
                 <div class="name">
-                    <img src="images/people.png" alt="Image">
+                    <img src="images/icons/people.png" alt="Image">
                     <span>
                         <?php
                         $sqlForFaculty = "select * from users where in_classroom=$_SESSION[in_classroom] and role='faculty'";

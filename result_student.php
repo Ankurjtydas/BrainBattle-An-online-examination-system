@@ -26,6 +26,11 @@ if (isset($_GET["result"])) {
     }
     $markScored = $row["mark_obtained"];
     $totalMarks = $row["total_marks"];
+
+    // retrieving the details of exam
+    $sql = "select * from exams where exam_id = $row[of_exam]";
+    $result2 = mysqli_query($conn, $sql);
+    $exam = mysqli_fetch_assoc($result2);
 } else {
     header("Location: index.php");
     exit;
@@ -36,54 +41,33 @@ if (isset($_GET["result"])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result - Exam Title</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Result - Exam Title</title>
+	<?php require "partials/_bootstrap_css.php"; ?>
+	<link rel="stylesheet" href="css/navbar.css">
+	<link rel="stylesheet" href="css/result_student.css">
 </head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        width: 100vw;
-        height: 100vh;
-        position: relative;
-        display: flex;
-        justify-content: center;
-    }
-
-    .container {
-        width: 100%;
-        height: 70%;
-        border: 2px solid black;
-        margin: 0 auto;
-        margin-top: 150px;
-        text-align: center;
-        position: relative;
-        padding: 20px;
-    }
-
-    .name {
-        position: absolute;
-        top: -17px;
-        left: 50%;
-        background-color: white;
-        padding: 4px 7px;
-    }
-
-    .score {
-        font-size: 1.2rem;
-    }
-</style>
 
 <body>
+    <?php require "partials/_header.php";?>
     <div class="container">
-        <div class="image"></div>
-        <h2 class="name"><?php echo $_SESSION["first_name"] . " " . $_SESSION["first_name"] ?></h2>
-        <span class="score"><?php echo "Scored " . $markScored . " out of " . $totalMarks; ?></span>
+        <div class="profile">
+            <div class="profile-image">
+            </div>
+            <h2 class="text-center profile-name"><?php echo $_SESSION["first_name"].' '. $_SESSION["last_name"]; ?></h2>
+            <div class="details">
+                <span>Name : <?php echo $_SESSION["first_name"].' '. $_SESSION["last_name"]; ?></span>
+                <span>Exam title : <?php echo $exam["exam_title"]; ?></span>
+                <span>Exam date : <?php echo date("j/m/y", strtotime($exam["exam_date_time"])); ?></span>
+                <span>Score : You scored <span class="score"><?php echo $markScored; ?></span> out of <span class="score"><?php echo $totalMarks; ?></span></span>
+            </div>
+            <hr>
+            <p class="note">Note: Please take a screenshot for backup.</p>
+
+        </div>
     </div>
+    <?php require "partials/_footer.php"; ?>
 </body>
 
 </html>

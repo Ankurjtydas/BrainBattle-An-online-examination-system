@@ -27,7 +27,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Classroom - <?php echo $_SESSION["classroom_name"] ?>
+        Classroom -
+        <?php echo $_SESSION["classroom_name"] ?>
     </title>
     <?php require "partials/_bootstrap_css.php"; ?>
     <link rel="stylesheet" href="css/navbar.css">
@@ -42,12 +43,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         <div class="classroom-details">
             <div class="faculty-image">
                 <div class="faculty-name">
-                    <span class="name"><?php
+                    <span class="name">
+                        <?php
                     $sql = "select * from users where user_id = $row[classroom_faculty]";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
                     echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
-                    ?></span>
+                    ?>
+                    </span>
                 </div>
                 <span class="remark">Faculty</span>
             </div>
@@ -92,6 +95,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 <img src="images/icons/result.png" alt="">
             </div>
             <span>Results</span>
+        </a>
+        <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#editClassroomModal">
+            <div class="item-image">
+                <img src="images/icons/result.png" alt="">
+            </div>
+            <span>Edit Classroom</span>
         </a>
         <a href="" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
             <div class="item-image">
@@ -141,7 +150,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                                 hoursLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60 * 60) - cd.getTime() / (1000 * 60 * 60)) % 60);
                             minutesLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60) - cd.getTime() / (1000 * 60)) % 60);
                             secondsLeft = Math.floor((ed' . $i . '.getTime() / 1000 - cd.getTime() / 1000) % 60);
-                            if (hoursLeft<24) {
+                            if (hoursLeft < 24) {
                                 document.getElementById("timer' . $i . '").style.display = "block";
                                 if (hoursLeft < 1)
                                     document.getElementById("timer' . $i . '").style.color = "red";
@@ -153,7 +162,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                                     document.getElementById("time' . $i . '").innerText = "Exam has started. Disappearing in : " + (15 + secondsLeft) + "seconds";
                                 }
                                 else
-                                    document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft +"s";
+                                    document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft + "s";
                             }
                             }, 1000)
                         </script>
@@ -184,6 +193,37 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         }
         ?>
 
+    </div>
+
+    <!-- editClassroomModal -->
+    <div class="modal fade" id="editClassroomModal" tabindex="-1" aria-labelledby="editClassroomModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="editClassroomModalLabel">Edit Classroom</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="partials/_handleClassEdit.php" method="POST">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="classroomTitle" class="form-label">Classroom title</label>
+                            <input type="text" class="form-control" id="classroomTitle" name="classroomTitle"
+                                aria-describedby="classroomTitleHelp" value="<?php echo $_SESSION["classroom_name"]; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="classroomDescription" class="form-label">Classroom description</label>
+                            <textarea class="form-control" id="classroomDescription"
+                                name="classroomDescription"><?php echo $_SESSION["classroom_description"]; ?></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- deleteModal -->
