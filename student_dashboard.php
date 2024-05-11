@@ -110,8 +110,8 @@ if ($numRows == 1) {
                 if ($timeLeft->invert == 1) {
                     $displayedExams++;
                     echo '
-        <div class="test" id="test' . $i . '">
-            <div class="test-detail" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#appearExamModal">
+        <div class="test" id="test' . $i . '" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#appearExamModal">
+            <div class="test-detail">
                 <input type="hidden" value="' . $examId . '">
                 <input type="hidden" value="' . $noOfQuestions . '">
                 <input type="hidden" value="' . $timePerQuestion . '">
@@ -221,11 +221,12 @@ if ($numRows == 1) {
 
     <?php require "partials/_footer.php"; ?>
     <script>
-        document.querySelectorAll(".test-detail").forEach((e) => {
+        document.querySelectorAll(".test").forEach((e) => {
             e.addEventListener("click", () => {
-                let eId = e.childNodes[1].value;
-                let noOfQuestions = e.childNodes[3].value;
-                let timePerQuestion = e.childNodes[5].value;
+                let detail = e.childNodes[1];
+                let eId = detail.childNodes[1].value;
+                let noOfQuestions = detail.childNodes[3].value;
+                let timePerQuestion = detail.childNodes[5].value;
                 document.getElementById("examId").value = eId;
                 document.getElementById("totalQuestions").innerText = noOfQuestions;
                 document.getElementById("seconds").innerText = timePerQuestion;

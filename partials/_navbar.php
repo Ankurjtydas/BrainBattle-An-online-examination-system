@@ -31,6 +31,7 @@
                 </div>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="partials/_handleLogout.php">Logout</a></li>
                 </ul>
               </div>

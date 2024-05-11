@@ -41,12 +41,19 @@ nav {
     left: -110px;
 }
 
+nav .navbar-nav .dropdown-divider {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    opacity: 0.4;
+}
+
 /* triggered for small screen devices */
 @media screen and (max-width:600px) {
     .navbar {
         font-size: 1.3rem;
     }
-    .navbar-brand {
+    .navbar .navbar-brand b {
         font-size: 1.6rem;
     }
 }
@@ -66,8 +73,8 @@ nav {
     }
     .navbar-nav hr {
         color: gray;
-        min-width: 100%;
-        margin: 5px;
+        width: 100%;
+        margin: 5px auto;
         display: block;
     }
 }

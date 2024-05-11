@@ -45,11 +45,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                 <div class="faculty-name">
                     <span class="name">
                         <?php
-                    $sql = "select * from users where user_id = $row[classroom_faculty]";
-                    $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
-                    ?>
+                        $sql = "select * from users where user_id = $row[classroom_faculty]";
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_assoc($result);
+                        echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
+                        ?>
                     </span>
                 </div>
                 <span class="remark">Faculty</span>
@@ -147,23 +147,26 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                             ed' . $i . ' = new Date(examDate' . $i . ');
                             setInterval(() => {
                                 cd = new Date();
+                                daysLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60 * 60 * 24) - cd.getTime() / (1000 * 60 * 60 * 24)));
                                 hoursLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60 * 60) - cd.getTime() / (1000 * 60 * 60)) % 60);
-                            minutesLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60) - cd.getTime() / (1000 * 60)) % 60);
-                            secondsLeft = Math.floor((ed' . $i . '.getTime() / 1000 - cd.getTime() / 1000) % 60);
-                            if (hoursLeft < 24) {
-                                document.getElementById("timer' . $i . '").style.display = "block";
-                                if (hoursLeft < 1)
-                                    document.getElementById("timer' . $i . '").style.color = "red";
-                                if (secondsLeft < 0) {
-                                    if (secondsLeft == -1)
-                                        location.reload();
-                                    if (secondsLeft <= -15)
-                                        location.reload();
-                                    document.getElementById("time' . $i . '").innerText = "Exam has started. Disappearing in : " + (15 + secondsLeft) + "seconds";
+                                minutesLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60) - cd.getTime() / (1000 * 60)) % 60);
+                                secondsLeft = Math.floor((ed' . $i . '.getTime() / 1000 - cd.getTime() / 1000) % 60);
+                                if (daysLeft == 0) {
+                                    if (hoursLeft < 24) {
+                                        document.getElementById("timer' . $i . '").style.display = "block";
+                                        if (hoursLeft < 1)
+                                            document.getElementById("timer' . $i . '").style.color = "red";
+                                        if (secondsLeft < 0) {
+                                            if (secondsLeft == -1)
+                                                location.reload();
+                                            if (secondsLeft <= -15)
+                                                location.reload();
+                                            document.getElementById("time' . $i . '").innerText = "Exam has started. Disappearing in : " + (15 + secondsLeft) + "seconds";
+                                        }
+                                        else
+                                            document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft + "s";
+                                    }
                                 }
-                                else
-                                    document.getElementById("time' . $i . '").innerText = "Starting in : " + hoursLeft + "h : " + minutesLeft + "m : " + secondsLeft + "s";
-                            }
                             }, 1000)
                         </script>
                     </span>
@@ -209,7 +212,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                         <div class="mb-3">
                             <label for="classroomTitle" class="form-label">Classroom title</label>
                             <input type="text" class="form-control" id="classroomTitle" name="classroomTitle"
-                                aria-describedby="classroomTitleHelp" value="<?php echo $_SESSION["classroom_name"]; ?>">
+                                aria-describedby="classroomTitleHelp" value="<?php echo $_SESSION[" classroom_name"];
+                                ?>">
                         </div>
                         <div class="mb-3">
                             <label for="classroomDescription" class="form-label">Classroom description</label>
@@ -292,17 +296,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
         })
 
 
-        // const d = new Date();
-        // let timeout = Math.round(d.getTime() / 1000) + 10;
-        // let interval = setInterval(function(){
-        //     let n = new Date();
-        //     let time = Math.round(n.getTime()/1000);
-        //     document.getElementById("timer").innerText = (timeout-time);
-        //     console.log(time);
-        //     if((timeout-time)<=0){
-        //         clearInterval(interval);
-        //     }
-        // },1000);
+    // const d = new Date();
+    // let timeout = Math.round(d.getTime() / 1000) + 10;
+    // let interval = setInterval(function(){
+    //     let n = new Date();
+    //     let time = Math.round(n.getTime()/1000);
+    //     document.getElementById("timer").innerText = (timeout-time);
+    //     console.log(time);
+    //     if((timeout-time)<=0){
+    //         clearInterval(interval);
+    //     }
+    // },1000);
     </script>
 </body>
 

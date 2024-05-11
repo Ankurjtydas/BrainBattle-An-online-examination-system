@@ -64,7 +64,6 @@ body::before {
     gap: 1.2rem;
     font-size: 1.2rem;
     margin: 20px 0;
-    /* line-height: 2; */
 }
 
 .container .item {
@@ -98,9 +97,14 @@ body::before {
 }
 
 @media screen and (max-width:500px) {
+    * {font-size: 1.1rem;}
     .container .profile {
         padding: 6px;
         border-radius: 30px;
     }
-    .container .details {margin-left: 20px;}
+    .container .details {margin: 20px;}
+}
+
+@media screen and (max-width:476px) {
+    .container .item label {font-weight: 500;}
 }
