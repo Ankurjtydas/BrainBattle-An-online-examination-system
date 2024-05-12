@@ -23,7 +23,7 @@
 
     <div class="register-container">
         <div class="box col-5 px-4">
-            <form action="partials/_handleRegister.php" method="POST">
+            <form action="partials/_handleRegisterMail.php" method="POST">
                 <div class="register col-12">
                     <h4 class="text-center mb-3">Register</h4>
                     <div class="row mb-3">
