@@ -45,7 +45,7 @@ if ($numRows == 1) {
                     $sql = "select * from users where user_id = $row[classroom_faculty]";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
-                    echo strtoupper($row["first_name"]) . strtoupper($row["last_name"]);
+                    echo strtoupper($row["first_name"][0]) . strtoupper($row["last_name"][0]);
                     ?></span>
                 </div>
                 <span class="remark">Faculty</span>

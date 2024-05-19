@@ -1,5 +1,6 @@
 <?php
     session_status() == PHP_SESSION_ACTIVE?: session_start();
+    unset($_SESSION["updation"]);
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true){
         header("Location: index.php");
         exit;
@@ -54,7 +55,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                        <input type="submit" id="submit" class="btn btn-primary" value="Save Changes">
                     </div>
                 </div>
             </form>
