@@ -30,7 +30,7 @@
               <label for="email" class="col-form-label">Email</label>
             </div>
             <div class="col-9">
-              <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline">
+              <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline" required>
             </div>
           </div>
           <div class="row mb-3">
@@ -38,8 +38,8 @@
               <label for="password" class="col-form-label">Password</label>
             </div>
             <div class="col-9">
-              <input type="password" id="password" name="password" class="form-control" aria-describedby="passwordHelpInline">
-              <a href="#">Forget Password?</a>
+              <input type="password" id="password" name="password" class="form-control" aria-describedby="passwordHelpInline" required>
+              <a href="forgotPassword.php">Forget Password?</a>
             </div>
           </div>
           <div class="row mb-3">

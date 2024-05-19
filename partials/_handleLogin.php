@@ -12,6 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row["password"])) {
             session_start();
+            unset($_SESSION["register"]);
+            unset($_SESSION["forgot"]);
+            unset($_SESSION["temp_user"]);
             //  setup session
             $_SESSION["loggedin"] = true;
             $_SESSION["user_id"] = $row["user_id"];

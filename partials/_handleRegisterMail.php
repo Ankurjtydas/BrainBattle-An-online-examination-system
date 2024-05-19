@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: ../register.php?success=false&alert=$alert");
                 exit;
             } else {
+                header("Location: ../emailVerify.php");
                 $otp = rand(100000, 999999);
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -40,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "otp" => $otp,
                     "otp_expiry" => date('Y-m-d H:i:s', strtotime('+5 minutes')),
                 );
-                $_SESSION["verification"] = true;
+                $_SESSION["register"] = true;
 
                 // sending a mail with OTP to the email entered
                 try {
@@ -74,7 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
                     $mail->send();
                     // echo 'Message has been sent';
-                    header("Location: ../emailVerify.php");
                     exit;
                 } catch (Exception $e) {
                     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

@@ -16,23 +16,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`) VALUES ('$first_name', '$last_name', '$email', '$password')";
             $result = mysqli_query($conn, $sql);
             if ($result == 1) {
+                unset($_SESSION["temp_user"]);
+                unset($_SESSION["register"]);
                 $alert = "Email verified and register successfully. You can now login into you account.";
                 header("Location: ../login.php?success=true&alert=$alert");
                 exit;
             }
-            // $sql = "INSERT INTO `users` (`email_id`, `password`, `time_stamp`) VALUES ('$tempUser[email_id]', '$tempUser[password]', current_timestamp())";
-            // mysqli_query($conn, $sql);
-            // unset($_SESSION["verification"]);
-            // echo "User registered successfully.";
         } else {
             // echo "The OTP has been expired. Please re-submit the signup form.";
             $alert = "The OTP has been expired. Please re-submit the signup form.";
-            header("Location: ..register.php?success=false&alert=$alert");
+            header("Location: ../register.php?success=false&alert=$alert");
             exit;
         }
     } else {
         // echo "Incorrect OTP. Re-submit the signup form to get and new OTP.";
-        $alert = "Incorrect OTP. Try again or re-submit the signup form to get a new OTP.";
+        $alert = "Incorrect OTP. Try again!";
         header("Location: ../emailVerify.php?success=false&alert=$alert");
         exit;
     }

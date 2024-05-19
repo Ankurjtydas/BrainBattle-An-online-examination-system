@@ -1,12 +1,11 @@
 <?php
-    session_status() == PHP_SESSION_ACTIVE ? : session_start();
-   if(isset($_SESSION["verification"]) && $_SESSION["verification"] == true){
-        $tempUser = $_SESSION["temp_user"];
-    }else{
-        // echo "no verification";
-        header("Location: index.php");
-        exit;
-    }
+session_status() == PHP_SESSION_ACTIVE ?: session_start();
+if ((isset($_SESSION["register"]) && $_SESSION["register"] == true) || (isset($_SESSION["updation"]) && $_SESSION["updation"] == true) || (isset($_SESSION["forgot"]) && $_SESSION["forgot"] == true)) {
+    $tempUser = $_SESSION["temp_user"];
+} else {
+    header("Location: index.php");
+    exit;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,39 +14,65 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Email Verification</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        .container {
-            width: 100vw;
-            height: 100vh;
-            padding-top: 3rem;
-        }
-        form{
-            margin: 0 auto;
-        }
-        .verify-btn{
-            margin: 10px 0;
-        }
-    </style>
+    <?php require "partials/_bootstrap_css.php"; ?>
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/emailVerify.css">
 </head>
 
 <body>
     <?php include 'partials/_header.php'; ?>
+
     <div class="container">
-        <form action="partials/_handleVerifyOtp.php" method="post">
-            <h2>Verify your email Id</h2>
-            <div class="input">
-                <label for="otp" class="form-label">OTP :</label>
-                <input type="text" class="form-control" id="otp" name="otp">
+        <div class="box col-5 px-4">
+            <div class="col-12">
+                <h4 class="text-center mb-3">Verify email</h4>
+                <?php
+                if (isset($_SESSION["register"])) {
+                    echo '<form action="partials/_handleVerifyOtp.php" method="POST">';
+                } elseif (isset($_SESSION["updation"])) {
+                    echo '<form action="partials/_handleEmailUpdate.php" method="POST">';
+                } elseif(isset($_SESSION["forgot"])) {
+                    echo '<form action="reset_password.php" method="POST">';
+                } else {
+                    echo '<form action="" method="POST">';
+                }
+                ?>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <label for="otp" class="col-form-label">OTP :</label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" id="otp" name="otp" class="form-control" aria-describedby="nameHelpInline"
+                            required>
+                    </div>
+                </div>
+                <p>An OTP has been sent to your email <b><?php echo $tempUser["email"]; ?></b>. Expires in 5 minutes.
+                </p>
+                <div class="row mb-3">
+                    <input type="submit" class="btn btn-primary" value="Verify">
+                </div>
+                </form>
+                <?php
+                if (isset($_SESSION["register"])) {
+                    echo '<form action="partials/_resendRegisterOtp.php" method="post">';
+                } elseif (isset($_SESSION["updation"])) {
+                    echo '<form action="partials/_resendUpdateOtp.php" method="post">';
+                } elseif (isset($_SESSION["forgot"])) {
+                    echo '<form action="partials/_resendForgotOtp.php" method="post">';
+                } else {
+                    echo '<form action="" method="post">';
+                }
+                ?>
+                <div class="row mb-1">
+                    <button type="submit" id="resend" name="resend">Resend OTP</button>
+                </div>
+                </form>
             </div>
-            <p>An OTP has been sent to your email <?php echo $tempUser["email"];?>.</p>
-            <button type="submit" class="btn btn-primary verify-btn">Verify</button>
-        </form>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+
+    <?php require "partials/_footer.php"; ?>
+
 </body>
 
 </html>
