@@ -1,9 +1,11 @@
 <?php
-    session_status() == PHP_SESSION_ACTIVE?: session_start();
-    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true){
-        header("Location: index.php");
-        exit;
-    }
+session_status() == PHP_SESSION_ACTIVE ?: session_start();
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+  header("Location: index.php");
+  exit;
+}
+unset($_SESSION["register"]);
+unset($_SESSION["updation"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +20,7 @@
 </head>
 
 <body>
-    <?php require "partials/_header.php"; ?>
+  <?php require "partials/_header.php"; ?>
 
   <div class="login-container">
     <div class="box col-4 px-4">
@@ -30,7 +32,8 @@
               <label for="email" class="col-form-label">Email</label>
             </div>
             <div class="col-9">
-              <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline" required>
+              <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline"
+                required>
             </div>
           </div>
           <div class="row mb-3">
@@ -38,7 +41,8 @@
               <label for="password" class="col-form-label">Password</label>
             </div>
             <div class="col-9">
-              <input type="password" id="password" name="password" class="form-control" aria-describedby="passwordHelpInline" required>
+              <input type="password" id="password" name="password" class="form-control"
+                aria-describedby="passwordHelpInline" required>
               <a href="forgotPassword.php">Forget Password?</a>
             </div>
           </div>

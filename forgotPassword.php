@@ -4,6 +4,8 @@ if (isset($_SESSION["loggedin"])) {
     header("Location: index.php");
     exit;
 }
+unset($_SESSION["register"]);
+unset($_SESSION["updation"]);
 ?>
 
 <!doctype html>

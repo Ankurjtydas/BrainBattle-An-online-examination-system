@@ -1,10 +1,11 @@
 <?php
-    session_status() == PHP_SESSION_ACTIVE?: session_start();
-    unset($_SESSION["updation"]);
-    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true){
-        header("Location: index.php");
-        exit;
-    }
+session_status() == PHP_SESSION_ACTIVE ?: session_start();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true) {
+    header("Location: index.php");
+    exit;
+}
+unset($_SESSION["register"]);
+unset($_SESSION["updation"]);
 ?>
 
 <!DOCTYPE html>
@@ -63,4 +64,5 @@
     </div>
     <?php require "partials/_footer.php"; ?>
 </body>
+
 </html>
