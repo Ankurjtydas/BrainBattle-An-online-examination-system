@@ -127,21 +127,24 @@ if ($numRows == 1) {
                             ed' . $i . ' = new Date(examDate' . $i . ');
                             setInterval(()=>{
                                 cd = new Date();
+                                daysLeft = Math.floor((ed' . $i . '.getTime() / (1000 * 60 * 60 * 24) - cd.getTime() / (1000 * 60 * 60 * 24)));
                                 hoursLeft = Math.floor((ed' . $i . '.getTime()/(1000*60*60)-cd.getTime()/(1000*60*60))%60);
                                 minutesLeft = Math.floor((ed' . $i . '.getTime()/(1000*60)-cd.getTime()/(1000*60))%60);
                                 secondsLeft = Math.floor((ed' . $i . '.getTime()/1000-cd.getTime()/1000)%60);
-                                if(hoursLeft<24){
-                                    document.getElementById("timer' . $i . '").style.display = "block";
-                                    if(hoursLeft <1)
-                                        document.getElementById("timer' . $i . '").style.color = "red";
-                                    if(secondsLeft < 0){
-                                        if(secondsLeft == -1)
-                                            location.reload();
-                                        if(secondsLeft <= -15)
-                                            location.reload();
-                                        document.getElementById("time' . $i . '").innerText = "Exam has started. Join Before : "+(15+secondsLeft)+" seconds";
-                                    }else
-                                        document.getElementById("time' . $i . '").innerText = "Starting in : "+hoursLeft+"h : "+minutesLeft+"m : "+secondsLeft+"s";
+                                if (daysLeft == 0) {
+                                    if(hoursLeft<24){
+                                        document.getElementById("timer' . $i . '").style.display = "block";
+                                        if(hoursLeft <1)
+                                            document.getElementById("timer' . $i . '").style.color = "red";
+                                        if(secondsLeft < 0){
+                                            if(secondsLeft == -1)
+                                                location.reload();
+                                            if(secondsLeft <= -15)
+                                                location.reload();
+                                            document.getElementById("time' . $i . '").innerText = "Exam has started. Join Before : "+(15+secondsLeft)+" seconds";
+                                        }else
+                                            document.getElementById("time' . $i . '").innerText = "Starting in : "+hoursLeft+"h : "+minutesLeft+"m : "+secondsLeft+"s";
+                                    }
                                 }
                             },1000)
                         </script>
