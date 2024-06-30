@@ -212,7 +212,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true || $_SESSION[
                         <div class="mb-3">
                             <label for="classroomTitle" class="form-label">Classroom title</label>
                             <input type="text" class="form-control" id="classroomTitle" name="classroomTitle"
-                                aria-describedby="classroomTitleHelp" value="<?php echo $_SESSION[" classroom_name"];
+                                aria-describedby="classroomTitleHelp" value="<?php echo $_SESSION["classroom_name"];
                                 ?>">
                         </div>
                         <div class="mb-3">

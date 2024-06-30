@@ -39,6 +39,8 @@
             $row = mysqli_fetch_assoc($result);
             $_SESSION["in_classroom"] = $row["classroom_id"];
             $_SESSION["role"] = "faculty";
+            $_SESSION["classroom_name"] =  $classroomTitle ;
+            $_SESSION["classroom_description"] =  $classroomDescription ;
 
 
             // update classrooms table
